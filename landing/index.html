@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Demandez votre pré-devis gratuit en 3 minutes. Nettoyage professionnel et entretien espaces verts à Toulouse — Mr &amp; Mrs Eco'Clean." />
   <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#0d3a1f" />
   <meta property="og:title" content="Pré-devis Gratuit — Mr &amp; Mrs Eco'Clean" />
   <meta property="og:description" content="Nettoyage professionnel &amp; espaces verts à Toulouse. Devis gratuit, réponse sous 2h." />
   <title>Pré-devis Gratuit — Mr &amp; Mrs Eco'Clean | Nettoyage Toulouse</title>
@@ -60,7 +61,7 @@
       border: none; border-radius: 12px;
       padding: 13px 22px; font-size: 15px; font-weight: 600;
       cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
-      transition: all .2s;
+      transition: all .2s; min-height: 48px;
     }
     .btn-next:hover { background: #0d3a1f; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(22,83,45,.25); }
     .btn-next:active { transform: translateY(0); }
@@ -70,7 +71,7 @@
       border: none; border-radius: 12px;
       padding: 12px 18px; font-size: 14px; font-weight: 500;
       cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
-      transition: background .15s;
+      transition: background .15s; min-height: 48px;
     }
     .btn-back:hover { background: #e8f5ec; color: #16532d; }
 
@@ -115,16 +116,16 @@
 <header class="bg-white sticky top-0 z-30" style="border-bottom:1px solid #c3e6cb">
   <div class="max-w-xl mx-auto px-4 py-3 flex items-center justify-between">
     <div class="flex items-center gap-2.5">
-      <span class="text-xl">🌿</span>
+      <span class="text-xl" aria-hidden="true">🌿</span>
       <div>
         <p class="font-bold text-sm leading-tight" style="color:#0d3a1f">Mr &amp; Mrs Eco'Clean</p>
         <p class="text-xs leading-tight" style="color:#6b7a6b">Nettoyage &amp; Espaces verts — Toulouse</p>
       </div>
     </div>
-    <a href="tel:+33600000000"
+    <a href="tel:+33757671156"
        class="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold"
-       style="background:#e8f5ec;color:#16532d;text-decoration:none">
-      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+       style="background:#e8f5ec;color:#16532d;text-decoration:none;min-height:40px">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
       </svg>
       Appeler
@@ -143,9 +144,9 @@
       Nettoyage professionnel &middot; Entretien espaces verts &middot; Réponse sous 2h
     </p>
     <div class="flex flex-wrap justify-center gap-2">
-      <span class="px-3 py-1.5 rounded-full text-xs font-medium" style="background:rgba(255,255,255,.12);color:#c3e6cb">✅ 100% local — Toulouse</span>
-      <span class="px-3 py-1.5 rounded-full text-xs font-medium" style="background:rgba(255,255,255,.12);color:#c3e6cb">📞 Rappel sous 2h</span>
-      <span class="px-3 py-1.5 rounded-full text-xs font-medium" style="background:rgba(255,255,255,.12);color:#c3e6cb">🔒 Sans engagement</span>
+      <span class="px-3 py-1.5 rounded-full text-xs font-medium" style="background:rgba(255,255,255,.12);color:#c3e6cb"><span aria-hidden="true">✅</span> 100% local — Toulouse</span>
+      <span class="px-3 py-1.5 rounded-full text-xs font-medium" style="background:rgba(255,255,255,.12);color:#c3e6cb"><span aria-hidden="true">📞</span> Rappel sous 2h</span>
+      <span class="px-3 py-1.5 rounded-full text-xs font-medium" style="background:rgba(255,255,255,.12);color:#c3e6cb"><span aria-hidden="true">🔒</span> Sans engagement</span>
     </div>
   </div>
 </section>
@@ -160,14 +161,18 @@
       <p class="text-xs font-semibold" style="color:#16532d" id="stepPct">33%</p>
     </div>
     <div class="rounded-full overflow-hidden" style="height:6px;background:#e8f5ec">
-      <div class="progress-fill rounded-full" style="height:6px;background:#16532d;width:33%" id="pBar"></div>
+      <div class="progress-fill rounded-full" style="height:6px;background:#16532d;width:33%"
+           id="pBar" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" aria-label="Progression du formulaire"></div>
     </div>
     <p class="text-xs font-medium mt-1.5" style="color:#1a2e1a" id="stepName">Votre besoin</p>
   </div>
 
+  <!-- Steps container with aria-live for screen readers -->
+  <div aria-live="polite" aria-atomic="false">
+
   <!-- STEP 1 — Besoin -->
   <div class="step visible bg-white rounded-2xl shadow-sm p-5 sm:p-6" style="border:1px solid #e2e8e2" id="step1">
-    <h2 class="text-lg font-bold mb-4" style="color:#0d3a1f">Quel service vous intéresse ?</h2>
+    <h2 class="text-lg font-bold mb-4" style="color:#0d3a1f">Quel service vous intéresse ?</h2>
 
     <!-- Service -->
     <div class="mb-5">
@@ -176,26 +181,26 @@
         <label class="opt-card" id="lbl-svc-nettoyage">
           <input type="radio" name="service_type" value="nettoyage" onchange="pickRadio('service_type','lbl-svc-',this.value)" />
           <div class="opt-inner flex-col text-center gap-1 py-3">
-            <span class="text-2xl">🧹</span>
+            <span class="text-2xl" aria-hidden="true">🧹</span>
             <p class="text-xs font-semibold" style="color:#1a2e1a">Nettoyage</p>
           </div>
         </label>
         <label class="opt-card" id="lbl-svc-espaces_verts">
           <input type="radio" name="service_type" value="espaces_verts" onchange="pickRadio('service_type','lbl-svc-',this.value)" />
           <div class="opt-inner flex-col text-center gap-1 py-3">
-            <span class="text-2xl">🌿</span>
+            <span class="text-2xl" aria-hidden="true">🌿</span>
             <p class="text-xs font-semibold" style="color:#1a2e1a">Espaces verts</p>
           </div>
         </label>
         <label class="opt-card" id="lbl-svc-les_deux">
           <input type="radio" name="service_type" value="les_deux" onchange="pickRadio('service_type','lbl-svc-',this.value)" />
           <div class="opt-inner flex-col text-center gap-1 py-3">
-            <span class="text-2xl">✨</span>
+            <span class="text-2xl" aria-hidden="true">✨</span>
             <p class="text-xs font-semibold" style="color:#1a2e1a">Les deux</p>
           </div>
         </label>
       </div>
-      <p class="emsg" id="err-service">Veuillez choisir un type de prestation.</p>
+      <p class="emsg" id="err-service" role="alert">Veuillez choisir un type de prestation.</p>
     </div>
 
     <!-- Urgency -->
@@ -205,33 +210,33 @@
         <label class="opt-card" id="lbl-urg-48h">
           <input type="radio" name="urgency" value="48h" onchange="pickRadio('urgency','lbl-urg-',this.value)" />
           <div class="opt-inner">
-            <span class="text-lg">🔴</span>
+            <span class="text-lg" aria-hidden="true">🔴</span>
             <div><p class="text-sm font-semibold" style="color:#1a2e1a">Sous 48h</p><p class="text-xs" style="color:#6b7a6b">Urgent</p></div>
           </div>
         </label>
         <label class="opt-card" id="lbl-urg-semaine">
           <input type="radio" name="urgency" value="semaine" onchange="pickRadio('urgency','lbl-urg-',this.value)" />
           <div class="opt-inner">
-            <span class="text-lg">🟡</span>
+            <span class="text-lg" aria-hidden="true">🟡</span>
             <div><p class="text-sm font-semibold" style="color:#1a2e1a">Cette semaine</p><p class="text-xs" style="color:#6b7a6b">Rapide</p></div>
           </div>
         </label>
         <label class="opt-card" id="lbl-urg-mois">
           <input type="radio" name="urgency" value="mois" onchange="pickRadio('urgency','lbl-urg-',this.value)" />
           <div class="opt-inner">
-            <span class="text-lg">🟢</span>
+            <span class="text-lg" aria-hidden="true">🟢</span>
             <div><p class="text-sm font-semibold" style="color:#1a2e1a">Ce mois</p><p class="text-xs" style="color:#6b7a6b">Planifié</p></div>
           </div>
         </label>
         <label class="opt-card" id="lbl-urg-planifie">
           <input type="radio" name="urgency" value="planifie" onchange="pickRadio('urgency','lbl-urg-',this.value)" />
           <div class="opt-inner">
-            <span class="text-lg">📅</span>
+            <span class="text-lg" aria-hidden="true">📅</span>
             <div><p class="text-sm font-semibold" style="color:#1a2e1a">Planifié</p><p class="text-xs" style="color:#6b7a6b">Date flexible</p></div>
           </div>
         </label>
       </div>
-      <p class="emsg" id="err-urgency">Veuillez indiquer un délai.</p>
+      <p class="emsg" id="err-urgency" role="alert">Veuillez indiquer un délai.</p>
     </div>
 
     <!-- Frequency -->
@@ -241,19 +246,19 @@
         <label class="opt-card" id="lbl-frq-ponctuel">
           <input type="radio" name="frequency" value="ponctuel" onchange="pickRadio('frequency','lbl-frq-',this.value)" />
           <div class="opt-inner">
-            <span class="text-xl">1️⃣</span>
+            <span class="text-xl" aria-hidden="true">1️⃣</span>
             <div><p class="text-sm font-semibold" style="color:#1a2e1a">Ponctuel</p><p class="text-xs" style="color:#6b7a6b">Une seule fois</p></div>
           </div>
         </label>
         <label class="opt-card" id="lbl-frq-regulier">
           <input type="radio" name="frequency" value="regulier" onchange="pickRadio('frequency','lbl-frq-',this.value)" />
           <div class="opt-inner">
-            <span class="text-xl">🔄</span>
+            <span class="text-xl" aria-hidden="true">🔄</span>
             <div><p class="text-sm font-semibold" style="color:#1a2e1a">Régulier</p><p class="text-xs" style="color:#6b7a6b">Contrat récurrent</p></div>
           </div>
         </label>
       </div>
-      <p class="emsg" id="err-frequency">Veuillez choisir une fréquence.</p>
+      <p class="emsg" id="err-frequency" role="alert">Veuillez choisir une fréquence.</p>
     </div>
 
     <!-- Profile -->
@@ -263,39 +268,39 @@
         <label class="opt-card" id="lbl-prf-particulier">
           <input type="radio" name="profile_type" value="particulier" onchange="pickRadio('profile_type','lbl-prf-',this.value)" />
           <div class="opt-inner">
-            <span class="text-xl">🏠</span>
+            <span class="text-xl" aria-hidden="true">🏠</span>
             <p class="text-sm font-semibold" style="color:#1a2e1a">Particulier</p>
           </div>
         </label>
         <label class="opt-card" id="lbl-prf-agence_immo">
           <input type="radio" name="profile_type" value="agence_immo" onchange="pickRadio('profile_type','lbl-prf-',this.value)" />
           <div class="opt-inner">
-            <span class="text-xl">🏢</span>
+            <span class="text-xl" aria-hidden="true">🏢</span>
             <p class="text-sm font-semibold" style="color:#1a2e1a">Agence immo.</p>
           </div>
         </label>
         <label class="opt-card" id="lbl-prf-professionnel">
           <input type="radio" name="profile_type" value="professionnel" onchange="pickRadio('profile_type','lbl-prf-',this.value)" />
           <div class="opt-inner">
-            <span class="text-xl">💼</span>
+            <span class="text-xl" aria-hidden="true">💼</span>
             <p class="text-sm font-semibold" style="color:#1a2e1a">Professionnel</p>
           </div>
         </label>
         <label class="opt-card" id="lbl-prf-bailleur">
           <input type="radio" name="profile_type" value="bailleur" onchange="pickRadio('profile_type','lbl-prf-',this.value)" />
           <div class="opt-inner">
-            <span class="text-xl">🔑</span>
+            <span class="text-xl" aria-hidden="true">🔑</span>
             <p class="text-sm font-semibold" style="color:#1a2e1a">Bailleur / SCI</p>
           </div>
         </label>
       </div>
-      <p class="emsg" id="err-profile">Veuillez sélectionner votre profil.</p>
+      <p class="emsg" id="err-profile" role="alert">Veuillez sélectionner votre profil.</p>
     </div>
 
     <div class="flex justify-end">
       <button onclick="goNext(1)" class="btn-next">
         Étape suivante
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </button>
     </div>
   </div>
@@ -311,53 +316,53 @@
         <label class="opt-card" id="lbl-pt-appartement">
           <input type="radio" name="property_type" value="appartement" onchange="pickRadio('property_type','lbl-pt-',this.value)" />
           <div class="opt-inner flex-col text-center gap-0.5 py-3">
-            <span class="text-xl">🏠</span>
+            <span class="text-xl" aria-hidden="true">🏠</span>
             <p class="text-xs font-semibold" style="color:#1a2e1a">Appartement</p>
           </div>
         </label>
         <label class="opt-card" id="lbl-pt-maison">
           <input type="radio" name="property_type" value="maison" onchange="pickRadio('property_type','lbl-pt-',this.value)" />
           <div class="opt-inner flex-col text-center gap-0.5 py-3">
-            <span class="text-xl">🏡</span>
+            <span class="text-xl" aria-hidden="true">🏡</span>
             <p class="text-xs font-semibold" style="color:#1a2e1a">Maison</p>
           </div>
         </label>
         <label class="opt-card" id="lbl-pt-bureau_commerce">
           <input type="radio" name="property_type" value="bureau_commerce" onchange="pickRadio('property_type','lbl-pt-',this.value)" />
           <div class="opt-inner flex-col text-center gap-0.5 py-3">
-            <span class="text-xl">🏢</span>
+            <span class="text-xl" aria-hidden="true">🏢</span>
             <p class="text-xs font-semibold" style="color:#1a2e1a">Bureau/Com.</p>
           </div>
         </label>
         <label class="opt-card" id="lbl-pt-jardin">
           <input type="radio" name="property_type" value="jardin" onchange="pickRadio('property_type','lbl-pt-',this.value)" />
           <div class="opt-inner flex-col text-center gap-0.5 py-3">
-            <span class="text-xl">🌳</span>
+            <span class="text-xl" aria-hidden="true">🌳</span>
             <p class="text-xs font-semibold" style="color:#1a2e1a">Jardin/EV</p>
           </div>
         </label>
         <label class="opt-card" id="lbl-pt-parties_communes">
           <input type="radio" name="property_type" value="parties_communes" onchange="pickRadio('property_type','lbl-pt-',this.value)" />
           <div class="opt-inner flex-col text-center gap-0.5 py-3">
-            <span class="text-xl">🏗️</span>
+            <span class="text-xl" aria-hidden="true">🏗️</span>
             <p class="text-xs font-semibold" style="color:#1a2e1a">Parties comm.</p>
           </div>
         </label>
         <label class="opt-card" id="lbl-pt-autre">
           <input type="radio" name="property_type" value="autre" onchange="pickRadio('property_type','lbl-pt-',this.value)" />
           <div class="opt-inner flex-col text-center gap-0.5 py-3">
-            <span class="text-xl">📦</span>
+            <span class="text-xl" aria-hidden="true">📦</span>
             <p class="text-xs font-semibold" style="color:#1a2e1a">Autre</p>
           </div>
         </label>
       </div>
-      <p class="emsg" id="err-property">Veuillez choisir un type de bien.</p>
+      <p class="emsg" id="err-property" role="alert">Veuillez choisir un type de bien.</p>
     </div>
 
-    <!-- Surface -->
+    <!-- Surface — 2 cols on mobile, 4 cols on sm+ -->
     <div class="mb-5">
       <p class="text-sm font-semibold mb-2" style="color:#374151">Surface approximative *</p>
-      <div class="grid grid-cols-4 gap-2">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
         <label class="opt-card" id="lbl-sf-moins_40">
           <input type="radio" name="surface" value="moins_40" onchange="pickRadio('surface','lbl-sf-',this.value)" />
           <div class="opt-inner flex-col text-center py-2.5 gap-0">
@@ -387,14 +392,14 @@
           </div>
         </label>
       </div>
-      <p class="emsg" id="err-surface">Veuillez indiquer une surface.</p>
+      <p class="emsg" id="err-surface" role="alert">Veuillez indiquer une surface.</p>
     </div>
 
     <!-- City -->
     <div class="mb-5">
-      <label class="block text-sm font-semibold mb-1.5" style="color:#374151">Ville / Code postal *</label>
+      <label class="block text-sm font-semibold mb-1.5" style="color:#374151" for="city">Ville / Code postal *</label>
       <input type="text" id="city" class="field" placeholder="Ex: Toulouse, 31000" autocomplete="postal-code" />
-      <p class="emsg" id="err-city">Veuillez indiquer votre ville ou code postal.</p>
+      <p class="emsg" id="err-city" role="alert">Veuillez indiquer votre ville ou code postal.</p>
     </div>
 
     <!-- State -->
@@ -404,25 +409,25 @@
         <label class="opt-card" id="lbl-ps-propre">
           <input type="radio" name="property_state" value="propre" onchange="pickRadio('property_state','lbl-ps-',this.value)" />
           <div class="opt-inner gap-2 py-2">
-            <span>😊</span><p class="text-sm" style="color:#1a2e1a">Propre à entretenir</p>
+            <span aria-hidden="true">😊</span><p class="text-sm" style="color:#1a2e1a">Propre à entretenir</p>
           </div>
         </label>
         <label class="opt-card" id="lbl-ps-sale">
           <input type="radio" name="property_state" value="sale" onchange="pickRadio('property_state','lbl-ps-',this.value)" />
           <div class="opt-inner gap-2 py-2">
-            <span>😐</span><p class="text-sm" style="color:#1a2e1a">Sale</p>
+            <span aria-hidden="true">😐</span><p class="text-sm" style="color:#1a2e1a">Sale</p>
           </div>
         </label>
         <label class="opt-card" id="lbl-ps-tres_sale">
           <input type="radio" name="property_state" value="tres_sale" onchange="pickRadio('property_state','lbl-ps-',this.value)" />
           <div class="opt-inner gap-2 py-2">
-            <span>😰</span><p class="text-sm" style="color:#1a2e1a">Très sale</p>
+            <span aria-hidden="true">😰</span><p class="text-sm" style="color:#1a2e1a">Très sale</p>
           </div>
         </label>
         <label class="opt-card" id="lbl-ps-apres_travaux">
           <input type="radio" name="property_state" value="apres_travaux" onchange="pickRadio('property_state','lbl-ps-',this.value)" />
           <div class="opt-inner gap-2 py-2">
-            <span>🔨</span><p class="text-sm" style="color:#1a2e1a">Après travaux / sinistre</p>
+            <span aria-hidden="true">🔨</span><p class="text-sm" style="color:#1a2e1a">Après travaux / sinistre</p>
           </div>
         </label>
       </div>
@@ -430,12 +435,12 @@
 
     <div class="flex justify-between">
       <button onclick="goPrev(2)" class="btn-back">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         Retour
       </button>
       <button onclick="goNext(2)" class="btn-next">
         Étape suivante
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </button>
     </div>
   </div>
@@ -452,31 +457,31 @@
 
     <div class="space-y-4">
       <div>
-        <label class="block text-sm font-semibold mb-1.5" style="color:#374151">Prénom &amp; Nom *</label>
+        <label class="block text-sm font-semibold mb-1.5" style="color:#374151" for="contact_name">Prénom &amp; Nom *</label>
         <input type="text" id="contact_name" class="field" placeholder="Jean Dupont" autocomplete="name" />
-        <p class="emsg" id="err-name">Veuillez indiquer votre nom.</p>
+        <p class="emsg" id="err-name" role="alert">Veuillez indiquer votre nom.</p>
       </div>
 
       <div>
-        <label class="block text-sm font-semibold mb-1" style="color:#374151">
+        <label class="block text-sm font-semibold mb-1" style="color:#374151" for="phone">
           Téléphone / WhatsApp *
           <span class="font-normal text-xs" style="color:#6b7a6b"> — pour vous rappeler rapidement</span>
         </label>
         <input type="tel" id="phone" class="field" placeholder="06 00 00 00 00" autocomplete="tel" />
-        <p class="emsg" id="err-phone">Numéro invalide (minimum 8 chiffres).</p>
+        <p class="emsg" id="err-phone" role="alert">Numéro invalide (minimum 8 chiffres).</p>
       </div>
 
       <div>
-        <label class="block text-sm font-semibold mb-1" style="color:#374151">
+        <label class="block text-sm font-semibold mb-1" style="color:#374151" for="email">
           Email
           <span class="font-normal text-xs" style="color:#6b7a6b"> — optionnel, pour recevoir le devis</span>
         </label>
         <input type="email" id="email" class="field" placeholder="vous@exemple.fr" autocomplete="email" />
-        <p class="emsg" id="err-email">Adresse email invalide.</p>
+        <p class="emsg" id="err-email" role="alert">Adresse email invalide.</p>
       </div>
 
       <div>
-        <label class="block text-sm font-semibold mb-1.5" style="color:#374151">Meilleur moment pour vous rappeler</label>
+        <label class="block text-sm font-semibold mb-1.5" style="color:#374151" for="callback_time">Meilleur moment pour vous rappeler</label>
         <select id="callback_time" class="field" style="cursor:pointer">
           <option value="">Pas de préférence</option>
           <option value="matin">Matin (8h–12h)</option>
@@ -487,12 +492,12 @@
       </div>
 
       <div>
-        <label class="block text-sm font-semibold mb-1.5" style="color:#374151">
+        <label class="block text-sm font-semibold mb-1.5" style="color:#374151" for="message">
           Message / Précisions
           <span class="font-normal text-xs" style="color:#6b7a6b"> — optionnel</span>
         </label>
         <textarea id="message" class="field" rows="3"
-          placeholder="Ex : logement inoccupé depuis 6 mois, accès par boîte à clés, urgence EDL..."
+          placeholder="Ex : logement inoccupé depuis 6 mois, accès par boîte à clés, urgence EDL..."
           style="resize:vertical"></textarea>
       </div>
 
@@ -507,17 +512,17 @@
             Données conservées 2 ans maximum. Aucun démarchage commercial non sollicité.
           </p>
         </label>
-        <p class="emsg mt-2" id="err-rgpd">Vous devez accepter pour continuer.</p>
+        <p class="emsg mt-2" id="err-rgpd" role="alert">Vous devez accepter pour continuer.</p>
       </div>
     </div>
 
     <div class="flex justify-between mt-6">
       <button onclick="goPrev(3)" class="btn-back">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         Retour
       </button>
       <button onclick="submitForm()" id="submitBtn" class="btn-next">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
         </svg>
         Envoyer ma demande
@@ -526,15 +531,15 @@
   </div>
 
   <!-- CONFIRMATION -->
-  <div class="step bg-white rounded-2xl shadow-sm p-6 sm:p-8 text-center" style="border:1px solid #c3e6cb" id="stepConf">
+  <div class="step bg-white rounded-2xl shadow-sm p-6 sm:p-8 text-center" style="border:1px solid #c3e6cb" id="stepConf" role="status">
     <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background:#e8f5ec">
-      <svg class="w-8 h-8" style="color:#16532d" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="w-8 h-8" style="color:#16532d" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
       </svg>
     </div>
-    <h2 class="text-xl font-bold mb-2" style="color:#0d3a1f">Demande envoyée ! 🎉</h2>
+    <h2 class="text-xl font-bold mb-2" style="color:#0d3a1f">Demande envoyée ! <span aria-hidden="true">🎉</span></h2>
     <p class="text-sm mb-6" style="color:#4b5563">
-      Merci <strong id="confPrenom"></strong> ! Nous avons reçu votre demande et vous rappellerons
+      Merci <strong id="confPrenom"></strong> ! Nous avons reçu votre demande et vous rappellerons
       <strong>sous 2h</strong> (lun.–sam., 8h–19h).
     </p>
 
@@ -543,34 +548,36 @@
       <div id="confSummary" class="space-y-1.5 text-sm"></div>
     </div>
 
-    <p class="text-sm mb-4" style="color:#4b5563">Vous préférez nous joindre directement ?</p>
+    <p class="text-sm mb-4" style="color:#4b5563">Vous préférez nous joindre directement ?</p>
     <div class="flex flex-col sm:flex-row gap-3 justify-center">
-      <a href="tel:+33600000000" class="btn-next justify-center" style="text-decoration:none">
-        📞 Nous appeler
+      <a href="tel:+33757671156" class="btn-next justify-center" style="text-decoration:none">
+        <span aria-hidden="true">📞</span> Nous appeler
       </a>
-      <a href="https://wa.me/33600000000?text=Bonjour%20Mr%20%26%20Mrs%20Eco'Clean%2C%20je%20viens%20de%20remplir%20votre%20formulaire%20de%20pr%C3%A9-devis."
+      <a href="https://wa.me/33757671156?text=Bonjour%20Mr%20%26%20Mrs%20Eco'Clean%2C%20je%20viens%20de%20remplir%20votre%20formulaire%20de%20pr%C3%A9-devis."
          target="_blank" rel="noopener noreferrer"
          class="btn-back justify-center" style="text-decoration:none;display:inline-flex">
-        💬 WhatsApp
+        <span aria-hidden="true">💬</span> WhatsApp
       </a>
     </div>
-    <p class="text-xs mt-6" style="color:#9ca3af">Référence : <span id="confRef" class="font-mono"></span></p>
+    <p class="text-xs mt-6" style="color:#9ca3af">Référence : <span id="confRef" class="font-mono"></span></p>
   </div>
+
+  </div><!-- end aria-live -->
 
   <!-- TRUST BADGES -->
   <div class="grid grid-cols-3 gap-3 mt-5" id="trustBadges">
     <div class="bg-white rounded-xl p-3 text-center" style="border:1px solid #e2e8e2">
-      <p class="text-2xl mb-1">⭐</p>
+      <p class="text-2xl mb-1" aria-hidden="true">⭐</p>
       <p class="text-xs font-semibold" style="color:#1a2e1a">Qualité garantie</p>
       <p class="text-xs" style="color:#6b7a6b">Pros certifiés</p>
     </div>
     <div class="bg-white rounded-xl p-3 text-center" style="border:1px solid #e2e8e2">
-      <p class="text-2xl mb-1">🕐</p>
+      <p class="text-2xl mb-1" aria-hidden="true">🕐</p>
       <p class="text-xs font-semibold" style="color:#1a2e1a">Réponse rapide</p>
       <p class="text-xs" style="color:#6b7a6b">Sous 2h ouvrables</p>
     </div>
     <div class="bg-white rounded-xl p-3 text-center" style="border:1px solid #e2e8e2">
-      <p class="text-2xl mb-1">🔒</p>
+      <p class="text-2xl mb-1" aria-hidden="true">🔒</p>
       <p class="text-xs font-semibold" style="color:#1a2e1a">Sans engagement</p>
       <p class="text-xs" style="color:#6b7a6b">Devis 100% gratuit</p>
     </div>
@@ -590,9 +597,9 @@ let cur = 1;
 
 const META = [
   null,
-  { label: 'Étape 1 sur 3', name: 'Votre besoin',      pct: 33 },
-  { label: 'Étape 2 sur 3', name: 'Votre bien',         pct: 66 },
-  { label: 'Étape 3 sur 3', name: 'Vos coordonnées',   pct: 100 },
+  { label: 'Étape 1 sur 3', name: 'Votre besoin',    pct: 33 },
+  { label: 'Étape 2 sur 3', name: 'Votre bien',       pct: 66 },
+  { label: 'Étape 3 sur 3', name: 'Vos coordonnées', pct: 100 },
 ];
 
 const SVC_LBL   = { nettoyage:'Nettoyage intérieur', espaces_verts:'Espaces verts', les_deux:'Nettoyage + Espaces verts' };
@@ -600,11 +607,20 @@ const URG_LBL   = { '48h':'Sous 48h (urgent)', semaine:'Cette semaine', mois:'Ce
 const SURF_LBL  = { moins_40:'< 40 m²', '40_70':'40–70 m²', '70_100':'70–100 m²', plus_100:'> 100 m²' };
 const STATE_LBL = { propre:'Propre à entretenir', sale:'Sale', tres_sale:'Très sale', apres_travaux:'Après travaux/sinistre' };
 
+// ==================== SECURITY ====================
+function esc(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;');
+}
+
 // ==================== UI HELPERS ====================
 function showStep(n) {
   ['step1','step2','step3','stepConf'].forEach(id => {
-    const el = document.getElementById(id);
-    el.classList.remove('visible');
+    document.getElementById(id).classList.remove('visible');
   });
   const target = n <= STEPS ? 'step' + n : 'stepConf';
   document.getElementById(target).classList.add('visible');
@@ -619,8 +635,10 @@ function showStep(n) {
     const m = META[n];
     document.getElementById('stepLabel').textContent = m.label;
     document.getElementById('stepPct').textContent   = m.pct + '%';
-    document.getElementById('pBar').style.width      = m.pct + '%';
     document.getElementById('stepName').textContent  = m.name;
+    const pbar = document.getElementById('pBar');
+    pbar.style.width = m.pct + '%';
+    pbar.setAttribute('aria-valuenow', m.pct);
   }
   cur = n;
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -630,7 +648,6 @@ function pickRadio(name, prefix, val) {
   document.querySelectorAll('[id^="' + prefix + '"]').forEach(el => el.classList.remove('selected'));
   const el = document.getElementById(prefix + val);
   if (el) el.classList.add('selected');
-  // Hide state block if service is espaces_verts
   if (name === 'service_type') {
     document.getElementById('stateBlock').style.display = val === 'espaces_verts' ? 'none' : '';
   }
@@ -670,14 +687,13 @@ function validateStep2() {
 function validateStep3() {
   let ok = true;
   const name = document.getElementById('contact_name').value.trim();
-  if (!name)                                           { showErr('err-name', true);  ok = false; } else clearErr('err-name');
+  if (!name)                                                        { showErr('err-name', true);  ok = false; } else clearErr('err-name');
   const phone = document.getElementById('phone').value.trim();
-  if (!/^[\d\s\+\(\)\.\-]{8,}$/.test(phone))         { showErr('err-phone', true); ok = false; } else clearErr('err-phone');
+  if (!/^[\d\s\+\(\)\.\-]{8,}$/.test(phone))                      { showErr('err-phone', true); ok = false; } else clearErr('err-phone');
   const email = document.getElementById('email').value.trim();
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('err-email', true); ok = false; } else clearErr('err-email');
-  if (!document.getElementById('rgpd').checked)        { showErr('err-rgpd', true);  ok = false; } else clearErr('err-rgpd');
-  // Honeypot check — if bot filled it, silently abort
-  if (document.getElementById('botField').value)        return false;
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))         { showErr('err-email', true); ok = false; } else clearErr('err-email');
+  if (!document.getElementById('rgpd').checked)                     { showErr('err-rgpd', true);  ok = false; } else clearErr('err-rgpd');
+  if (document.getElementById('botField').value)                    return false;
   return ok;
 }
 
@@ -692,14 +708,14 @@ function goPrev(from) { showStep(from - 1); }
 function calcScore() {
   let s = 0;
   const urg = radio('urgency');
-  if (urg === '48h')    s += 3;
+  if (urg === '48h')      s += 3;
   else if (urg === 'semaine') s += 2;
-  else if (urg === 'mois')   s += 1;
+  else if (urg === 'mois')    s += 1;
 
   if (radio('frequency') === 'regulier') s += 3; else s += 1;
 
   const surf = radio('surface');
-  if (surf === 'plus_100') s += 3;
+  if (surf === 'plus_100')  s += 3;
   else if (surf === '70_100') s += 2;
   else if (surf === '40_70')  s += 1;
 
@@ -728,8 +744,9 @@ async function submitForm() {
   btn.disabled = true;
   btn.innerHTML = '<div class="spinner"></div> Envoi…';
 
-  const ref = genRef();
+  const ref  = genRef();
   const { score, priority } = calcScore();
+  const ts   = new Date().toISOString();
 
   const name  = document.getElementById('contact_name').value.trim();
   const phone = document.getElementById('phone').value.trim();
@@ -746,29 +763,29 @@ async function submitForm() {
   const surf  = radio('surface');
   const state = radio('property_state') || 'non_renseigne';
 
-  const subject = '[' + priority + '] ' + ref + ' — ' + (SVC_LBL[svc]||svc) + ' — ' + city;
+  const subject = '[' + priority + '] ' + ref + ' — ' + (SVC_LBL[svc] || svc) + ' — ' + city;
 
   const payload = new URLSearchParams({
-    'form-name': 'pre-devis-ecoclean',
-    'bot-field': '',
-    request_id: ref,
-    service_type: svc,
-    urgency: urg,
-    frequency: frq,
-    profile_type: prof,
-    property_type: prop,
-    surface: surf,
+    'form-name':    'pre-devis-ecoclean',
+    'bot-field':    '',
+    request_id:     ref,
+    service_type:   svc,
+    urgency:        urg,
+    frequency:      frq,
+    profile_type:   prof,
+    property_type:  prop,
+    surface:        surf,
     property_state: state,
-    city: city,
-    contact_name: name,
-    phone: phone,
-    email: email,
-    callback_time: cb,
-    message: msg,
-    rgpd_consent: 'oui',
+    city:           city,
+    contact_name:   name,
+    phone:          phone,
+    email:          email,
+    callback_time:  cb,
+    message:        msg,
+    rgpd_consent:   'oui',
     prospect_score: String(score),
-    subject: subject,
-    form_payload: JSON.stringify({ ref, svc, urg, frq, prof, prop, surf, state, city, name, phone, email, cb, msg, score, priority }),
+    subject:        subject,
+    form_payload:   JSON.stringify({ ref, ts, svc, urg, frq, prof, prop, surf, state, city, name, phone, email, cb, msg, score, priority }),
   });
 
   try {
@@ -778,7 +795,6 @@ async function submitForm() {
       body: payload.toString(),
     });
   } catch (e) {
-    // Network error — show confirmation anyway (Netlify sometimes returns non-200)
     console.warn('Submit warning:', e);
   }
 
@@ -786,24 +802,24 @@ async function submitForm() {
   document.getElementById('confPrenom').textContent = name.split(' ')[0];
   document.getElementById('confRef').textContent    = ref;
   document.getElementById('confSummary').innerHTML  =
-    row('Service',  SVC_LBL[svc]  || svc) +
-    row('Délai',    URG_LBL[urg]  || urg) +
+    row('Service',   SVC_LBL[svc]  || svc) +
+    row('Délai',     URG_LBL[urg]  || urg) +
     row('Fréquence', frq === 'regulier' ? 'Régulier' : 'Ponctuel') +
-    row('Surface',  SURF_LBL[surf]|| surf) +
-    row('Ville',    city) +
-    row('Contact',  phone + (email ? ' — ' + email : ''));
+    row('Surface',   SURF_LBL[surf] || surf) +
+    row('Ville',     city) +
+    row('Contact',   phone + (email ? ' — ' + email : ''));
 
   showStep(99);
 
   btn.disabled = false;
-  btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg> Envoyer ma demande';
+  btn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg> Envoyer ma demande';
 }
 
 function row(k, v) {
   if (!v) return '';
   return '<div class="flex justify-between gap-2" style="border-bottom:1px solid #c3e6cb;padding:4px 0">'
-    + '<span style="color:#6b7a6b">' + k + '</span>'
-    + '<span style="font-weight:600;color:#1a2e1a;text-align:right">' + v + '</span>'
+    + '<span style="color:#6b7a6b">' + esc(k) + '</span>'
+    + '<span style="font-weight:600;color:#1a2e1a;text-align:right">' + esc(v) + '</span>'
     + '</div>';
 }
 
