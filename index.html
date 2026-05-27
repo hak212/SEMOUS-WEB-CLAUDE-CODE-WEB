@@ -387,6 +387,26 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
     </div>
   </div>
 
+  <!-- ESPACES VERTS -->
+  <div class="card">
+    <p class="sec-title">🌿 Espaces Verts</p>
+    <p class="text-xs text-gray-500 mb-3">Entretien jardin, pelouse, haies et nettoyage haute pression extérieur</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-0.5">
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="tonte_petite"/><span>Tonte pelouse &lt; 50 m²<span class="tag">+30€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="tonte_moyenne"/><span>Tonte pelouse 50–150 m²<span class="tag">+55€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="tonte_grande"/><span>Tonte pelouse &gt; 150 m²<span class="tag">→ devis manuel</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="taille_haies_courte"/><span>Taille haies &lt; 10 m<span class="tag">+30€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="taille_haies_longue"/><span>Taille haies 10–25 m<span class="tag">+55€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="taille_arbustes"/><span>Taille arbustes / massifs<span class="tag">+40€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="desherbage"/><span>Désherbage allées / massifs<span class="tag">+25€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="ramassage_feuilles"/><span>Ramassage feuilles / déchets verts<span class="tag">+30€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="soufflage"/><span>Soufflage / balayage extérieur<span class="tag">+20€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="karcher_allee"/><span>Nettoyage allée haute pression<span class="tag">+40€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="karcher_terrasse"/><span>Nettoyage terrasse haute pression<span class="tag">+35€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="abattage"/><span>Abattage / élagage arbre<span class="tag">→ devis manuel</span></span></label>
+    </div>
+  </div>
+
   <!-- PRESTATIONS SPÉCIALES -->
   <div class="card">
     <p class="sec-title">⭐ Prestations spéciales</p>
@@ -449,6 +469,15 @@ let niveauCuisine = 'propre'
 let niveauSdb = 'propre'
 let vitresOpt = 'aucune'
 let selectedTypeBien = ''
+
+const EV_PRICES = {
+  tonte_petite:30,tonte_moyenne:55,
+  taille_haies_courte:30,taille_haies_longue:55,
+  taille_arbustes:40,desherbage:25,
+  ramassage_feuilles:30,soufflage:20,
+  karcher_allee:40,karcher_terrasse:35
+}
+const EV_DEVIS_MANUEL = ['tonte_grande','abattage']
 
 async function loadTarifs() {
   const { data } = await db.schema('ecoclean').from('tarifs').select('*').eq('actif', true)
@@ -597,6 +626,7 @@ function calculerEstimation() {
   const solsOpts = getChecked('sols_opt')
   const zonesOpts = getChecked('zones_opt')
   const specialesOpts = getChecked('speciales_opt')
+  const evOpts = getChecked('ev_opt')
   const nbSdb = parseInt(v('nb_sdb'))||1
   const nbWc = parseInt(v('nb_wc'))||0
 
@@ -606,6 +636,7 @@ function calculerEstimation() {
     || niveauCuisine === 'exceptionnel'
     || niveauSdb === 'exceptionnel'
     || zonesOpts.includes('dechets')
+    || evOpts.some(o => EV_DEVIS_MANUEL.includes(o))
   if (isSurDevis) return { surDevis: true }
 
   const surfCode = surface<=20?'s_0_20':surface<=40?'s_21_40':surface<=60?'s_41_60':surface<=80?'s_61_80':'s_81_100'
@@ -628,8 +659,9 @@ function calculerEstimation() {
   let zonesPrice = zonesOpts.reduce((s,o) => s+(o!=='volets'?T('zones',o):0), 0)
   if (voletChecked) zonesPrice += T('zones','volets')||20
   const specialesPrice = specialesOpts.reduce((s,o) => s+T('speciales',o), 0)
+  const evPrice = evOpts.reduce((s, o) => s + (EV_PRICES[o] || 0), 0)
 
-  const subtotal = basePrice + cuisinePrice + sdbPrice + solsPrice + vitresPrice + zonesPrice + specialesPrice
+  const subtotal = basePrice + cuisinePrice + sdbPrice + solsPrice + vitresPrice + zonesPrice + specialesPrice + evPrice
 
   const priority = ['tres_sale','sinistre','apres_travaux','remise_en_etat','avant_vente','avant_location','apres_depart','simple']
   let coefCode = 'simple'
@@ -654,7 +686,7 @@ function calculerEstimation() {
     tva: Math.round(tva*100)/100,
     estTTC: Math.round((estHT+tva)*100)/100,
     tauxTva,
-    details: { basePrice, cuisinePrice:Math.round(cuisinePrice*100)/100, sdbPrice:Math.round(sdbPrice*100)/100, solsPrice, vitresPrice, zonesPrice, specialesPrice, coef, urgentCoef, etageFee, statFee }
+    details: { basePrice, cuisinePrice:Math.round(cuisinePrice*100)/100, sdbPrice:Math.round(sdbPrice*100)/100, solsPrice, vitresPrice, zonesPrice, specialesPrice, evPrice, coef, urgentCoef, etageFee, statFee }
   }
 }
 
@@ -676,6 +708,7 @@ function buildRecap() {
     if (d.vitresPrice) lines.push(`Vitres : ${d.vitresPrice} €`)
     if (d.zonesPrice) lines.push(`Zones supplémentaires : ${d.zonesPrice} €`)
     if (d.specialesPrice) lines.push(`Prestations spéciales : ${d.specialesPrice} €`)
+    if (d.evPrice) lines.push(`Espaces verts : ${d.evPrice} €`)
     if (d.coef>1) lines.push(`Coefficient intervention : ×${d.coef}`)
     if (d.urgentCoef>1) lines.push(`Urgence : ×${d.urgentCoef}`)
     if (d.etageFee) lines.push(`Étage sans ascenseur : +${d.etageFee} €`)
@@ -697,6 +730,7 @@ function buildRecap() {
   const solsOpts = getChecked('sols_opt').join(', ')||'Aucun traitement'
   const zonesOpts = getChecked('zones_opt').join(', ')||'Aucune'
   const specialesOpts = getChecked('speciales_opt').join(', ')||'Aucune'
+  const evOpts = getChecked('ev_opt').join(', ')||'Aucune prestation'
 
   function row(lbl,val) { return val?`<div class="flex gap-2 py-1.5 border-b border-gray-100 last:border-0 text-sm"><span class="text-gray-400 w-40 shrink-0">${lbl}</span><span class="font-medium text-gray-800">${val}</span></div>`:'' }
   function section(title, rows) { return `<div class="mb-4"><p class="text-xs font-bold text-eco-green uppercase tracking-wide mb-2">${title}</p>${rows.join('')}</div>` }
@@ -706,7 +740,7 @@ function buildRecap() {
     ${section('Agence',[row('Agence',v('nom_agence')),row('Gestionnaire',v('gestionnaire')),row('Téléphone',v('telephone')),row('Email',v('email'))])}
     ${section('Chantier',[row('Adresse',`${v('adresse_chantier')}, ${v('code_postal')} ${v('ville')}`),row('Type de bien',`${selectedTypeBien||'—'} — ${v('surface')} m²`),row('Intervention',interventions),row('Accès clés',v('acces_cles'))])}
     ${section('Facturation',[row('Payeur',v('nom_payeur')),row('Type payeur',v('payeur')),row('Email fact.',v('email_facturation'))])}
-    ${section('Prestations',[row('Cuisine',`Niveau ${niveauCuisine} — ${cuisineOpts}`),row('Salle de bain',`Niveau ${niveauSdb} — ${sdbOpts}`),row('Sols',`${v('type_sol')||'—'} — ${solsEtat}`),row('Traitements sols',solsOpts),row('Vitres',vitresOpt),row('Zones',zonesOpts),row('Spéciales',specialesOpts),row('Photos prévues',v('nb_photos')||'0')])}
+    ${section('Prestations',[row('Cuisine',`Niveau ${niveauCuisine} — ${cuisineOpts}`),row('Salle de bain',`Niveau ${niveauSdb} — ${sdbOpts}`),row('Sols',`${v('type_sol')||'—'} — ${solsEtat}`),row('Traitements sols',solsOpts),row('Vitres',vitresOpt),row('Zones',zonesOpts),row('Espaces verts',evOpts),row('Spéciales',specialesOpts),row('Photos prévues',v('nb_photos')||'0')])}
   `
 }
 
@@ -724,6 +758,7 @@ async function submitForm() {
     const ref = genRef()
     const now = new Date().toISOString()
     const interventions = getChecked('intervention')
+    const evOpts = getChecked('ev_opt')
     const demande = {
       id: ref, created_at: now, updated_at: now,
       nom_agence: v('nom_agence'), gestionnaire: v('gestionnaire'), telephone: v('telephone'),
@@ -751,7 +786,7 @@ async function submitForm() {
       estimation_tva: r.surDevis ? null : r.tva,
       estimation_ttc: r.surDevis ? null : r.estTTC,
       taux_tva: r.tauxTva||10,
-      detail_calcul: r.surDevis ? {} : r.details,
+      detail_calcul: r.surDevis ? {} : {...r.details, ev_options: evOpts},
       sur_devis: r.surDevis, statut: 'nouveau',
       commentaire_interne: v('commentaire_agence')||null,
     }
