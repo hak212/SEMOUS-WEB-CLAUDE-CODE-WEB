@@ -56,7 +56,6 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
 </head>
 <body class="bg-gray-50 min-h-screen">
 
-<!-- HEADER -->
 <header class="bg-eco-green text-white">
   <div class="max-w-3xl mx-auto px-4 py-4 flex items-center gap-3">
     <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center font-bold text-lg">🍃</div>
@@ -67,7 +66,6 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
   </div>
 </header>
 
-<!-- STEP INDICATOR -->
 <div class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-20">
   <div class="max-w-3xl mx-auto px-4 py-3">
     <div class="flex items-center">
@@ -91,7 +89,6 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
 
 <main class="max-w-3xl mx-auto px-4 py-8">
 
-<!-- ===================== CONFIRMATION ===================== -->
 <div id="view-conf" class="step-view">
   <div class="card max-w-md mx-auto text-center py-10">
     <div class="w-16 h-16 bg-eco-pale rounded-full flex items-center justify-center mx-auto mb-4 text-4xl">✅</div>
@@ -106,10 +103,7 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
   </div>
 </div>
 
-<!-- ===================== ÉTAPE 1 ===================== -->
 <div id="step1" class="step-view active space-y-6">
-
-  <!-- SUPERFICIE HERO -->
   <div class="bg-eco-green text-white rounded-2xl p-6 shadow-md">
     <p class="text-xs font-bold uppercase tracking-wider text-white/70 mb-3">Superficie du bien à nettoyer</p>
     <div class="flex items-end gap-4 flex-wrap">
@@ -144,7 +138,6 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
     </details>
   </div>
 
-  <!-- INFOS AGENCE -->
   <div class="card">
     <p class="sec-title">Informations agence</p>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -157,7 +150,6 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
     </div>
   </div>
 
-  <!-- ADRESSE CHANTIER -->
   <div class="card">
     <p class="sec-title">Adresse du chantier</p>
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -183,7 +175,6 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
     </div>
   </div>
 
-  <!-- TYPE DE BIEN -->
   <div class="card">
     <p class="sec-title">Type de bien</p>
     <div class="grid grid-cols-2 sm:grid-cols-5 gap-2" id="type-bien-grid">
@@ -201,7 +192,6 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
     <div id="e_type_bien" class="err-msg hidden mt-2">Veuillez sélectionner un type de bien</div>
   </div>
 
-  <!-- TYPE D'INTERVENTION -->
   <div class="card">
     <p class="sec-title">Type d'intervention <span class="text-red-500">*</span></p>
     <p class="text-xs text-gray-500 mb-3">Plusieurs choix possibles</p>
@@ -220,20 +210,10 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
     <div id="e_intervention" class="err-msg hidden mt-2">Veuillez sélectionner au moins un type d'intervention</div>
   </div>
 
-  <!-- FACTURATION -->
   <div class="card">
     <p class="sec-title">Facturation</p>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <div class="sm:col-span-2">
-        <label class="lbl">À qui facturer l'intervention ? <span class="text-red-500">*</span></label>
-        <select id="payeur" class="inp">
-          <option value="agence">Agence immobilière</option>
-          <option value="proprietaire">Propriétaire</option>
-          <option value="locataire">Locataire</option>
-          <option value="depot_garantie">Retenue sur dépôt de garantie</option>
-          <option value="autre">Autre</option>
-        </select>
-      </div>
+      <div class="sm:col-span-2"><label class="lbl">À qui facturer l'intervention ? <span class="text-red-500">*</span></label><select id="payeur" class="inp"><option value="agence">Agence immobilière</option><option value="proprietaire">Propriétaire</option><option value="locataire">Locataire</option><option value="depot_garantie">Retenue sur dépôt de garantie</option><option value="autre">Autre</option></select></div>
       <div><label class="lbl">Nom du payeur / société <span class="text-red-500">*</span></label><input type="text" id="nom_payeur" class="inp" placeholder="Nom complet ou raison sociale"/><div id="e_nom_payeur" class="err-msg hidden">Champ requis</div></div>
       <div><label class="lbl">Adresse de facturation</label><input type="text" id="adresse_facturation" class="inp" placeholder="5 rue du Commerce, 31000 Toulouse"/></div>
       <div><label class="lbl">Email de facturation</label><input type="email" id="email_facturation" class="inp" placeholder="facturation@..."/></div>
@@ -246,10 +226,8 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
   </div>
 </div>
 
-<!-- ===================== ÉTAPE 2 ===================== -->
 <div id="step2" class="step-view space-y-6">
 
-  <!-- CUISINE -->
   <div class="card">
     <p class="sec-title">🍳 Cuisine</p>
     <p class="lbl">État général</p>
@@ -278,26 +256,11 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
     <div id="cuisine-except" class="warn-box hidden">⚠ État exceptionnel — cette demande passera en devis manuel.</div>
   </div>
 
-  <!-- SALLE DE BAIN -->
   <div class="card">
     <p class="sec-title">🚿 Salle de bain / WC</p>
     <div class="grid grid-cols-2 gap-4 mb-4">
-      <div>
-        <label class="lbl">Nombre de salles de bain</label>
-        <select id="nb_sdb" class="inp">
-          <option value="1">1 salle de bain</option>
-          <option value="2">2 salles de bain (+30€)</option>
-          <option value="3">3 et plus (+60€)</option>
-        </select>
-      </div>
-      <div>
-        <label class="lbl">WC séparés</label>
-        <select id="nb_wc" class="inp">
-          <option value="0">Aucun WC séparé</option>
-          <option value="1">1 WC séparé (+10€)</option>
-          <option value="2">2 WC séparés (+20€)</option>
-        </select>
-      </div>
+      <div><label class="lbl">Nombre de salles de bain</label><select id="nb_sdb" class="inp"><option value="1">1 salle de bain</option><option value="2">2 salles de bain (+30€)</option><option value="3">3 et plus (+60€)</option></select></div>
+      <div><label class="lbl">WC séparés</label><select id="nb_wc" class="inp"><option value="0">Aucun WC séparé</option><option value="1">1 WC séparé (+10€)</option><option value="2">2 WC séparés (+20€)</option></select></div>
     </div>
     <p class="lbl">État général</p>
     <div class="flex flex-wrap gap-2 mb-4">
@@ -321,23 +284,10 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
     <div id="sdb-except" class="warn-box hidden">⚠ État exceptionnel — cette demande passera en devis manuel.</div>
   </div>
 
-  <!-- SOLS -->
   <div class="card">
     <p class="sec-title">🪟 Sols</p>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-      <div>
-        <label class="lbl">Type de revêtement</label>
-        <select id="type_sol" class="inp">
-          <option value="">— Sélectionner —</option>
-          <option value="Carrelage">Carrelage</option>
-          <option value="Parquet">Parquet</option>
-          <option value="Lino">Lino / PVC</option>
-          <option value="Moquette">Moquette</option>
-          <option value="Béton ciré">Béton ciré</option>
-          <option value="Mixte">Mixte</option>
-          <option value="Autre">Autre</option>
-        </select>
-      </div>
+      <div><label class="lbl">Type de revêtement</label><select id="type_sol" class="inp"><option value="">— Sélectionner —</option><option>Carrelage</option><option>Parquet</option><option>Lino</option><option>Moquette</option><option>Béton ciré</option><option>Mixte</option><option>Autre</option></select></div>
     </div>
     <p class="lbl">État des sols</p>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-0.5 mb-4">
@@ -358,7 +308,6 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
     </div>
   </div>
 
-  <!-- VITRES -->
   <div class="card">
     <p class="sec-title">🪟 Vitres &amp; Menuiseries</p>
     <div class="space-y-2">
@@ -371,7 +320,6 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
     <div class="mt-3"><label class="chk-row"><input type="checkbox" id="volets"/> Volets intérieurs à nettoyer <span class="tag">(+20€)</span></label></div>
   </div>
 
-  <!-- ZONES -->
   <div class="card">
     <p class="sec-title">📦 Zones supplémentaires</p>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-0.5">
@@ -387,7 +335,26 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
     </div>
   </div>
 
-  <!-- PRESTATIONS SPÉCIALES -->
+  <!-- ESPACES VERTS -->
+  <div class="card">
+    <p class="sec-title">🌿 Espaces Verts</p>
+    <p class="text-xs text-gray-500 mb-3">Entretien jardin, pelouse, haies et nettoyage haute pression extérieur</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-0.5">
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="tonte_petite"/><span>Tonte pelouse &lt; 50 m²<span class="tag">+30€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="tonte_moyenne"/><span>Tonte pelouse 50–150 m²<span class="tag">+55€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="tonte_grande"/><span>Tonte pelouse &gt; 150 m²<span class="tag">→ devis manuel</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="taille_haies_courte"/><span>Taille haies &lt; 10 m<span class="tag">+30€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="taille_haies_longue"/><span>Taille haies 10–25 m<span class="tag">+55€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="taille_arbustes"/><span>Taille arbustes / massifs<span class="tag">+40€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="desherbage"/><span>Désherbage allées / massifs<span class="tag">+25€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="ramassage_feuilles"/><span>Ramassage feuilles / déchets verts<span class="tag">+30€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="soufflage"/><span>Soufflage / balayage extérieur<span class="tag">+20€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="karcher_allee"/><span>Nettoyage allée haute pression<span class="tag">+40€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="karcher_terrasse"/><span>Nettoyage terrasse haute pression<span class="tag">+35€</span></span></label>
+      <label class="opt-chk"><input type="checkbox" name="ev_opt" value="abattage"/><span>Abattage / élagage arbre<span class="tag">→ devis manuel</span></span></label>
+    </div>
+  </div>
+
   <div class="card">
     <p class="sec-title">⭐ Prestations spéciales</p>
     <p class="text-xs text-gray-500 mb-3">Services complémentaires pour des situations particulières</p>
@@ -401,7 +368,6 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
     </div>
   </div>
 
-  <!-- PHOTOS -->
   <div class="card">
     <p class="sec-title">📸 Photos</p>
     <p class="text-sm text-gray-500 mb-3">Les photos permettent d'affiner le devis.</p>
@@ -412,7 +378,7 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
     <div id="photos-warn" class="warn-box mt-2 hidden">Sans photos, la demande pourra passer en devis manuel.</div>
     <div class="mt-3">
       <label class="lbl">Commentaire / informations complémentaires</label>
-      <textarea id="commentaire_agence" rows="3" class="inp resize-none" placeholder="Précisez tout élément utile : odeur de tabac, animaux, code d'accès, urgence particulière..."></textarea>
+      <textarea id="commentaire_agence" rows="3" class="inp resize-none" placeholder="Précisez tout élément utile..."></textarea>
     </div>
   </div>
 
@@ -422,7 +388,6 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
   </div>
 </div>
 
-<!-- ===================== ÉTAPE 3 ===================== -->
 <div id="step3" class="step-view space-y-6">
   <div id="estimation-box"></div>
   <div id="recap-content" class="card"></div>
@@ -443,51 +408,40 @@ input[type=checkbox],input[type=radio]{accent-color:#16532d;width:16px;height:16
 const SUPA_URL = 'https://xbiirtewzzhcapuoxezt.supabase.co'
 const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiaWlydGV3enpoY2FwdW94ZXp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwODk1NjYsImV4cCI6MjA5MzY2NTU2Nn0.0K8w2ft5QcSYu3BSg42HsJt2Ov9l0KcTIo2WzbBxdrQ'
 const db = supabase.createClient(SUPA_URL, SUPA_KEY)
-
 let tarifs = []
-let niveauCuisine = 'propre'
-let niveauSdb = 'propre'
-let vitresOpt = 'aucune'
-let selectedTypeBien = ''
+let niveauCuisine = 'propre', niveauSdb = 'propre', vitresOpt = 'aucune', selectedTypeBien = ''
+const EV_PRICES = {tonte_petite:30,tonte_moyenne:55,taille_haies_courte:30,taille_haies_longue:55,taille_arbustes:40,desherbage:25,ramassage_feuilles:30,soufflage:20,karcher_allee:40,karcher_terrasse:35}
+const EV_DEVIS_MANUEL = ['tonte_grande','abattage']
 
 async function loadTarifs() {
   const { data } = await db.schema('ecoclean').from('tarifs').select('*').eq('actif', true)
   if (data) tarifs = data
 }
-
 function T(cat, code) {
   const t = tarifs.find(x => x.categorie === cat && x.code === code)
   return t ? parseFloat(t.valeur) : 0
 }
-
 function onSurfaceInput(val) {
   const s = parseFloat(val)
   const info = document.getElementById('surface-info')
-  const range = document.getElementById('surface-range')
-  const base = document.getElementById('surface-base')
   if (!val || isNaN(s) || s <= 0) { info.classList.add('hidden'); return }
   info.classList.remove('hidden')
-  if (s > 100) {
-    range.textContent = '+ 100 m² → Devis manuel'
-    base.textContent = 'Estimation personnalisée'
-  } else {
+  const range = document.getElementById('surface-range')
+  const base = document.getElementById('surface-base')
+  if (s > 100) { range.textContent = '+ 100 m² → Devis manuel'; base.textContent = 'Estimation personnalisée' }
+  else {
     const r = s<=20?'0–20 m²':s<=40?'21–40 m²':s<=60?'41–60 m²':s<=80?'61–80 m²':'81–100 m²'
     const p = s<=20?T('surface','s_0_20')||60:s<=40?T('surface','s_21_40')||90:s<=60?T('surface','s_41_60')||130:s<=80?T('surface','s_61_80')||170:T('surface','s_81_100')||220
-    range.textContent = r
-    base.textContent = `Base : ${p} € HT`
+    range.textContent = r; base.textContent = `Base : ${p} € HT`
   }
 }
-
 function selectTypeBien(el, val) {
   selectedTypeBien = val
   document.querySelectorAll('.radio-card').forEach(c => c.classList.remove('selected'))
-  el.classList.add('selected')
-  el.querySelector('input').checked = true
+  el.classList.add('selected'); el.querySelector('input').checked = true
 }
-
 function setNiveau(type, val, btn) {
-  const btns = btn.parentElement.querySelectorAll('.niveau-btn')
-  btns.forEach(b => b.classList.remove('selected'))
+  btn.parentElement.querySelectorAll('.niveau-btn').forEach(b => b.classList.remove('selected'))
   btn.classList.add('selected')
   if (type === 'cuisine') {
     niveauCuisine = val
@@ -499,276 +453,160 @@ function setNiveau(type, val, btn) {
     document.getElementById('sdb-except').classList.toggle('hidden', val !== 'exceptionnel')
   }
 }
-
 function setVitres(el, val) {
   vitresOpt = val
-  document.querySelectorAll('[name=vitres]').forEach(r => {
-    r.closest('label').style.borderColor = ''
-    r.closest('label').style.background = ''
-  })
-  el.style.borderColor = '#16532d'
-  el.style.background = '#e8f5ec'
+  document.querySelectorAll('[name=vitres]').forEach(r => { r.closest('label').style.borderColor = ''; r.closest('label').style.background = '' })
+  el.style.borderColor = '#16532d'; el.style.background = '#e8f5ec'
 }
-
-function getChecked(name) {
-  return [...document.querySelectorAll(`[name=${name}]:checked`)].map(e => e.value)
-}
-
+function getChecked(name) { return [...document.querySelectorAll(`[name=${name}]:checked`)].map(e => e.value) }
 function v(id) { return (document.getElementById(id)||{}).value||'' }
-
 function showErr(id, show) {
-  const el = document.getElementById(id)
-  if (el) el.classList.toggle('hidden', !show)
-  const inp = document.getElementById(id.replace('e_',''))
-  if (inp) inp.classList.toggle('inp-err', show)
+  const el = document.getElementById(id); if (el) el.classList.toggle('hidden', !show)
+  const inp = document.getElementById(id.replace('e_','')); if (inp) inp.classList.toggle('inp-err', show)
 }
-
 function validateStep1() {
   let ok = true
-  const fields = [
-    {id:'nom_agence', check: () => v('nom_agence').trim()},
-    {id:'gestionnaire', check: () => v('gestionnaire').trim()},
-    {id:'telephone', check: () => v('telephone').trim()},
-    {id:'email', check: () => /\S+@\S+\.\S+/.test(v('email'))},
-    {id:'adresse_chantier', check: () => v('adresse_chantier').trim()},
-    {id:'code_postal', check: () => v('code_postal').trim()},
-    {id:'ville', check: () => v('ville').trim()},
-    {id:'nom_payeur', check: () => v('nom_payeur').trim()},
-  ]
+  const fields = [{id:'nom_agence',check:()=>v('nom_agence').trim()},{id:'gestionnaire',check:()=>v('gestionnaire').trim()},{id:'telephone',check:()=>v('telephone').trim()},{id:'email',check:()=>/\S+@\S+\.\S+/.test(v('email'))},{id:'adresse_chantier',check:()=>v('adresse_chantier').trim()},{id:'code_postal',check:()=>v('code_postal').trim()},{id:'ville',check:()=>v('ville').trim()},{id:'nom_payeur',check:()=>v('nom_payeur').trim()}]
   fields.forEach(f => { const pass = f.check(); showErr('e_'+f.id, !pass); if (!pass) ok = false })
   const noSurface = !v('surface') || parseFloat(v('surface')) <= 0
   document.getElementById('surface-err').textContent = noSurface ? 'La superficie est obligatoire' : ''
   document.getElementById('surface-err').classList.toggle('hidden', !noSurface)
   if (noSurface) ok = false
-  const noType = !selectedTypeBien
-  showErr('e_type_bien', noType)
-  if (noType) ok = false
-  const noInterv = getChecked('intervention').length === 0
-  showErr('e_intervention', noInterv)
-  if (noInterv) ok = false
+  const noType = !selectedTypeBien; showErr('e_type_bien', noType); if (noType) ok = false
+  const noInterv = getChecked('intervention').length === 0; showErr('e_intervention', noInterv); if (noInterv) ok = false
   return ok
 }
-
 function goStep2() {
   if (!validateStep1()) { window.scrollTo({top:0,behavior:'smooth'}); return }
   goStep(2)
-  const photos = parseInt(v('nb_photos'))||0
-  document.getElementById('photos-warn').classList.toggle('hidden', photos > 0)
+  document.getElementById('photos-warn').classList.toggle('hidden', parseInt(v('nb_photos'))>0)
 }
-
 function goStep3() { goStep(3); buildRecap() }
-
 function goStep(n) {
   document.querySelectorAll('.step-view').forEach(s => s.classList.remove('active'))
   document.getElementById(`step${n}`)?.classList.add('active')
-  updateStepIndicator(n)
-  window.scrollTo({top:0,behavior:'smooth'})
+  updateStepIndicator(n); window.scrollTo({top:0,behavior:'smooth'})
 }
-
 function updateStepIndicator(n) {
   for (let i=1; i<=3; i++) {
-    const si = document.getElementById(`si${i}`)
-    const sl = document.getElementById(`sl${i}`)
-    const bar = document.getElementById(`sb${i}`)
+    const si=document.getElementById(`si${i}`),sl=document.getElementById(`sl${i}`),bar=document.getElementById(`sb${i}`)
     if (!si) continue
-    if (i < n) {
-      si.className = 'w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold bg-eco-green text-white'
-      si.textContent = '✓'
-      if (sl) sl.className = 'text-sm font-medium text-eco-green hidden sm:block'
-      if (bar) bar.className = 'flex-1 mx-3 h-0.5 bg-eco-green'
-    } else if (i === n) {
-      si.className = 'w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold bg-eco-green text-white'
-      si.textContent = String(i)
-      if (sl) sl.className = 'text-sm font-semibold text-eco-green hidden sm:block'
-    } else {
-      si.className = 'w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold bg-gray-200 text-gray-500'
-      si.textContent = String(i)
-      if (sl) sl.className = 'text-sm font-medium text-gray-400 hidden sm:block'
-      if (bar) bar.className = 'flex-1 mx-3 h-0.5 bg-gray-200'
-    }
+    if (i<n) { si.className='w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold bg-eco-green text-white'; si.textContent='✓'; if(sl)sl.className='text-sm font-medium text-eco-green hidden sm:block'; if(bar)bar.className='flex-1 mx-3 h-0.5 bg-eco-green' }
+    else if (i===n) { si.className='w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold bg-eco-green text-white'; si.textContent=String(i); if(sl)sl.className='text-sm font-semibold text-eco-green hidden sm:block' }
+    else { si.className='w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold bg-gray-200 text-gray-500'; si.textContent=String(i); if(sl)sl.className='text-sm font-medium text-gray-400 hidden sm:block'; if(bar)bar.className='flex-1 mx-3 h-0.5 bg-gray-200' }
   }
 }
-
 function calculerEstimation() {
-  const interventions = getChecked('intervention')
-  const surface = parseFloat(v('surface'))||0
-  const cuisineOpts = getChecked('cuisine_opt')
-  const sdbOpts = getChecked('sdb_opt')
-  const solsOpts = getChecked('sols_opt')
-  const zonesOpts = getChecked('zones_opt')
-  const specialesOpts = getChecked('speciales_opt')
-  const nbSdb = parseInt(v('nb_sdb'))||1
-  const nbWc = parseInt(v('nb_wc'))||0
-
-  const isSurDevis = interventions.includes('insalubre')
-    || surface > 100 || !surface
-    || vitresOpt === 'plus_10'
-    || niveauCuisine === 'exceptionnel'
-    || niveauSdb === 'exceptionnel'
-    || zonesOpts.includes('dechets')
+  const interventions=getChecked('intervention'),surface=parseFloat(v('surface'))||0
+  const cuisineOpts=getChecked('cuisine_opt'),sdbOpts=getChecked('sdb_opt'),solsOpts=getChecked('sols_opt')
+  const zonesOpts=getChecked('zones_opt'),specialesOpts=getChecked('speciales_opt'),evOpts=getChecked('ev_opt')
+  const nbSdb=parseInt(v('nb_sdb'))||1,nbWc=parseInt(v('nb_wc'))||0
+  const isSurDevis = interventions.includes('insalubre')||surface>100||!surface||vitresOpt==='plus_10'||niveauCuisine==='exceptionnel'||niveauSdb==='exceptionnel'||zonesOpts.includes('dechets')||evOpts.some(o=>EV_DEVIS_MANUEL.includes(o))
   if (isSurDevis) return { surDevis: true }
-
-  const surfCode = surface<=20?'s_0_20':surface<=40?'s_21_40':surface<=60?'s_41_60':surface<=80?'s_61_80':'s_81_100'
-  const basePrice = T('surface', surfCode) || (surface<=20?60:surface<=40?90:surface<=60?130:surface<=80?170:220)
-
-  let cuisinePrice = cuisineOpts.reduce((s,o) => s+T('cuisine',o), 0)
-  if (niveauCuisine==='tres_sale') cuisinePrice *= 1.5
-  else if (niveauCuisine==='sale') cuisinePrice *= 1.2
-
-  let sdbPrice = sdbOpts.reduce((s,o) => s+T('sdb',o), 0)
-  if (nbSdb===2) sdbPrice += T('sdb','sdb_supp')||30
-  if (nbSdb>=3) sdbPrice += (T('sdb','sdb_supp')||30)*2
-  if (nbWc>=1) sdbPrice += nbWc * 10
-  if (niveauSdb==='tres_sale') sdbPrice *= 1.5
-  else if (niveauSdb==='sale') sdbPrice *= 1.2
-
-  const solsPrice = solsOpts.reduce((s,o) => s+T('sols',o), 0)
-  const vitresPrice = vitresOpt !== 'aucune' ? T('vitres', vitresOpt) : 0
-  const voletChecked = document.getElementById('volets')?.checked
-  let zonesPrice = zonesOpts.reduce((s,o) => s+(o!=='volets'?T('zones',o):0), 0)
-  if (voletChecked) zonesPrice += T('zones','volets')||20
-  const specialesPrice = specialesOpts.reduce((s,o) => s+T('speciales',o), 0)
-
-  const subtotal = basePrice + cuisinePrice + sdbPrice + solsPrice + vitresPrice + zonesPrice + specialesPrice
-
-  const priority = ['tres_sale','sinistre','apres_travaux','remise_en_etat','avant_vente','avant_location','apres_depart','simple']
-  let coefCode = 'simple'
-  for (const p of priority) { if (interventions.includes(p)) { coefCode=p; break } }
-  let coef = T('coefficients', coefCode) || 1
-  if (coef < 1) coef = 1
-
-  const urgentCoef = interventions.includes('urgent') ? (T('coefficients','urgent')||1.25) : 1
-  let estHT = subtotal * coef * urgentCoef
-
-  const etageFee = document.getElementById('etage_sans_asc')?.checked ? (T('params','etage_sans_asc')||15) : 0
-  const statFee = document.getElementById('stationnement_difficile')?.checked ? (T('params','stationnement')||10) : 0
-  estHT += etageFee + statFee
-  const minimum = T('params','minimum')||60
-  estHT = Math.max(estHT, minimum)
-
-  const tauxTva = T('params','tva')||10
-  const tva = estHT * tauxTva / 100
-  return {
-    surDevis: false,
-    estHT: Math.round(estHT*100)/100,
-    tva: Math.round(tva*100)/100,
-    estTTC: Math.round((estHT+tva)*100)/100,
-    tauxTva,
-    details: { basePrice, cuisinePrice:Math.round(cuisinePrice*100)/100, sdbPrice:Math.round(sdbPrice*100)/100, solsPrice, vitresPrice, zonesPrice, specialesPrice, coef, urgentCoef, etageFee, statFee }
-  }
+  const surfCode=surface<=20?'s_0_20':surface<=40?'s_21_40':surface<=60?'s_41_60':surface<=80?'s_61_80':'s_81_100'
+  const basePrice=T('surface',surfCode)||(surface<=20?60:surface<=40?90:surface<=60?130:surface<=80?170:220)
+  let cuisinePrice=cuisineOpts.reduce((s,o)=>s+T('cuisine',o),0)
+  if(niveauCuisine==='tres_sale')cuisinePrice*=1.5; else if(niveauCuisine==='sale')cuisinePrice*=1.2
+  let sdbPrice=sdbOpts.reduce((s,o)=>s+T('sdb',o),0)
+  if(nbSdb===2)sdbPrice+=T('sdb','sdb_supp')||30; if(nbSdb>=3)sdbPrice+=(T('sdb','sdb_supp')||30)*2
+  if(nbWc>=1)sdbPrice+=nbWc*10
+  if(niveauSdb==='tres_sale')sdbPrice*=1.5; else if(niveauSdb==='sale')sdbPrice*=1.2
+  const solsPrice=solsOpts.reduce((s,o)=>s+T('sols',o),0)
+  const vitresPrice=vitresOpt!=='aucune'?T('vitres',vitresOpt):0
+  const voletChecked=document.getElementById('volets')?.checked
+  let zonesPrice=zonesOpts.reduce((s,o)=>s+(o!=='volets'?T('zones',o):0),0)
+  if(voletChecked)zonesPrice+=T('zones','volets')||20
+  const specialesPrice=specialesOpts.reduce((s,o)=>s+T('speciales',o),0)
+  const evPrice=evOpts.reduce((s,o)=>s+(EV_PRICES[o]||0),0)
+  const subtotal=basePrice+cuisinePrice+sdbPrice+solsPrice+vitresPrice+zonesPrice+specialesPrice+evPrice
+  const priority=['tres_sale','sinistre','apres_travaux','remise_en_etat','avant_vente','avant_location','apres_depart','simple']
+  let coefCode='simple'
+  for(const p of priority){if(interventions.includes(p)){coefCode=p;break}}
+  let coef=T('coefficients',coefCode)||1; if(coef<1)coef=1
+  const urgentCoef=interventions.includes('urgent')?(T('coefficients','urgent')||1.25):1
+  let estHT=subtotal*coef*urgentCoef
+  const etageFee=document.getElementById('etage_sans_asc')?.checked?(T('params','etage_sans_asc')||15):0
+  const statFee=document.getElementById('stationnement_difficile')?.checked?(T('params','stationnement')||10):0
+  estHT+=etageFee+statFee; estHT=Math.max(estHT,T('params','minimum')||60)
+  const tauxTva=T('params','tva')||10,tva=estHT*tauxTva/100
+  return {surDevis:false,estHT:Math.round(estHT*100)/100,tva:Math.round(tva*100)/100,estTTC:Math.round((estHT+tva)*100)/100,tauxTva,details:{basePrice,cuisinePrice:Math.round(cuisinePrice*100)/100,sdbPrice:Math.round(sdbPrice*100)/100,solsPrice,vitresPrice,zonesPrice,specialesPrice,evPrice,coef,urgentCoef,etageFee,statFee}}
 }
-
 function buildRecap() {
-  const r = calculerEstimation()
-  const estBox = document.getElementById('estimation-box')
-  if (r.surDevis) {
-    estBox.innerHTML = `<div class="rounded-xl border-2 border-orange-300 bg-orange-50 p-6 text-center">
-      <p class="text-lg font-bold text-orange-700 mb-1">Demande sur devis manuel</p>
-      <p class="text-sm text-orange-600">Votre demande nécessite une vérification personnalisée. Eco'Clean vous recontactera sous 24h.</p>
-    </div>`
+  const r=calculerEstimation()
+  const estBox=document.getElementById('estimation-box')
+  if(r.surDevis){
+    estBox.innerHTML=`<div class="rounded-xl border-2 border-orange-300 bg-orange-50 p-6 text-center"><p class="text-lg font-bold text-orange-700 mb-1">Demande sur devis manuel</p><p class="text-sm text-orange-600">Votre demande nécessite une vérification personnalisée. Eco'Clean vous recontactera sous 24h.</p></div>`
   } else {
-    const d = r.details
-    const lines = []
-    if (d.basePrice) lines.push(`Surface ${v('surface')} m² : ${d.basePrice} €`)
-    if (d.cuisinePrice) lines.push(`Cuisine (${niveauCuisine}) : ${d.cuisinePrice} €`)
-    if (d.sdbPrice) lines.push(`Salle de bain : ${d.sdbPrice} €`)
-    if (d.solsPrice) lines.push(`Sols (traitements) : ${d.solsPrice} €`)
-    if (d.vitresPrice) lines.push(`Vitres : ${d.vitresPrice} €`)
-    if (d.zonesPrice) lines.push(`Zones supplémentaires : ${d.zonesPrice} €`)
-    if (d.specialesPrice) lines.push(`Prestations spéciales : ${d.specialesPrice} €`)
-    if (d.coef>1) lines.push(`Coefficient intervention : ×${d.coef}`)
-    if (d.urgentCoef>1) lines.push(`Urgence : ×${d.urgentCoef}`)
-    if (d.etageFee) lines.push(`Étage sans ascenseur : +${d.etageFee} €`)
-    if (d.statFee) lines.push(`Stationnement difficile : +${d.statFee} €`)
-    estBox.innerHTML = `<div class="rounded-xl border-2 border-eco-border bg-eco-pale p-6 text-center">
-      <p class="text-xs font-bold text-eco-green uppercase tracking-wider mb-2">Estimation indicative</p>
-      <p class="text-5xl font-bold text-eco-dark mb-1">${r.estTTC.toFixed(2)} €<span class="text-xl font-normal ml-1">TTC</span></p>
-      <p class="text-sm text-gray-500">${r.estHT.toFixed(2)} € HT + TVA ${r.tauxTva}% (${r.tva.toFixed(2)} €)</p>
-      <div class="mt-4 text-xs text-gray-400 space-y-0.5">${lines.map(l=>`<p>${l}</p>`).join('')}</div>
-      <p class="text-xs text-gray-400 mt-3 italic">Indicatif — sous réserve de vérification de l'état réel du logement.</p>
-    </div>`
+    const d=r.details,lines=[]
+    if(d.basePrice)lines.push(`Surface ${v('surface')} m² : ${d.basePrice} €`)
+    if(d.cuisinePrice)lines.push(`Cuisine (${niveauCuisine}) : ${d.cuisinePrice} €`)
+    if(d.sdbPrice)lines.push(`Salle de bain : ${d.sdbPrice} €`)
+    if(d.solsPrice)lines.push(`Sols (traitements) : ${d.solsPrice} €`)
+    if(d.vitresPrice)lines.push(`Vitres : ${d.vitresPrice} €`)
+    if(d.zonesPrice)lines.push(`Zones supplémentaires : ${d.zonesPrice} €`)
+    if(d.specialesPrice)lines.push(`Prestations spéciales : ${d.specialesPrice} €`)
+    if(d.evPrice)lines.push(`Espaces verts : ${d.evPrice} €`)
+    if(d.coef>1)lines.push(`Coefficient intervention : ×${d.coef}`)
+    if(d.urgentCoef>1)lines.push(`Urgence : ×${d.urgentCoef}`)
+    if(d.etageFee)lines.push(`Étage sans ascenseur : +${d.etageFee} €`)
+    if(d.statFee)lines.push(`Stationnement difficile : +${d.statFee} €`)
+    estBox.innerHTML=`<div class="rounded-xl border-2 border-eco-border bg-eco-pale p-6 text-center"><p class="text-xs font-bold text-eco-green uppercase tracking-wider mb-2">Estimation indicative</p><p class="text-5xl font-bold text-eco-dark mb-1">${r.estTTC.toFixed(2)} €<span class="text-xl font-normal ml-1">TTC</span></p><p class="text-sm text-gray-500">${r.estHT.toFixed(2)} € HT + TVA ${r.tauxTva}% (${r.tva.toFixed(2)} €)</p><div class="mt-4 text-xs text-gray-400 space-y-0.5">${lines.map(l=>`<p>${l}</p>`).join('')}</div><p class="text-xs text-gray-400 mt-3 italic">Indicatif — sous réserve de vérification de l'état réel du logement.</p></div>`
   }
-
-  const interv_labels = {simple:'Nettoyage simple',avant_vente:'Avant vente',avant_location:'Avant location',apres_depart:'Après départ locataire',remise_en_etat:'Remise en état',apres_travaux:'Après travaux',tres_sale:'Très sale',sinistre:'Après sinistre',insalubre:'Insalubre',urgent:'Urgent'}
-  const interventions = getChecked('intervention').map(i=>interv_labels[i]||i).join(', ')
-  const cuisineOpts = getChecked('cuisine_opt').join(', ')||'Aucune option'
-  const sdbOpts = getChecked('sdb_opt').join(', ')||'Aucune option'
-  const solsEtat = getChecked('sol_etat').join(', ')||'—'
-  const solsOpts = getChecked('sols_opt').join(', ')||'Aucun traitement'
-  const zonesOpts = getChecked('zones_opt').join(', ')||'Aucune'
-  const specialesOpts = getChecked('speciales_opt').join(', ')||'Aucune'
-
-  function row(lbl,val) { return val?`<div class="flex gap-2 py-1.5 border-b border-gray-100 last:border-0 text-sm"><span class="text-gray-400 w-40 shrink-0">${lbl}</span><span class="font-medium text-gray-800">${val}</span></div>`:'' }
-  function section(title, rows) { return `<div class="mb-4"><p class="text-xs font-bold text-eco-green uppercase tracking-wide mb-2">${title}</p>${rows.join('')}</div>` }
-
-  document.getElementById('recap-content').innerHTML = `
+  const il={simple:'Nettoyage simple',avant_vente:'Avant vente',avant_location:'Avant location',apres_depart:'Après départ locataire',remise_en_etat:'Remise en état',apres_travaux:'Après travaux',tres_sale:'Très sale',sinistre:'Après sinistre',insalubre:'Insalubre',urgent:'Urgent'}
+  const interventions=getChecked('intervention').map(i=>il[i]||i).join(', ')
+  const evOpts=getChecked('ev_opt').join(', ')||'Aucune prestation'
+  function row(lbl,val){return val?`<div class="flex gap-2 py-1.5 border-b border-gray-100 last:border-0 text-sm"><span class="text-gray-400 w-40 shrink-0">${lbl}</span><span class="font-medium text-gray-800">${val}</span></div>`:''}
+  function section(title,rows){return `<div class="mb-4"><p class="text-xs font-bold text-eco-green uppercase tracking-wide mb-2">${title}</p>${rows.join('')}</div>`}
+  document.getElementById('recap-content').innerHTML=`
     <p class="sec-title">Récapitulatif de la demande</p>
     ${section('Agence',[row('Agence',v('nom_agence')),row('Gestionnaire',v('gestionnaire')),row('Téléphone',v('telephone')),row('Email',v('email'))])}
     ${section('Chantier',[row('Adresse',`${v('adresse_chantier')}, ${v('code_postal')} ${v('ville')}`),row('Type de bien',`${selectedTypeBien||'—'} — ${v('surface')} m²`),row('Intervention',interventions),row('Accès clés',v('acces_cles'))])}
     ${section('Facturation',[row('Payeur',v('nom_payeur')),row('Type payeur',v('payeur')),row('Email fact.',v('email_facturation'))])}
-    ${section('Prestations',[row('Cuisine',`Niveau ${niveauCuisine} — ${cuisineOpts}`),row('Salle de bain',`Niveau ${niveauSdb} — ${sdbOpts}`),row('Sols',`${v('type_sol')||'—'} — ${solsEtat}`),row('Traitements sols',solsOpts),row('Vitres',vitresOpt),row('Zones',zonesOpts),row('Spéciales',specialesOpts),row('Photos prévues',v('nb_photos')||'0')])}
+    ${section('Prestations',[row('Cuisine',`Niveau ${niveauCuisine} — ${getChecked('cuisine_opt').join(', ')||'Aucune option'}`),row('Salle de bain',`Niveau ${niveauSdb} — ${getChecked('sdb_opt').join(', ')||'Aucune option'}`),row('Sols',`${v('type_sol')||'—'} — ${getChecked('sol_etat').join(', ')||'—'}`),row('Traitements sols',getChecked('sols_opt').join(', ')||'Aucun traitement'),row('Vitres',vitresOpt),row('Zones',getChecked('zones_opt').join(', ')||'Aucune'),row('Espaces verts',evOpts),row('Spéciales',getChecked('speciales_opt').join(', ')||'Aucune'),row('Photos prévues',v('nb_photos')||'0')])}
   `
 }
-
-function genRef() {
-  const yr = String(new Date().getFullYear()).slice(-2)
-  return `ECO-${yr}-${Math.floor(Math.random()*9000+1000)}`
-}
-
+function genRef() { return `ECO-${String(new Date().getFullYear()).slice(-2)}-${Math.floor(Math.random()*9000+1000)}` }
 async function submitForm() {
-  const btn = document.getElementById('btn-submit')
-  btn.disabled = true
-  btn.textContent = 'Envoi en cours...'
+  const btn=document.getElementById('btn-submit')
+  btn.disabled=true; btn.textContent='Envoi en cours...'
   try {
-    const r = calculerEstimation()
-    const ref = genRef()
-    const now = new Date().toISOString()
-    const interventions = getChecked('intervention')
-    const demande = {
-      id: ref, created_at: now, updated_at: now,
-      nom_agence: v('nom_agence'), gestionnaire: v('gestionnaire'), telephone: v('telephone'),
-      email: v('email'), adresse_agence: v('adresse_agence'), siret: v('siret')||null,
-      adresse_chantier: v('adresse_chantier'), code_postal: v('code_postal'), ville: v('ville'),
-      etage: v('etage')||null,
-      ascenseur: document.getElementById('ascenseur').checked,
-      stationnement_difficile: document.getElementById('stationnement_difficile').checked,
-      etage_sans_asc: document.getElementById('etage_sans_asc').checked,
-      acces_cles: v('acces_cles'),
-      type_bien: selectedTypeBien, surface: parseFloat(v('surface')),
-      type_intervention: interventions.join(','),
-      payeur: v('payeur'), nom_payeur: v('nom_payeur'),
-      adresse_facturation: v('adresse_facturation')||null,
-      email_facturation: v('email_facturation')||null,
-      tel_payeur: v('tel_payeur')||null,
-      niveau_cuisine: niveauCuisine, cuisine_options: getChecked('cuisine_opt'),
-      niveau_sdb: niveauSdb, sdb_options: getChecked('sdb_opt'),
-      type_sol: v('type_sol')||null, etat_sol: getChecked('sol_etat'),
-      sol_options: getChecked('sols_opt'),
-      vitres_option: vitresOpt, zones_options: getChecked('zones_opt'),
-      speciales_options: getChecked('speciales_opt'),
-      nb_photos: parseInt(v('nb_photos'))||0, photos_urls: [],
-      estimation_ht: r.surDevis ? null : r.estHT,
-      estimation_tva: r.surDevis ? null : r.tva,
-      estimation_ttc: r.surDevis ? null : r.estTTC,
-      taux_tva: r.tauxTva||10,
-      detail_calcul: r.surDevis ? {} : r.details,
-      sur_devis: r.surDevis, statut: 'nouveau',
-      commentaire_interne: v('commentaire_agence')||null,
+    const r=calculerEstimation(),ref=genRef(),now=new Date().toISOString()
+    const interventions=getChecked('intervention'),evOpts=getChecked('ev_opt')
+    const demande={
+      id:ref,created_at:now,updated_at:now,
+      nom_agence:v('nom_agence'),gestionnaire:v('gestionnaire'),telephone:v('telephone'),
+      email:v('email'),adresse_agence:v('adresse_agence'),siret:v('siret')||null,
+      adresse_chantier:v('adresse_chantier'),code_postal:v('code_postal'),ville:v('ville'),etage:v('etage')||null,
+      ascenseur:document.getElementById('ascenseur').checked,
+      stationnement_difficile:document.getElementById('stationnement_difficile').checked,
+      etage_sans_asc:document.getElementById('etage_sans_asc').checked,
+      acces_cles:v('acces_cles'),type_bien:selectedTypeBien,surface:parseFloat(v('surface')),
+      type_intervention:interventions.join(','),
+      payeur:v('payeur'),nom_payeur:v('nom_payeur'),
+      adresse_facturation:v('adresse_facturation')||null,email_facturation:v('email_facturation')||null,tel_payeur:v('tel_payeur')||null,
+      niveau_cuisine:niveauCuisine,cuisine_options:getChecked('cuisine_opt'),
+      niveau_sdb:niveauSdb,sdb_options:getChecked('sdb_opt'),
+      type_sol:v('type_sol')||null,etat_sol:getChecked('sol_etat'),sol_options:getChecked('sols_opt'),
+      vitres_option:vitresOpt,zones_options:getChecked('zones_opt'),speciales_options:getChecked('speciales_opt'),
+      nb_photos:parseInt(v('nb_photos'))||0,photos_urls:[],
+      estimation_ht:r.surDevis?null:r.estHT,estimation_tva:r.surDevis?null:r.tva,estimation_ttc:r.surDevis?null:r.estTTC,
+      taux_tva:r.tauxTva||10,
+      detail_calcul:r.surDevis?{}:{...r.details,ev_options:evOpts},
+      sur_devis:r.surDevis,statut:'nouveau',
+      commentaire_interne:v('commentaire_agence')||null,
     }
-    const { error } = await db.schema('ecoclean').from('demandes').insert(demande)
-    if (error) throw error
-    document.getElementById('conf-ref').textContent = ref
-    document.querySelectorAll('.step-view').forEach(s => s.classList.remove('active'))
+    const {error}=await db.schema('ecoclean').from('demandes').insert(demande)
+    if(error) throw error
+    document.getElementById('conf-ref').textContent=ref
+    document.querySelectorAll('.step-view').forEach(s=>s.classList.remove('active'))
     document.getElementById('view-conf').classList.add('active')
     window.scrollTo({top:0,behavior:'smooth'})
   } catch(err) {
     console.error(err)
     alert('Erreur lors de l\'envoi. Veuillez réessayer.')
-    btn.disabled = false
-    btn.textContent = 'Envoyer la demande →'
+    btn.disabled=false; btn.textContent='Envoyer la demande →'
   }
 }
-
 loadTarifs()
 </script>
 </body>
