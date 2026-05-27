@@ -66,7 +66,7 @@
 
       <div class="grid grid-cols-2 gap-6 mb-6">
         <div>
-          <p class="text-xs font-bold uppercase tracking-wide mb-2" style="color:#16532d">Agence</p>
+          <p class="text-xs font-bold uppercase tracking-wide mb-2" style="color:#16532d">Agence / Client</p>
           <table class="w-full" id="agenceTable"></table>
         </div>
         <div>
@@ -111,6 +111,7 @@
   const SUPA_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhiaWlydGV3enpoY2FwdW94ZXp0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwODk1NjYsImV4cCI6MjA5MzY2NTU2Nn0.0K8w2ft5QcSYu3BSg42HsJt2Ov9l0KcTIo2WzbBxdrQ'
   const db=supabase.createClient(SUPA_URL,SUPA_KEY)
   const TYPE_LABELS={locataire_sortant:'État des lieux sortant',bailleur_entrant:'Préparation entrée',simple:'Nettoyage simple',avant_vente:'Avant vente',avant_location:'Avant location',apres_depart:'Après départ',remise_en_etat:'Remise en état',apres_travaux:'Après travaux',tres_sale:'Très sale',sinistre:'Après sinistre',insalubre:'Insalubre',urgent:'Urgent'}
+  const EV_LABELS={tonte_petite:'Tonte <50m²',tonte_moyenne:'Tonte 50-150m²',taille_haies_courte:'Haies <10m',taille_haies_longue:'Haies 10-25m',taille_arbustes:'Arbustes/massifs',desherbage:'Désherbage',ramassage_feuilles:'Ramassage feuilles',soufflage:'Soufflage',karcher_allee:'Allée HP',karcher_terrasse:'Terrasse HP'}
 
   function row(label,value){
     if(!value) return ''
@@ -154,7 +155,7 @@
       prixBlock.innerHTML=`<div class="rounded-xl p-5 mb-6 text-center" style="background:#e8f5ec;border:1px solid #c3e6cb"><p class="text-xs font-semibold uppercase tracking-wide mb-2" style="color:#16532d">Estimation totale</p><p class="text-4xl font-bold" style="color:#0d3a1f">${d.estimation_ttc} €<span class="text-lg font-normal"> TTC</span></p><p class="text-sm text-gray-500 mt-1">${d.estimation_ht} € HT + TVA ${d.taux_tva||10}% (${d.estimation_tva} €)</p></div>`
     }
 
-    document.getElementById('agenceTable').innerHTML=`<tbody>${row('Agence',d.nom_agence)}${row('Gestionnaire',d.gestionnaire)}${row('Téléphone',d.telephone)}${row('Email',d.email)}</tbody>`
+    document.getElementById('agenceTable').innerHTML=`<tbody>${row('Agence / Client',d.nom_agence)}${row('Contact',d.gestionnaire)}${row('Téléphone',d.telephone)}${row('Email',d.email)}</tbody>`
     document.getElementById('payeurTable').innerHTML=`<tbody>${row('Payeur',d.nom_payeur)}${row('Email',d.email_facturation)}${row('Adresse',d.adresse_facturation)}</tbody>`
 
     const iv=(d.type_intervention||'').split(',').map(i=>TYPE_LABELS[i.trim()]||i.trim()).filter(Boolean).join(', ')
@@ -170,6 +171,10 @@
       if(dc.vitresPrice>0) rows.push(drow(`Vitres`,`${dc.vitresPrice} €`))
       if(dc.zonesPrice>0) rows.push(drow(`Zones supplémentaires`,`${dc.zonesPrice} €`))
       if(dc.specialesPrice>0) rows.push(drow(`Prestations spéciales`,`${dc.specialesPrice} €`))
+      if(dc.evPrice>0) {
+        const evLabels=(dc.ev_options||[]).map(o=>EV_LABELS[o]||o).join(', ')
+        rows.push(drow(`🌿 Espaces verts${evLabels?` (${evLabels})`:''}`,`${dc.evPrice} €`))
+      }
       if(dc.coef>1) rows.push(drow(`Coefficient (×${dc.coef})`,'inclus',true))
       if(dc.urgentCoef>1) rows.push(drow(`Urgence (×${dc.urgentCoef})`,'inclus',true))
       if(dc.statFee>0) rows.push(drow('Stationnement',`+${dc.statFee} €`))

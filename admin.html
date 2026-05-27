@@ -55,6 +55,10 @@
     td { padding: 10px 12px; font-size: 13px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: #fafafa; }
+    .dg-lvl-btn { padding: 4px 12px; border-radius: 14px; border: 1.5px solid #e5e7eb; font-size: 12px; cursor: pointer; transition: all .15s; background: #fff; font-weight: 500; }
+    .dg-lvl-btn:hover { border-color: #16532d; }
+    .dg-lvl-btn.selected { background: #16532d; color: #fff; border-color: #16532d; }
+    .dg-section { border-top: 1px solid #f0f0f0; padding-top: 12px; margin-top: 12px; }
   </style>
 </head>
 <body>
@@ -75,7 +79,7 @@
       </div>
       <div>
         <label class="block text-xs font-semibold mb-1" style="color:#6b7a6b">Mot de passe</label>
-        <input id="loginPassword" type="password" class="input" placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
+        <input id="loginPassword" type="password" class="input" placeholder="••••••••" />
       </div>
       <div id="loginError" class="text-red-600 text-xs hidden">Email ou mot de passe incorrect.</div>
       <button onclick="doLogin()" class="btn btn-primary w-full justify-center">Se connecter</button>
@@ -95,6 +99,10 @@
       <a href="#" onclick="showTab('demandes')" id="nav-demandes" class="active">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         Demandes
+      </a>
+      <a href="#" onclick="showTab('devis_general')" id="nav-devis_general">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        Nouveau Devis
       </a>
       <a href="#" onclick="showTab('tarifs')" id="nav-tarifs">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
@@ -141,6 +149,7 @@
     </header>
 
     <div class="flex-1 p-4">
+      <!-- TAB DEMANDES -->
       <div id="tab-demandes">
         <div id="demandesLoading" class="flex items-center justify-center h-48" style="color:#6b7a6b">
           <span class="spinner mr-2" style="border-color:#c3e6cb;border-top-color:#16532d;"></span> Chargement...
@@ -150,12 +159,250 @@
         </div>
         <div id="demandesList" class="space-y-3 hidden"></div>
       </div>
+
+      <!-- TAB TARIFS -->
       <div id="tab-tarifs" class="hidden">
         <div id="tarifsLoading" class="flex items-center justify-center h-48" style="color:#6b7a6b">
           <span class="spinner mr-2" style="border-color:#c3e6cb;border-top-color:#16532d;"></span> Chargement...
         </div>
         <div id="tarifsContent" class="space-y-6 hidden"></div>
       </div>
+
+      <!-- TAB DEVIS GÉNÉRAL -->
+      <div id="tab-devis_general" class="hidden">
+        <div class="flex gap-6 flex-wrap lg:flex-nowrap">
+
+          <!-- COLONNE GAUCHE : FORMULAIRE -->
+          <div class="flex-1 space-y-4 min-w-0">
+
+            <!-- CLIENT -->
+            <div class="card p-4">
+              <p class="text-sm font-bold mb-3" style="color:#0d3a1f">👤 Client</p>
+              <div class="grid grid-cols-2 gap-3">
+                <div class="col-span-2">
+                  <label class="block text-xs font-semibold mb-1" style="color:#6b7a6b">Nom / Société *</label>
+                  <input id="dg_nom" type="text" class="input" placeholder="Jean Dupont ou Société SARL" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold mb-1" style="color:#6b7a6b">Téléphone *</label>
+                  <input id="dg_tel" type="tel" class="input" placeholder="06 00 00 00 00" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold mb-1" style="color:#6b7a6b">Email</label>
+                  <input id="dg_email" type="email" class="input" placeholder="client@exemple.fr" />
+                </div>
+                <div class="col-span-2">
+                  <label class="block text-xs font-semibold mb-1" style="color:#6b7a6b">Adresse facturation</label>
+                  <input id="dg_adresse_fact" type="text" class="input" placeholder="5 rue du Commerce, 31000 Toulouse" />
+                </div>
+              </div>
+            </div>
+
+            <!-- CHANTIER -->
+            <div class="card p-4">
+              <p class="text-sm font-bold mb-3" style="color:#0d3a1f">📍 Chantier</p>
+              <div class="grid grid-cols-3 gap-3">
+                <div class="col-span-3">
+                  <label class="block text-xs font-semibold mb-1" style="color:#6b7a6b">Adresse *</label>
+                  <input id="dg_adresse" type="text" class="input" placeholder="3 avenue des Pins" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold mb-1" style="color:#6b7a6b">Code postal *</label>
+                  <input id="dg_cp" type="text" class="input" placeholder="31000" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold mb-1" style="color:#6b7a6b">Ville *</label>
+                  <input id="dg_ville" type="text" class="input" placeholder="Toulouse" />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold mb-1" style="color:#6b7a6b">Surface (m²) *</label>
+                  <input id="dg_surface" type="number" min="1" class="input" placeholder="65" oninput="dgCalculate()" />
+                </div>
+                <div class="col-span-2">
+                  <label class="block text-xs font-semibold mb-1" style="color:#6b7a6b">Type de bien</label>
+                  <select id="dg_type_bien" class="input">
+                    <option>Studio</option><option>T1</option><option>T2</option><option>T3</option>
+                    <option>T4</option><option>T5+</option><option>Maison</option>
+                    <option>Local commercial</option><option>Bureau</option><option>Autre</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold mb-1" style="color:#6b7a6b">Accès clés</label>
+                  <select id="dg_acces" class="input">
+                    <option value="client">Client sur place</option>
+                    <option value="boite_cles">Boîte à clés</option>
+                    <option value="proprietaire">Propriétaire</option>
+                    <option value="autre">Autre</option>
+                  </select>
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-4 mt-3 text-xs">
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="dg_etage_sans_asc" onchange="dgCalculate()" style="accent-color:#16532d"/> Étage sans ascenseur (+15€)</label>
+                <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="dg_stat_diff" onchange="dgCalculate()" style="accent-color:#16532d"/> Stationnement difficile (+10€)</label>
+              </div>
+            </div>
+
+            <!-- TYPE D'INTERVENTION -->
+            <div class="card p-4">
+              <p class="text-sm font-bold mb-3" style="color:#0d3a1f">🔧 Type d'intervention *</p>
+              <div class="grid grid-cols-2 gap-1 text-xs">
+                <label class="flex items-center gap-2 p-1.5 rounded cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dg_intervention" value="simple" onchange="dgCalculate()" style="accent-color:#16532d"/> Nettoyage simple</label>
+                <label class="flex items-center gap-2 p-1.5 rounded cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dg_intervention" value="avant_vente" onchange="dgCalculate()" style="accent-color:#16532d"/> Avant vente</label>
+                <label class="flex items-center gap-2 p-1.5 rounded cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dg_intervention" value="avant_location" onchange="dgCalculate()" style="accent-color:#16532d"/> Avant location</label>
+                <label class="flex items-center gap-2 p-1.5 rounded cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dg_intervention" value="apres_depart" onchange="dgCalculate()" style="accent-color:#16532d"/> Après départ</label>
+                <label class="flex items-center gap-2 p-1.5 rounded cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dg_intervention" value="remise_en_etat" onchange="dgCalculate()" style="accent-color:#16532d"/> Remise en état</label>
+                <label class="flex items-center gap-2 p-1.5 rounded cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dg_intervention" value="apres_travaux" onchange="dgCalculate()" style="accent-color:#16532d"/> Après travaux</label>
+                <label class="flex items-center gap-2 p-1.5 rounded cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dg_intervention" value="tres_sale" onchange="dgCalculate()" style="accent-color:#16532d"/> Très sale</label>
+                <label class="flex items-center gap-2 p-1.5 rounded cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dg_intervention" value="sinistre" onchange="dgCalculate()" style="accent-color:#16532d"/> Après sinistre</label>
+                <label class="flex items-center gap-2 p-1.5 rounded cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dg_intervention" value="urgent" onchange="dgCalculate()" style="accent-color:#16532d"/> Urgent (×1.25)</label>
+                <label class="flex items-center gap-2 p-1.5 rounded cursor-pointer hover:bg-gray-50"><input type="checkbox" name="dg_intervention" value="insalubre" onchange="dgCalculate()" style="accent-color:#16532d"/> Insalubre → devis manuel</label>
+              </div>
+            </div>
+
+            <!-- NETTOYAGE INTÉRIEUR -->
+            <div class="card p-4">
+              <p class="text-sm font-bold mb-3" style="color:#0d3a1f">🧹 Nettoyage Intérieur</p>
+
+              <!-- Cuisine -->
+              <div>
+                <p class="text-xs font-semibold mb-2" style="color:#6b7a6b">Cuisine</p>
+                <div class="flex flex-wrap gap-1 mb-2">
+                  <button class="dg-lvl-btn selected" data-zone="dg_cuisine" data-val="propre" onclick="dgSetNiveau('dg_cuisine','propre',this)">Propre</button>
+                  <button class="dg-lvl-btn" data-zone="dg_cuisine" data-val="sale" onclick="dgSetNiveau('dg_cuisine','sale',this)">Sale</button>
+                  <button class="dg-lvl-btn" data-zone="dg_cuisine" data-val="tres_sale" onclick="dgSetNiveau('dg_cuisine','tres_sale',this)">Très sale</button>
+                </div>
+                <div class="grid grid-cols-3 gap-1 text-xs">
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_cuisine_opt" value="four" onchange="dgCalculate()" style="accent-color:#16532d"/> Four +15€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_cuisine_opt" value="frigo" onchange="dgCalculate()" style="accent-color:#16532d"/> Frigo +15€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_cuisine_opt" value="hotte" onchange="dgCalculate()" style="accent-color:#16532d"/> Hotte +20€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_cuisine_opt" value="congelateur" onchange="dgCalculate()" style="accent-color:#16532d"/> Congélateur +15€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_cuisine_opt" value="micro_ondes" onchange="dgCalculate()" style="accent-color:#16532d"/> Micro-ondes +10€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_cuisine_opt" value="lave_vaisselle" onchange="dgCalculate()" style="accent-color:#16532d"/> Lave-vaisselle +15€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_cuisine_opt" value="plaques" onchange="dgCalculate()" style="accent-color:#16532d"/> Plaques +10€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_cuisine_opt" value="placards_int" onchange="dgCalculate()" style="accent-color:#16532d"/> Placards int. +15€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_cuisine_opt" value="graisse" onchange="dgCalculate()" style="accent-color:#16532d"/> Graisse +25€</label>
+                </div>
+              </div>
+
+              <!-- Salle de bain -->
+              <div class="dg-section">
+                <div class="flex flex-wrap items-center gap-3 mb-2">
+                  <p class="text-xs font-semibold" style="color:#6b7a6b">Salle de bain</p>
+                  <select id="dg_nb_sdb" class="input py-0.5 px-2 text-xs" style="width:auto" onchange="dgCalculate()">
+                    <option value="1">1 SDB</option><option value="2">2 SDB (+30€)</option><option value="3">3+ SDB (+60€)</option>
+                  </select>
+                  <select id="dg_nb_wc" class="input py-0.5 px-2 text-xs" style="width:auto" onchange="dgCalculate()">
+                    <option value="0">0 WC séparé</option><option value="1">1 WC (+10€)</option><option value="2">2 WC (+20€)</option>
+                  </select>
+                </div>
+                <div class="flex flex-wrap gap-1 mb-2">
+                  <button class="dg-lvl-btn selected" data-zone="dg_sdb" data-val="propre" onclick="dgSetNiveau('dg_sdb','propre',this)">Propre</button>
+                  <button class="dg-lvl-btn" data-zone="dg_sdb" data-val="sale" onclick="dgSetNiveau('dg_sdb','sale',this)">Sale</button>
+                  <button class="dg-lvl-btn" data-zone="dg_sdb" data-val="tres_sale" onclick="dgSetNiveau('dg_sdb','tres_sale',this)">Très sale</button>
+                </div>
+                <div class="grid grid-cols-3 gap-1 text-xs">
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_sdb_opt" value="joints_noirs" onchange="dgCalculate()" style="accent-color:#16532d"/> Joints +20€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_sdb_opt" value="calcaire" onchange="dgCalculate()" style="accent-color:#16532d"/> Calcaire +20€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_sdb_opt" value="moisissures" onchange="dgCalculate()" style="accent-color:#16532d"/> Moisissures +25€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_sdb_opt" value="paroi_douche" onchange="dgCalculate()" style="accent-color:#16532d"/> Paroi douche +15€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_sdb_opt" value="wc_sale" onchange="dgCalculate()" style="accent-color:#16532d"/> WC sale +15€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_sdb_opt" value="robinetterie" onchange="dgCalculate()" style="accent-color:#16532d"/> Robinetterie +15€</label>
+                </div>
+              </div>
+
+              <!-- Sols -->
+              <div class="dg-section">
+                <p class="text-xs font-semibold mb-2" style="color:#6b7a6b">Sols / Traitements spéciaux</p>
+                <div class="grid grid-cols-2 gap-1 text-xs">
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_sols_opt" value="shampoing" onchange="dgCalculate()" style="accent-color:#16532d"/> Shampooing moquette +50€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_sols_opt" value="decapage" onchange="dgCalculate()" style="accent-color:#16532d"/> Décapage sols +60€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_sols_opt" value="polissage" onchange="dgCalculate()" style="accent-color:#16532d"/> Polissage +40€</label>
+                  <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_sols_opt" value="parquet_reno" onchange="dgCalculate()" style="accent-color:#16532d"/> Parquet remise en état +55€</label>
+                </div>
+              </div>
+
+              <!-- Vitres -->
+              <div class="dg-section">
+                <p class="text-xs font-semibold mb-2" style="color:#6b7a6b">Vitres</p>
+                <div class="flex flex-wrap gap-1">
+                  <button class="dg-lvl-btn selected" data-zone="dg_vitres" data-val="aucune" onclick="dgSetNiveau('dg_vitres','aucune',this)">Aucune</button>
+                  <button class="dg-lvl-btn" data-zone="dg_vitres" data-val="v1_3" onclick="dgSetNiveau('dg_vitres','v1_3',this)">1–3 (+20€)</button>
+                  <button class="dg-lvl-btn" data-zone="dg_vitres" data-val="v4_6" onclick="dgSetNiveau('dg_vitres','v4_6',this)">4–6 (+35€)</button>
+                  <button class="dg-lvl-btn" data-zone="dg_vitres" data-val="v7_10" onclick="dgSetNiveau('dg_vitres','v7_10',this)">7–10 (+50€)</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- ZONES + ESPACES VERTS -->
+            <div class="card p-4">
+              <p class="text-sm font-bold mb-3" style="color:#0d3a1f">📦 Zones & Espaces Verts</p>
+
+              <p class="text-xs font-semibold mb-2" style="color:#6b7a6b">Zones supplémentaires</p>
+              <div class="grid grid-cols-2 gap-1 text-xs mb-4">
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_zones" value="balcon" onchange="dgCalculate()" style="accent-color:#16532d"/> Balcon +20€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_zones" value="terrasse" onchange="dgCalculate()" style="accent-color:#16532d"/> Terrasse +30€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_zones" value="cave" onchange="dgCalculate()" style="accent-color:#16532d"/> Cave +30€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_zones" value="garage" onchange="dgCalculate()" style="accent-color:#16532d"/> Garage +30€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_zones" value="escaliers" onchange="dgCalculate()" style="accent-color:#16532d"/> Escaliers +15€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_zones" value="parking" onchange="dgCalculate()" style="accent-color:#16532d"/> Parking +35€</label>
+              </div>
+
+              <p class="text-xs font-semibold mb-2" style="color:#16532d">🌿 Espaces Verts</p>
+              <div class="grid grid-cols-2 gap-1 text-xs">
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_ev" value="tonte_petite" onchange="dgCalculate()" style="accent-color:#16532d"/> Tonte &lt;50m² +30€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_ev" value="tonte_moyenne" onchange="dgCalculate()" style="accent-color:#16532d"/> Tonte 50–150m² +55€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_ev" value="taille_haies_courte" onchange="dgCalculate()" style="accent-color:#16532d"/> Haies &lt;10m +30€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_ev" value="taille_haies_longue" onchange="dgCalculate()" style="accent-color:#16532d"/> Haies 10–25m +55€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_ev" value="taille_arbustes" onchange="dgCalculate()" style="accent-color:#16532d"/> Arbustes / massifs +40€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_ev" value="desherbage" onchange="dgCalculate()" style="accent-color:#16532d"/> Désherbage +25€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_ev" value="ramassage_feuilles" onchange="dgCalculate()" style="accent-color:#16532d"/> Ramassage feuilles +30€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_ev" value="soufflage" onchange="dgCalculate()" style="accent-color:#16532d"/> Soufflage +20€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_ev" value="karcher_allee" onchange="dgCalculate()" style="accent-color:#16532d"/> Allée haute pression +40€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_ev" value="karcher_terrasse" onchange="dgCalculate()" style="accent-color:#16532d"/> Terrasse haute pression +35€</label>
+              </div>
+            </div>
+
+            <!-- PRESTATIONS SPÉCIALES -->
+            <div class="card p-4">
+              <p class="text-sm font-bold mb-3" style="color:#0d3a1f">⭐ Prestations spéciales</p>
+              <div class="grid grid-cols-2 gap-1 text-xs">
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_speciales" value="desinfection" onchange="dgCalculate()" style="accent-color:#16532d"/> Désinfection +60€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_speciales" value="odeurs" onchange="dgCalculate()" style="accent-color:#16532d"/> Mauvaises odeurs +45€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_speciales" value="moisissures_traite" onchange="dgCalculate()" style="accent-color:#16532d"/> Anti-moisissures +50€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_speciales" value="degat_eaux" onchange="dgCalculate()" style="accent-color:#16532d"/> Après dégât eaux +70€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_speciales" value="parties_communes" onchange="dgCalculate()" style="accent-color:#16532d"/> Parties communes +40€</label>
+                <label class="flex items-center gap-1 cursor-pointer p-1 rounded hover:bg-gray-50"><input type="checkbox" name="dg_speciales" value="debarras_leger" onchange="dgCalculate()" style="accent-color:#16532d"/> Débarras léger +35€</label>
+              </div>
+            </div>
+
+            <!-- COMMENTAIRE -->
+            <div class="card p-4">
+              <label class="block text-xs font-semibold mb-2" style="color:#6b7a6b">Commentaire / Notes</label>
+              <textarea id="dg_commentaire" rows="3" class="input resize-none text-xs" placeholder="Informations complémentaires, remarques pour ce devis..."></textarea>
+            </div>
+
+          </div><!-- fin colonne gauche -->
+
+          <!-- COLONNE DROITE : PRIX -->
+          <div class="w-full lg:w-72 shrink-0">
+            <div class="sticky top-16">
+              <div class="card p-5">
+                <p class="text-xs font-bold uppercase tracking-wide mb-4" style="color:#16532d">Estimation</p>
+                <p class="text-3xl font-bold" style="color:#0d3a1f" id="dg-ttc-price">—</p>
+                <p class="text-xs mt-1 mb-3" style="color:#6b7a6b" id="dg-ht-info">Remplissez le formulaire</p>
+                <div id="dg-devis-manuel-warn" class="hidden mb-3 p-2 rounded-lg text-xs" style="background:#fff7ed;border:1px solid #fed7aa;color:#c2410c">⚠ Devis manuel requis</div>
+                <div id="dg-detail-lines" class="space-y-0.5 text-xs mb-4" style="color:#6b7a6b"></div>
+                <button id="dg-save-btn" onclick="dgSave()" class="btn btn-primary w-full justify-center">
+                  Créer le devis &amp; ouvrir PDF
+                </button>
+                <p class="text-xs mt-3" style="color:#9ca3af">Le devis est enregistré et le PDF s'ouvre immédiatement.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div><!-- fin tab-devis_general -->
+
     </div>
   </div>
 </div>
@@ -207,6 +454,11 @@ const CAT_LABELS = {
   speciales:'Prestations spéciales', coefficients:'Coefficients', params:'Paramètres généraux',
 }
 
+function T(cat, code) {
+  const t = allTarifs.find(x => x.categorie === cat && x.code === code)
+  return t ? parseFloat(t.valeur) : 0
+}
+
 function checkAuth() {
   if (localStorage.getItem('ecoclean_admin')==='true') showApp()
   else showLogin()
@@ -233,13 +485,16 @@ document.addEventListener('keydown',e=>{ if(e.key==='Enter') doLogin() })
 function doLogout() { localStorage.removeItem('ecoclean_admin'); showLogin() }
 
 function showTab(tab) {
-  document.getElementById('tab-demandes').classList.toggle('hidden',tab!=='demandes')
-  document.getElementById('tab-tarifs').classList.toggle('hidden',tab!=='tarifs')
-  document.getElementById('nav-demandes').classList.toggle('active',tab==='demandes')
-  document.getElementById('nav-tarifs').classList.toggle('active',tab==='tarifs')
-  document.getElementById('pageTitle').textContent=tab==='demandes'?'Demandes':'Gestion des tarifs'
-  document.getElementById('filterStatut').classList.toggle('hidden',tab!=='demandes')
-  if(tab==='tarifs') loadTarifs()
+  ['demandes','tarifs','devis_general'].forEach(t => {
+    document.getElementById('tab-'+t).classList.toggle('hidden', t !== tab)
+    document.getElementById('nav-'+t)?.classList.toggle('active', t === tab)
+  })
+  const titles = { demandes:'Demandes', tarifs:'Gestion des tarifs', devis_general:'Nouveau Devis Direct' }
+  document.getElementById('pageTitle').textContent = titles[tab] || tab
+  document.getElementById('filterStatut').classList.toggle('hidden', tab !== 'demandes')
+  document.getElementById('refreshBtn').classList.toggle('hidden', tab !== 'demandes')
+  if (tab === 'tarifs') loadTarifs()
+  if (tab === 'devis_general' && allTarifs.length === 0) loadTarifs()
 }
 
 function toast(msg,type='success') {
@@ -284,13 +539,15 @@ function renderCard(d){
   const iv=(d.type_intervention||'').split(',').map(i=>TYPE_LABELS[i.trim()]||i.trim()).filter(Boolean).join(', ')
   const date=new Date(d.created_at).toLocaleDateString('fr-FR')
   const isExp=expandedId===d.id
+  const isDirect = (d.commentaire_interne||'').startsWith('[DEVIS DIRECT CLIENT]')
   return `<div class="card overflow-hidden" id="card-${d.id}">
-    <div class="flex items-center gap-3 p-4 cursor-pointer select-none" style="hover:background:#f9fafb" onclick="toggleCard('${d.id}')">
+    <div class="flex items-center gap-3 p-4 cursor-pointer select-none" onclick="toggleCard('${d.id}')">
       <div class="flex-1 min-w-0">
         <div class="flex flex-wrap items-center gap-2 mb-1">
           <span class="font-bold text-sm" style="color:#16532d">${d.id}</span>
           ${statutBadge(d.statut)}
           ${d.sur_devis?'<span class="badge" style="background:#fed7aa;color:#c2410c">Sur devis</span>':''}
+          ${isDirect?'<span class="badge" style="background:#e0e7ff;color:#4338ca">Devis direct</span>':''}
         </div>
         <p class="text-sm font-medium truncate" style="color:#1a2e1a">${d.nom_agence||'—'} — ${d.adresse_chantier||''}, ${d.ville||''}</p>
         <p class="text-xs" style="color:#6b7a6b">${d.type_bien||'—'} · ${d.surface||'?'} m² · ${iv||'—'}</p>
@@ -318,8 +575,8 @@ function renderExpanded(d){
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
       <div class="bg-white rounded-lg p-3" style="border:1px solid #e2e8e2">
-        <p class="text-xs font-semibold uppercase tracking-wide mb-2" style="color:#16532d">Agence</p>
-        ${ir('Agence',d.nom_agence)}${ir('Gestionnaire',d.gestionnaire)}${ir('Téléphone',d.telephone)}${ir('Email',d.email)}${ir('SIRET',d.siret)}
+        <p class="text-xs font-semibold uppercase tracking-wide mb-2" style="color:#16532d">Agence / Client</p>
+        ${ir('Nom',d.nom_agence)}${ir('Contact',d.gestionnaire)}${ir('Téléphone',d.telephone)}${ir('Email',d.email)}${ir('SIRET',d.siret)}
       </div>
       <div class="bg-white rounded-lg p-3" style="border:1px solid #e2e8e2">
         <p class="text-xs font-semibold uppercase tracking-wide mb-2" style="color:#16532d">Chantier</p>
@@ -337,11 +594,12 @@ function renderExpanded(d){
         <p class="text-xs font-semibold uppercase tracking-wide mb-2" style="color:#16532d">Prestations</p>
         ${ir('Cuisine',d.niveau_cuisine?`${d.niveau_cuisine} — ${(d.cuisine_options||[]).join(', ')||'—'}`:null)}
         ${ir('SDB',d.niveau_sdb?`${d.niveau_sdb} — ${(d.sdb_options||[]).join(', ')||'—'}`:null)}
-        ${d.type_sol?ir('Sol',`${d.type_sol} — ${(d.etat_sol||[]).join(', ')||'—'}`):''}
+        ${d.type_sol?ir('Sol',`${d.type_sol} — ${(d.etat_sol||[]).join(', ')||'—'}`)  :''}
         ${(d.sol_options||[]).length?ir('Traitements sols',(d.sol_options||[]).join(', ')):''}
         ${ir('Vitres',d.vitres_option)}
         ${(d.zones_options||[]).length?ir('Zones',d.zones_options.join(', ')):''}
         ${(d.speciales_options||[]).length?ir('Spéciales',d.speciales_options.join(', ')):''}
+        ${d.detail_calcul&&d.detail_calcul.ev_options&&d.detail_calcul.ev_options.length?ir('Espaces verts',d.detail_calcul.ev_options.join(', ')):''}
         ${d.nb_photos?ir('Photos',`${d.nb_photos}`):''}
       </div>
     </div>
@@ -376,11 +634,12 @@ async function updateCommentaire(id,commentaire_interne){
 function openPropret(id){
   const d=allDemandes.find(x=>x.id===id); if(!d) return
   const iv=(d.type_intervention||'').split(',').map(i=>TYPE_LABELS[i.trim()]||i.trim()).filter(Boolean).join(', ')
+  const evOpts = d.detail_calcul&&d.detail_calcul.ev_options ? d.detail_calcul.ev_options.join(', ') : null
   const lines=[
     `=== FICHE PROPRET — Eco'Clean ===`, '',
     `Référence : ${d.id}`, `Date : ${new Date(d.created_at).toLocaleDateString('fr-FR')}`, '',
-    '--- AGENCE ---',
-    `Agence : ${d.nom_agence||'—'}`, `Gestionnaire : ${d.gestionnaire||'—'}`,
+    '--- AGENCE / CLIENT ---',
+    `Nom : ${d.nom_agence||'—'}`, `Contact : ${d.gestionnaire||'—'}`,
     `Téléphone : ${d.telephone||'—'}`, `Email : ${d.email||'—'}`,
     d.siret?`SIRET : ${d.siret}`:null, '',
     '--- CHANTIER ---',
@@ -396,7 +655,8 @@ function openPropret(id){
     (d.sol_options||[]).length?`Traitements sols : ${d.sol_options.join(', ')}`:null,
     d.vitres_option?`Vitres : ${d.vitres_option}`:null,
     (d.zones_options||[]).length?`Zones : ${d.zones_options.join(', ')}`:null,
-    (d.speciales_options||[]).length?`Spéciales : ${d.speciales_options.join(', ')}`:null, '',
+    (d.speciales_options||[]).length?`Spéciales : ${d.speciales_options.join(', ')}`:null,
+    evOpts?`Espaces verts : ${evOpts}`:null, '',
     '--- FACTURATION ---',
     `Payeur : ${d.payeur||'—'} — ${d.nom_payeur||''}`,
     d.adresse_facturation?`Adresse fact. : ${d.adresse_facturation}`:null,
@@ -416,12 +676,12 @@ function copyPropret(){
 }
 
 async function loadTarifs(){
-  document.getElementById('tarifsLoading').classList.remove('hidden')
-  document.getElementById('tarifsContent').classList.add('hidden')
+  document.getElementById('tarifsLoading')?.classList.remove('hidden')
+  document.getElementById('tarifsContent')?.classList.add('hidden')
   const {data}=await db.schema('ecoclean').from('tarifs').select('*').order('categorie').order('ordre')
   allTarifs=data||[]
-  document.getElementById('tarifsLoading').classList.add('hidden')
-  document.getElementById('tarifsContent').classList.remove('hidden')
+  document.getElementById('tarifsLoading')?.classList.add('hidden')
+  document.getElementById('tarifsContent')?.classList.remove('hidden')
   renderTarifs()
 }
 
@@ -474,6 +734,244 @@ async function saveTarif(id){
   document.getElementById(`row-${id}`).style.background=''
   document.getElementById(`savecell-${id}`).innerHTML=''
   toast(`${tarif.label} mis à jour`)
+}
+
+// ==================== DEVIS GÉNÉRAL ====================
+const DG_NIVEAUX = { dg_cuisine: 'propre', dg_sdb: 'propre', dg_vitres: 'aucune' }
+const DG_EV_PRICES = {
+  tonte_petite:30,tonte_moyenne:55,
+  taille_haies_courte:30,taille_haies_longue:55,
+  taille_arbustes:40,desherbage:25,
+  ramassage_feuilles:30,soufflage:20,
+  karcher_allee:40,karcher_terrasse:35
+}
+
+function dgSetNiveau(zone, val, btn) {
+  DG_NIVEAUX[zone] = val
+  document.querySelectorAll(`[data-zone="${zone}"]`).forEach(b => b.classList.remove('selected'))
+  btn.classList.add('selected')
+  dgCalculate()
+}
+
+function dgGetChecked(name) {
+  return [...document.querySelectorAll(`[name=${name}]:checked`)].map(e => e.value)
+}
+
+function dgVal(id) { return (document.getElementById(id)||{}).value||'' }
+
+function dgCalculate() {
+  const interventions = dgGetChecked('dg_intervention')
+  const surface = parseFloat(dgVal('dg_surface'))||0
+  const cuisineOpts = dgGetChecked('dg_cuisine_opt')
+  const sdbOpts = dgGetChecked('dg_sdb_opt')
+  const solsOpts = dgGetChecked('dg_sols_opt')
+  const zonesOpts = dgGetChecked('dg_zones')
+  const specialesOpts = dgGetChecked('dg_speciales')
+  const evOpts = dgGetChecked('dg_ev')
+  const nbSdb = parseInt(dgVal('dg_nb_sdb'))||1
+  const nbWc = parseInt(dgVal('dg_nb_wc'))||0
+  const vitresVal = DG_NIVEAUX['dg_vitres']
+  const niveauCuisineLocal = DG_NIVEAUX['dg_cuisine']
+  const niveauSdbLocal = DG_NIVEAUX['dg_sdb']
+
+  const isSurDevis = interventions.includes('insalubre') || surface > 100 || !surface
+
+  const warnEl = document.getElementById('dg-devis-manuel-warn')
+  const priceEl = document.getElementById('dg-ttc-price')
+  const htEl = document.getElementById('dg-ht-info')
+  const detailEl = document.getElementById('dg-detail-lines')
+
+  if (isSurDevis) {
+    priceEl.textContent = '—'
+    htEl.textContent = 'Devis manuel requis'
+    warnEl.classList.remove('hidden')
+    detailEl.innerHTML = ''
+    return
+  }
+  warnEl.classList.add('hidden')
+
+  const surfCode = surface<=20?'s_0_20':surface<=40?'s_21_40':surface<=60?'s_41_60':surface<=80?'s_61_80':'s_81_100'
+  const basePrice = T('surface', surfCode) || (surface<=20?60:surface<=40?90:surface<=60?130:surface<=80?170:220)
+
+  let cuisinePrice = cuisineOpts.reduce((s,o) => s+T('cuisine',o), 0)
+  if (niveauCuisineLocal==='tres_sale') cuisinePrice *= 1.5
+  else if (niveauCuisineLocal==='sale') cuisinePrice *= 1.2
+
+  let sdbPrice = sdbOpts.reduce((s,o) => s+T('sdb',o), 0)
+  if (nbSdb===2) sdbPrice += T('sdb','sdb_supp')||30
+  if (nbSdb>=3) sdbPrice += (T('sdb','sdb_supp')||30)*2
+  if (nbWc>=1) sdbPrice += nbWc * 10
+  if (niveauSdbLocal==='tres_sale') sdbPrice *= 1.5
+  else if (niveauSdbLocal==='sale') sdbPrice *= 1.2
+
+  const solsPrice = solsOpts.reduce((s,o) => s+T('sols',o), 0)
+  const vitresPrice = vitresVal !== 'aucune' ? T('vitres', vitresVal) : 0
+  const zonesPrice = zonesOpts.reduce((s,o) => s+T('zones',o), 0)
+  const specialesPrice = specialesOpts.reduce((s,o) => s+T('speciales',o), 0)
+  const evPrice = evOpts.reduce((s,o) => s+(DG_EV_PRICES[o]||0), 0)
+
+  const subtotal = basePrice + cuisinePrice + sdbPrice + solsPrice + vitresPrice + zonesPrice + specialesPrice + evPrice
+
+  const priority = ['tres_sale','sinistre','apres_travaux','remise_en_etat','avant_vente','avant_location','apres_depart','simple']
+  let coefCode = 'simple'
+  for (const p of priority) { if (interventions.includes(p)) { coefCode=p; break } }
+  let coef = T('coefficients', coefCode) || 1
+  if (coef < 1) coef = 1
+  const urgentCoef = interventions.includes('urgent') ? (T('coefficients','urgent')||1.25) : 1
+
+  let estHT = subtotal * coef * urgentCoef
+  const etageFee = document.getElementById('dg_etage_sans_asc')?.checked ? 15 : 0
+  const statFee = document.getElementById('dg_stat_diff')?.checked ? 10 : 0
+  estHT += etageFee + statFee
+  estHT = Math.max(estHT, T('params','minimum')||60)
+
+  const tauxTva = T('params','tva')||10
+  const tva = estHT * tauxTva / 100
+  const estTTC = estHT + tva
+
+  priceEl.textContent = `${Math.round(estTTC*100)/100} € TTC`
+  htEl.textContent = `${Math.round(estHT*100)/100} € HT + TVA ${tauxTva}%`
+
+  const lines = []
+  if (basePrice) lines.push(`Surface ${surface}m² : ${basePrice}€`)
+  if (Math.round(cuisinePrice)) lines.push(`Cuisine : ${Math.round(cuisinePrice)}€`)
+  if (Math.round(sdbPrice)) lines.push(`SDB : ${Math.round(sdbPrice)}€`)
+  if (solsPrice) lines.push(`Sols : ${solsPrice}€`)
+  if (vitresPrice) lines.push(`Vitres : ${vitresPrice}€`)
+  if (zonesPrice) lines.push(`Zones : ${zonesPrice}€`)
+  if (specialesPrice) lines.push(`Spéciales : ${specialesPrice}€`)
+  if (evPrice) lines.push(`🌿 Espaces verts : ${evPrice}€`)
+  if (coef > 1) lines.push(`Coef ×${coef}`)
+  if (urgentCoef > 1) lines.push(`Urgence ×${urgentCoef}`)
+  if (etageFee) lines.push(`Étage : +${etageFee}€`)
+  if (statFee) lines.push(`Stationnement : +${statFee}€`)
+  detailEl.innerHTML = lines.map(l=>`<div>${l}</div>`).join('')
+}
+
+async function dgSave() {
+  const nom = dgVal('dg_nom').trim()
+  const tel = dgVal('dg_tel').trim()
+  const adresse = dgVal('dg_adresse').trim()
+  const cp = dgVal('dg_cp').trim()
+  const ville = dgVal('dg_ville').trim()
+  const surface = parseFloat(dgVal('dg_surface'))
+  const interventions = dgGetChecked('dg_intervention')
+
+  if (!nom || !tel || !adresse || !cp || !ville || !surface || interventions.length === 0) {
+    toast('Veuillez remplir les champs obligatoires (*, type d\'intervention, surface)', 'error')
+    return
+  }
+
+  const btn = document.getElementById('dg-save-btn')
+  btn.disabled = true
+  btn.innerHTML = '<span class="spinner"></span> Création...'
+
+  try {
+    const cuisineOpts = dgGetChecked('dg_cuisine_opt')
+    const sdbOpts = dgGetChecked('dg_sdb_opt')
+    const solsOpts = dgGetChecked('dg_sols_opt')
+    const zonesOpts = dgGetChecked('dg_zones')
+    const specialesOpts = dgGetChecked('dg_speciales')
+    const evOpts = dgGetChecked('dg_ev')
+    const nbSdb = parseInt(dgVal('dg_nb_sdb'))||1
+    const nbWc = parseInt(dgVal('dg_nb_wc'))||0
+    const vitresVal = DG_NIVEAUX['dg_vitres']
+    const niveauCuisineLocal = DG_NIVEAUX['dg_cuisine']
+    const niveauSdbLocal = DG_NIVEAUX['dg_sdb']
+    const isSurDevis = interventions.includes('insalubre') || surface > 100
+
+    const ref = 'DIR-' + String(new Date().getFullYear()).slice(-2) + '-' + Math.floor(Math.random()*9000+1000)
+    const now = new Date().toISOString()
+
+    let estHT = 0, estTva = 0, estTTC = 0, tauxTva = T('params','tva')||10, detail = {}
+    if (!isSurDevis) {
+      const surfCode = surface<=20?'s_0_20':surface<=40?'s_21_40':surface<=60?'s_41_60':surface<=80?'s_61_80':'s_81_100'
+      const basePrice = T('surface', surfCode) || (surface<=20?60:surface<=40?90:surface<=60?130:surface<=80?170:220)
+      let cuisinePrice = cuisineOpts.reduce((s,o) => s+T('cuisine',o), 0)
+      if (niveauCuisineLocal==='tres_sale') cuisinePrice *= 1.5
+      else if (niveauCuisineLocal==='sale') cuisinePrice *= 1.2
+      let sdbPrice = sdbOpts.reduce((s,o) => s+T('sdb',o), 0)
+      if (nbSdb===2) sdbPrice += T('sdb','sdb_supp')||30
+      if (nbSdb>=3) sdbPrice += (T('sdb','sdb_supp')||30)*2
+      if (nbWc>=1) sdbPrice += nbWc * 10
+      if (niveauSdbLocal==='tres_sale') sdbPrice *= 1.5
+      else if (niveauSdbLocal==='sale') sdbPrice *= 1.2
+      const solsPrice = solsOpts.reduce((s,o) => s+T('sols',o), 0)
+      const vitresPrice = vitresVal !== 'aucune' ? T('vitres', vitresVal) : 0
+      const zonesPrice = zonesOpts.reduce((s,o) => s+T('zones',o), 0)
+      const specialesPrice = specialesOpts.reduce((s,o) => s+T('speciales',o), 0)
+      const evPrice = evOpts.reduce((s,o) => s+(DG_EV_PRICES[o]||0), 0)
+      const subtotal = basePrice + cuisinePrice + sdbPrice + solsPrice + vitresPrice + zonesPrice + specialesPrice + evPrice
+      const priority = ['tres_sale','sinistre','apres_travaux','remise_en_etat','avant_vente','avant_location','apres_depart','simple']
+      let coefCode = 'simple'
+      for (const p of priority) { if (interventions.includes(p)) { coefCode=p; break } }
+      let coef = T('coefficients', coefCode) || 1
+      if (coef < 1) coef = 1
+      const urgentCoef = interventions.includes('urgent') ? (T('coefficients','urgent')||1.25) : 1
+      let total = subtotal * coef * urgentCoef
+      const etageFee = document.getElementById('dg_etage_sans_asc')?.checked ? 15 : 0
+      const statFee = document.getElementById('dg_stat_diff')?.checked ? 10 : 0
+      total += etageFee + statFee
+      total = Math.max(total, T('params','minimum')||60)
+      const tva = total * tauxTva / 100
+      estHT = Math.round(total*100)/100
+      estTva = Math.round(tva*100)/100
+      estTTC = Math.round((total+tva)*100)/100
+      detail = { basePrice, cuisinePrice:Math.round(cuisinePrice*100)/100, sdbPrice:Math.round(sdbPrice*100)/100, solsPrice, vitresPrice, zonesPrice, specialesPrice, evPrice, ev_options:evOpts, coef, urgentCoef, etageFee, statFee }
+    }
+
+    const demande = {
+      id: ref, created_at: now, updated_at: now,
+      nom_agence: nom, gestionnaire: nom, telephone: tel,
+      email: dgVal('dg_email')||null,
+      adresse_agence: dgVal('dg_adresse_fact')||null,
+      adresse_chantier: adresse, code_postal: cp, ville: ville,
+      type_bien: dgVal('dg_type_bien')||'Autre', surface: surface,
+      type_intervention: interventions.join(','),
+      acces_cles: dgVal('dg_acces')||'client',
+      etage_sans_asc: document.getElementById('dg_etage_sans_asc')?.checked||false,
+      stationnement_difficile: document.getElementById('dg_stat_diff')?.checked||false,
+      ascenseur: false,
+      payeur: 'particulier', nom_payeur: nom,
+      adresse_facturation: dgVal('dg_adresse_fact')||null,
+      email_facturation: dgVal('dg_email')||null,
+      niveau_cuisine: niveauCuisineLocal, cuisine_options: cuisineOpts,
+      niveau_sdb: niveauSdbLocal, sdb_options: sdbOpts,
+      type_sol: null, etat_sol: [], sol_options: solsOpts,
+      vitres_option: vitresVal, zones_options: zonesOpts,
+      speciales_options: specialesOpts,
+      nb_photos: 0, photos_urls: [],
+      estimation_ht: isSurDevis ? null : estHT,
+      estimation_tva: isSurDevis ? null : estTva,
+      estimation_ttc: isSurDevis ? null : estTTC,
+      taux_tva: tauxTva,
+      detail_calcul: isSurDevis ? {} : detail,
+      sur_devis: isSurDevis, statut: 'nouveau',
+      commentaire_interne: '[DEVIS DIRECT CLIENT]' + (dgVal('dg_commentaire') ? '\n' + dgVal('dg_commentaire') : ''),
+    }
+
+    const { error } = await db.schema('ecoclean').from('demandes').insert(demande)
+    if (error) throw error
+
+    toast(`Devis ${ref} créé !`)
+    window.open(`devis.html?id=${ref}`, '_blank')
+
+    // Reset formulaire
+    ['dg_nom','dg_tel','dg_email','dg_adresse','dg_cp','dg_ville','dg_surface','dg_commentaire','dg_adresse_fact'].forEach(id => {
+      const el = document.getElementById(id); if(el) el.value = ''
+    })
+    document.querySelectorAll('[name^="dg_"]:checked').forEach(el => el.checked = false)
+    DG_NIVEAUX.dg_cuisine = 'propre'; DG_NIVEAUX.dg_sdb = 'propre'; DG_NIVEAUX.dg_vitres = 'aucune'
+    document.querySelectorAll('.dg-lvl-btn').forEach(b => b.classList.remove('selected'))
+    document.querySelectorAll('[data-val="propre"]').forEach(b => b.classList.add('selected'))
+    document.querySelector('[data-val="aucune"]')?.classList.add('selected')
+    dgCalculate()
+  } catch(err) {
+    console.error(err)
+    toast('Erreur lors de la création : ' + (err.message||''), 'error')
+  }
+  btn.disabled = false
+  btn.innerHTML = 'Créer le devis &amp; ouvrir PDF'
 }
 
 checkAuth()
