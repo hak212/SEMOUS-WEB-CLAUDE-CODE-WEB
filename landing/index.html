@@ -3,67 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Demandez votre pré-devis gratuit en 3 minutes. Nettoyage professionnel et entretien espaces verts à Toulouse — Mr &amp; Mrs Eco'Clean." />
+  <meta name="description" content="Demande de pré-devis gratuit. Nettoyage professionnel et entretien espaces verts à Toulouse — Mr &amp; Mrs Eco'Clean. Syndic, agences, professionnels, particuliers." />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#0d3a1f" />
-  <meta property="og:title" content="Pré-devis Gratuit — Mr &amp; Mrs Eco'Clean" />
-  <meta property="og:description" content="Nettoyage professionnel &amp; espaces verts à Toulouse. Devis gratuit, réponse sous 2h." />
-  <title>Pré-devis Gratuit — Mr &amp; Mrs Eco'Clean | Nettoyage Toulouse</title>
+  <meta property="og:title" content="Demande de pré-devis — Mr &amp; Mrs Eco'Clean" />
+  <meta property="og:description" content="Nettoyage professionnel &amp; espaces verts à Toulouse. Proposition sur mesure, réponse sous 2h." />
+  <title>Demande de pré-devis — Mr &amp; Mrs Eco'Clean | Toulouse</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     * { -webkit-font-smoothing: antialiased; box-sizing: border-box; }
     body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background: #f5f7f5; }
 
-    .opt-card { cursor: pointer; }
+    .opt-card { cursor: pointer; display: block; }
     .opt-card input[type="radio"],
     .opt-card input[type="checkbox"] { position: absolute; opacity: 0; width: 0; height: 0; }
     .opt-inner {
-      border: 2px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 12px 14px;
-      transition: all 0.18s;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      border: 2px solid #e5e7eb; border-radius: 12px; padding: 12px 14px;
+      transition: border-color .18s, background .18s; background: #fff;
+      display: flex; align-items: center; gap: 10px;
     }
     .opt-inner:hover { border-color: #8dd4a0; background: #f9fdf9; }
-    .opt-card.selected .opt-inner,
-    .opt-card input:checked ~ .opt-inner { border-color: #16532d; background: #e8f5ec; }
+    .opt-card.selected .opt-inner { border-color: #16532d; background: #e8f5ec; }
+
+    .profile-card .opt-inner { flex-direction: column; text-align: center; gap: 6px; padding: 16px 12px; justify-content: center; }
 
     .progress-fill { transition: width 0.45s cubic-bezier(.4,0,.2,1); }
 
     .step { display: none; }
-    .step.visible { display: block; animation: slideUp .3s ease; }
-    @keyframes slideUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+    .step.visible { display: block; animation: fadeUp .28s ease; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
 
     .field {
-      border: 1.5px solid #e2e8e2;
-      border-radius: 10px;
-      padding: 10px 14px;
-      font-size: 15px;
-      width: 100%;
-      outline: none;
-      background: #fff;
+      border: 1.5px solid #e2e8e2; border-radius: 10px; padding: 10px 14px;
+      font-size: 15px; width: 100%; outline: none; background: #fff;
       transition: border-color .15s, box-shadow .15s;
     }
     .field:focus { border-color: #16532d; box-shadow: 0 0 0 3px rgba(22,83,45,.08); }
-    .field.err { border-color: #ef4444; }
 
     .btn-next {
-      background: #16532d; color: #fff;
-      border: none; border-radius: 12px;
+      background: #16532d; color: #fff; border: none; border-radius: 12px;
       padding: 13px 22px; font-size: 15px; font-weight: 600;
       cursor: pointer; display: inline-flex; align-items: center; gap: 8px;
       transition: all .2s; min-height: 48px;
     }
     .btn-next:hover { background: #0d3a1f; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(22,83,45,.25); }
     .btn-next:active { transform: translateY(0); }
-    .btn-next:disabled { opacity: .65; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn-next:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
+
     .btn-back {
-      background: #f0f0f0; color: #555;
-      border: none; border-radius: 12px;
+      background: #f0f0f0; color: #555; border: none; border-radius: 12px;
       padding: 12px 18px; font-size: 14px; font-weight: 500;
       cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
       transition: background .15s; min-height: 48px;
@@ -77,31 +66,33 @@
     .spinner { width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,.3); border-top-color: #fff; border-radius: 50%; animation: spin .6s linear infinite; }
 
     .hp { position: absolute; left: -9999px; top: -9999px; opacity: 0; height: 0; overflow: hidden; pointer-events: none; }
+
+    .section-divider { border: none; border-top: 1px solid #e8f5ec; margin: 16px 0; }
   </style>
 </head>
 <body>
 
-<!-- NETLIFY FORM — hidden, for crawler detection -->
+<!-- NETLIFY FORM — hidden, crawler detection only. Must match all JS-submitted fields. -->
 <form name="pre-devis-ecoclean" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
   <input name="bot-field" />
   <input name="request_id" />
   <input name="source" />
   <input name="version" />
-  <input name="service_type" />
-  <input name="urgency" />
-  <input name="frequency" />
   <input name="profile_type" />
-  <input name="property_type" />
+  <input name="services" />
+  <input name="ev_services" />
+  <input name="frequency" />
+  <input name="site_address" />
   <input name="surface" />
-  <input name="property_state" />
-  <input name="city" />
+  <input name="specifications" />
   <input name="contact_name" />
+  <input name="company_name" />
   <input name="phone" />
   <input name="email" />
-  <input name="callback_time" />
-  <input name="message" />
+  <input name="contact_preference" />
   <input name="rgpd_consent" />
   <input name="prospect_score" />
+  <input name="priority" />
   <input name="subject" />
   <input name="form_payload" />
 </form>
@@ -128,19 +119,19 @@
 </header>
 
 <!-- HERO -->
-<section style="background:linear-gradient(160deg,#0d3a1f 0%,#16532d 100%);padding:32px 16px 48px">
+<section style="background:linear-gradient(160deg,#0d3a1f 0%,#16532d 100%);padding:28px 16px 44px">
   <div class="max-w-xl mx-auto text-center">
-    <p class="text-xs font-semibold uppercase tracking-widest mb-2" style="color:#8dd4a0">Devis gratuit &amp; sans engagement</p>
+    <p class="text-xs font-semibold uppercase tracking-widest mb-2" style="color:#8dd4a0">Pré-devis gratuit &amp; sans engagement</p>
     <h1 class="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
-      Votre estimation en <span style="color:#c3e6cb">3 minutes</span>
+      Décrivez votre besoin,<br class="sm:hidden" /> nous vous proposons <span style="color:#c3e6cb">une solution sur mesure</span>
     </h1>
     <p class="text-sm mb-5" style="color:#a7d4b3">
-      Nettoyage professionnel &middot; Entretien espaces verts &middot; Réponse sous 2h
+      Nettoyage professionnel &middot; Espaces verts &middot; Toulouse &amp; région &middot; Réponse sous 2h
     </p>
     <div class="flex flex-wrap justify-center gap-2">
-      <span class="px-3 py-1.5 rounded-full text-xs font-medium" style="background:rgba(255,255,255,.12);color:#c3e6cb"><span aria-hidden="true">✅</span> 100% local — Toulouse</span>
+      <span class="px-3 py-1.5 rounded-full text-xs font-medium" style="background:rgba(255,255,255,.12);color:#c3e6cb"><span aria-hidden="true">🏢</span> Syndic &amp; agences</span>
       <span class="px-3 py-1.5 rounded-full text-xs font-medium" style="background:rgba(255,255,255,.12);color:#c3e6cb"><span aria-hidden="true">📞</span> Rappel sous 2h</span>
-      <span class="px-3 py-1.5 rounded-full text-xs font-medium" style="background:rgba(255,255,255,.12);color:#c3e6cb"><span aria-hidden="true">🔒</span> Sans engagement</span>
+      <span class="px-3 py-1.5 rounded-full text-xs font-medium" style="background:rgba(255,255,255,.12);color:#c3e6cb"><span aria-hidden="true">🔒</span> Devis confidentiel</span>
     </div>
   </div>
 </section>
@@ -151,292 +142,200 @@
   <!-- Progress -->
   <div id="progressBlock" class="bg-white rounded-2xl shadow-sm px-5 pt-4 pb-3 mb-4" style="border:1px solid #e2e8e2">
     <div class="flex justify-between items-center mb-1.5">
-      <p class="text-xs font-semibold" style="color:#6b7a6b" id="stepLabel">Étape 1 sur 3</p>
-      <p class="text-xs font-semibold" style="color:#16532d" id="stepPct">33%</p>
+      <p class="text-xs font-semibold" id="stepLabel" style="color:#6b7a6b">Étape 1 sur 5</p>
+      <p class="text-xs font-semibold" id="stepPct" style="color:#16532d">20%</p>
     </div>
     <div class="rounded-full overflow-hidden" style="height:6px;background:#e8f5ec">
       <div class="progress-fill rounded-full" id="pBar"
-           style="height:6px;background:#16532d;width:33%"
-           role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"
+           style="height:6px;background:#16532d;width:20%"
+           role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
            aria-label="Progression du formulaire"></div>
     </div>
-    <p class="text-xs font-medium mt-1.5" style="color:#1a2e1a" id="stepName">Votre besoin</p>
+    <p class="text-xs font-medium mt-1.5" id="stepName" style="color:#1a2e1a">Votre profil</p>
   </div>
 
   <div aria-live="polite" aria-atomic="false">
 
-  <!-- STEP 1 — Besoin -->
+  <!-- STEP 1 — Profil -->
   <div class="step visible bg-white rounded-2xl shadow-sm p-5 sm:p-6" style="border:1px solid #e2e8e2" id="step1">
-    <h2 class="text-lg font-bold mb-4" style="color:#0d3a1f">Quel service vous intéresse ?</h2>
+    <h2 class="text-lg font-bold mb-1" style="color:#0d3a1f">Vous êtes…</h2>
+    <p class="text-sm mb-4" style="color:#6b7a6b">Sélectionnez votre profil pour voir les prestations adaptées.</p>
 
-    <div class="mb-5">
-      <p class="text-sm font-semibold mb-2" style="color:#374151">Type de prestation *</p>
-      <div class="grid grid-cols-3 gap-2">
-        <label class="opt-card" id="lbl-svc-nettoyage">
-          <input type="radio" name="service_type" value="nettoyage" onchange="pickRadio('service_type','lbl-svc-',this.value)" />
-          <div class="opt-inner flex-col text-center gap-1 py-3">
-            <span class="text-2xl" aria-hidden="true">🧹</span>
-            <p class="text-xs font-semibold" style="color:#1a2e1a">Nettoyage</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-svc-espaces_verts">
-          <input type="radio" name="service_type" value="espaces_verts" onchange="pickRadio('service_type','lbl-svc-',this.value)" />
-          <div class="opt-inner flex-col text-center gap-1 py-3">
-            <span class="text-2xl" aria-hidden="true">🌿</span>
-            <p class="text-xs font-semibold" style="color:#1a2e1a">Espaces verts</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-svc-les_deux">
-          <input type="radio" name="service_type" value="les_deux" onchange="pickRadio('service_type','lbl-svc-',this.value)" />
-          <div class="opt-inner flex-col text-center gap-1 py-3">
-            <span class="text-2xl" aria-hidden="true">✨</span>
-            <p class="text-xs font-semibold" style="color:#1a2e1a">Les deux</p>
-          </div>
-        </label>
-      </div>
-      <p class="emsg" id="err-service" role="alert">Veuillez choisir un type de prestation.</p>
+    <div class="grid grid-cols-2 gap-3">
+      <label class="opt-card profile-card" id="lbl-prf-syndic">
+        <input type="radio" name="profile_type" value="syndic" onchange="pickProfile('syndic')" />
+        <div class="opt-inner">
+          <span class="text-3xl" aria-hidden="true">🏘️</span>
+          <p class="text-sm font-bold leading-tight" style="color:#1a2e1a">Syndic / Copropriété</p>
+          <p class="text-xs" style="color:#6b7a6b">Résidence, immeuble</p>
+        </div>
+      </label>
+      <label class="opt-card profile-card" id="lbl-prf-agence_immo">
+        <input type="radio" name="profile_type" value="agence_immo" onchange="pickProfile('agence_immo')" />
+        <div class="opt-inner">
+          <span class="text-3xl" aria-hidden="true">🏢</span>
+          <p class="text-sm font-bold leading-tight" style="color:#1a2e1a">Agence immobilière</p>
+          <p class="text-xs" style="color:#6b7a6b">Gestion locative, EDL</p>
+        </div>
+      </label>
+      <label class="opt-card profile-card" id="lbl-prf-professionnel">
+        <input type="radio" name="profile_type" value="professionnel" onchange="pickProfile('professionnel')" />
+        <div class="opt-inner">
+          <span class="text-3xl" aria-hidden="true">💼</span>
+          <p class="text-sm font-bold leading-tight" style="color:#1a2e1a">Pro / Bureaux / Local</p>
+          <p class="text-xs" style="color:#6b7a6b">Commerce, entreprise</p>
+        </div>
+      </label>
+      <label class="opt-card profile-card" id="lbl-prf-particulier">
+        <input type="radio" name="profile_type" value="particulier" onchange="pickProfile('particulier')" />
+        <div class="opt-inner">
+          <span class="text-3xl" aria-hidden="true">🏠</span>
+          <p class="text-sm font-bold leading-tight" style="color:#1a2e1a">Particulier</p>
+          <p class="text-xs" style="color:#6b7a6b">Logement, maison, jardin</p>
+        </div>
+      </label>
     </div>
+    <p class="emsg mt-3" id="err-profile" role="alert">Veuillez sélectionner votre profil.</p>
 
-    <div class="mb-5">
-      <p class="text-sm font-semibold mb-2" style="color:#374151">Délai souhaité *</p>
-      <div class="grid grid-cols-2 gap-2">
-        <label class="opt-card" id="lbl-urg-48h">
-          <input type="radio" name="urgency" value="48h" onchange="pickRadio('urgency','lbl-urg-',this.value)" />
-          <div class="opt-inner">
-            <span class="text-lg" aria-hidden="true">🔴</span>
-            <div><p class="text-sm font-semibold" style="color:#1a2e1a">Sous 48h</p><p class="text-xs" style="color:#6b7a6b">Urgent</p></div>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-urg-semaine">
-          <input type="radio" name="urgency" value="semaine" onchange="pickRadio('urgency','lbl-urg-',this.value)" />
-          <div class="opt-inner">
-            <span class="text-lg" aria-hidden="true">🟡</span>
-            <div><p class="text-sm font-semibold" style="color:#1a2e1a">Cette semaine</p><p class="text-xs" style="color:#6b7a6b">Rapide</p></div>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-urg-mois">
-          <input type="radio" name="urgency" value="mois" onchange="pickRadio('urgency','lbl-urg-',this.value)" />
-          <div class="opt-inner">
-            <span class="text-lg" aria-hidden="true">🟢</span>
-            <div><p class="text-sm font-semibold" style="color:#1a2e1a">Ce mois</p><p class="text-xs" style="color:#6b7a6b">Planifié</p></div>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-urg-planifie">
-          <input type="radio" name="urgency" value="planifie" onchange="pickRadio('urgency','lbl-urg-',this.value)" />
-          <div class="opt-inner">
-            <span class="text-lg" aria-hidden="true">📅</span>
-            <div><p class="text-sm font-semibold" style="color:#1a2e1a">Planifié</p><p class="text-xs" style="color:#6b7a6b">Date flexible</p></div>
-          </div>
-        </label>
-      </div>
-      <p class="emsg" id="err-urgency" role="alert">Veuillez indiquer un délai.</p>
-    </div>
-
-    <div class="mb-5">
-      <p class="text-sm font-semibold mb-2" style="color:#374151">Fréquence *</p>
-      <div class="grid grid-cols-2 gap-2">
-        <label class="opt-card" id="lbl-frq-ponctuel">
-          <input type="radio" name="frequency" value="ponctuel" onchange="pickRadio('frequency','lbl-frq-',this.value)" />
-          <div class="opt-inner">
-            <span class="text-xl" aria-hidden="true">1️⃣</span>
-            <div><p class="text-sm font-semibold" style="color:#1a2e1a">Ponctuel</p><p class="text-xs" style="color:#6b7a6b">Une seule fois</p></div>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-frq-regulier">
-          <input type="radio" name="frequency" value="regulier" onchange="pickRadio('frequency','lbl-frq-',this.value)" />
-          <div class="opt-inner">
-            <span class="text-xl" aria-hidden="true">🔄</span>
-            <div><p class="text-sm font-semibold" style="color:#1a2e1a">Régulier</p><p class="text-xs" style="color:#6b7a6b">Contrat récurrent</p></div>
-          </div>
-        </label>
-      </div>
-      <p class="emsg" id="err-frequency" role="alert">Veuillez choisir une fréquence.</p>
-    </div>
-
-    <div class="mb-6">
-      <p class="text-sm font-semibold mb-2" style="color:#374151">Vous êtes *</p>
-      <div class="grid grid-cols-2 gap-2">
-        <label class="opt-card" id="lbl-prf-particulier">
-          <input type="radio" name="profile_type" value="particulier" onchange="pickRadio('profile_type','lbl-prf-',this.value)" />
-          <div class="opt-inner">
-            <span class="text-xl" aria-hidden="true">🏠</span>
-            <p class="text-sm font-semibold" style="color:#1a2e1a">Particulier</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-prf-agence_immo">
-          <input type="radio" name="profile_type" value="agence_immo" onchange="pickRadio('profile_type','lbl-prf-',this.value)" />
-          <div class="opt-inner">
-            <span class="text-xl" aria-hidden="true">🏢</span>
-            <p class="text-sm font-semibold" style="color:#1a2e1a">Agence immo.</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-prf-professionnel">
-          <input type="radio" name="profile_type" value="professionnel" onchange="pickRadio('profile_type','lbl-prf-',this.value)" />
-          <div class="opt-inner">
-            <span class="text-xl" aria-hidden="true">💼</span>
-            <p class="text-sm font-semibold" style="color:#1a2e1a">Professionnel</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-prf-bailleur">
-          <input type="radio" name="profile_type" value="bailleur" onchange="pickRadio('profile_type','lbl-prf-',this.value)" />
-          <div class="opt-inner">
-            <span class="text-xl" aria-hidden="true">🔑</span>
-            <p class="text-sm font-semibold" style="color:#1a2e1a">Bailleur / SCI</p>
-          </div>
-        </label>
-      </div>
-      <p class="emsg" id="err-profile" role="alert">Veuillez sélectionner votre profil.</p>
-    </div>
-
-    <div class="flex flex-col items-end gap-1.5">
+    <div class="flex flex-col items-end gap-1.5 mt-6">
       <button onclick="goNext(1)" class="btn-next">
-        Étape suivante
+        Voir les prestations
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </button>
-      <p class="text-xs" style="color:#9ca3af">Aucune donnée personnelle demandée à cette étape</p>
+      <p class="text-xs" style="color:#9ca3af">Aucune donnée personnelle à cette étape</p>
     </div>
   </div>
 
-  <!-- STEP 2 — Bien -->
+  <!-- STEP 2 — Prestations (dynamic) -->
   <div class="step bg-white rounded-2xl shadow-sm p-5 sm:p-6" style="border:1px solid #e2e8e2" id="step2">
-    <h2 class="text-lg font-bold mb-4" style="color:#0d3a1f">Votre bien</h2>
+    <h2 class="text-lg font-bold mb-1" style="color:#0d3a1f">Vos besoins</h2>
+    <p class="text-sm mb-4" id="step2Sub" style="color:#6b7a6b">Sélectionnez tout ce qui correspond à votre demande.</p>
 
-    <div class="mb-5">
-      <p class="text-sm font-semibold mb-2" style="color:#374151">Type de bien *</p>
-      <div class="grid grid-cols-3 gap-2">
-        <label class="opt-card" id="lbl-pt-appartement">
-          <input type="radio" name="property_type" value="appartement" onchange="pickRadio('property_type','lbl-pt-',this.value)" />
-          <div class="opt-inner flex-col text-center gap-0.5 py-3">
-            <span class="text-xl" aria-hidden="true">🏠</span>
-            <p class="text-xs font-semibold" style="color:#1a2e1a">Appartement</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-pt-maison">
-          <input type="radio" name="property_type" value="maison" onchange="pickRadio('property_type','lbl-pt-',this.value)" />
-          <div class="opt-inner flex-col text-center gap-0.5 py-3">
-            <span class="text-xl" aria-hidden="true">🏡</span>
-            <p class="text-xs font-semibold" style="color:#1a2e1a">Maison</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-pt-bureau_commerce">
-          <input type="radio" name="property_type" value="bureau_commerce" onchange="pickRadio('property_type','lbl-pt-',this.value)" />
-          <div class="opt-inner flex-col text-center gap-0.5 py-3">
-            <span class="text-xl" aria-hidden="true">🏢</span>
-            <p class="text-xs font-semibold" style="color:#1a2e1a">Bureau/Com.</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-pt-jardin">
-          <input type="radio" name="property_type" value="jardin" onchange="pickRadio('property_type','lbl-pt-',this.value)" />
-          <div class="opt-inner flex-col text-center gap-0.5 py-3">
-            <span class="text-xl" aria-hidden="true">🌳</span>
-            <p class="text-xs font-semibold" style="color:#1a2e1a">Jardin/EV</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-pt-parties_communes">
-          <input type="radio" name="property_type" value="parties_communes" onchange="pickRadio('property_type','lbl-pt-',this.value)" />
-          <div class="opt-inner flex-col text-center gap-0.5 py-3">
-            <span class="text-xl" aria-hidden="true">🏗️</span>
-            <p class="text-xs font-semibold" style="color:#1a2e1a">Parties comm.</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-pt-autre">
-          <input type="radio" name="property_type" value="autre" onchange="pickRadio('property_type','lbl-pt-',this.value)" />
-          <div class="opt-inner flex-col text-center gap-0.5 py-3">
-            <span class="text-xl" aria-hidden="true">📦</span>
-            <p class="text-xs font-semibold" style="color:#1a2e1a">Autre</p>
-          </div>
-        </label>
-      </div>
-      <p class="emsg" id="err-property" role="alert">Veuillez choisir un type de bien.</p>
+    <div id="servicesGrid" class="flex flex-col gap-2"></div>
+    <p class="emsg mt-2" id="err-services" role="alert">Veuillez sélectionner au moins une prestation.</p>
+
+    <!-- EV detail block — shown when EV service selected -->
+    <div id="evBlock" style="display:none">
+      <hr class="section-divider" />
+      <p class="text-sm font-semibold mb-1" style="color:#374151">
+        <span aria-hidden="true">🌿</span> Espaces verts — prestations souhaitées
+      </p>
+      <p class="text-xs mb-3" style="color:#6b7a6b">Sélectionnez les interventions. Si vous avez un cahier des charges, précisez-le à l'étape suivante.</p>
+      <div id="evGrid" class="flex flex-col gap-2"></div>
     </div>
 
-    <div class="mb-5">
-      <p class="text-sm font-semibold mb-2" style="color:#374151">Surface approximative *</p>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        <label class="opt-card" id="lbl-sf-moins_40">
-          <input type="radio" name="surface" value="moins_40" onchange="pickRadio('surface','lbl-sf-',this.value)" />
-          <div class="opt-inner flex-col text-center py-2.5 gap-0">
-            <p class="text-sm font-bold" style="color:#1a2e1a">&lt;40m²</p>
-            <p class="text-xs" style="color:#6b7a6b">Studio/T1</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-sf-40_70">
-          <input type="radio" name="surface" value="40_70" onchange="pickRadio('surface','lbl-sf-',this.value)" />
-          <div class="opt-inner flex-col text-center py-2.5 gap-0">
-            <p class="text-sm font-bold" style="color:#1a2e1a">40–70m²</p>
-            <p class="text-xs" style="color:#6b7a6b">T2/T3</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-sf-70_100">
-          <input type="radio" name="surface" value="70_100" onchange="pickRadio('surface','lbl-sf-',this.value)" />
-          <div class="opt-inner flex-col text-center py-2.5 gap-0">
-            <p class="text-sm font-bold" style="color:#1a2e1a">70–100m²</p>
-            <p class="text-xs" style="color:#6b7a6b">T3/T4</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-sf-plus_100">
-          <input type="radio" name="surface" value="plus_100" onchange="pickRadio('surface','lbl-sf-',this.value)" />
-          <div class="opt-inner flex-col text-center py-2.5 gap-0">
-            <p class="text-sm font-bold" style="color:#1a2e1a">&gt;100m²</p>
-            <p class="text-xs" style="color:#6b7a6b">Grand</p>
-          </div>
-        </label>
-      </div>
-      <p class="emsg" id="err-surface" role="alert">Veuillez indiquer une surface.</p>
-    </div>
-
-    <div class="mb-5">
-      <label class="block text-sm font-semibold mb-1.5" style="color:#374151" for="city">Ville / Code postal *</label>
-      <input type="text" id="city" class="field" placeholder="Ex: Toulouse, 31000" autocomplete="postal-code" />
-      <p class="emsg" id="err-city" role="alert">Veuillez indiquer votre ville ou code postal.</p>
-    </div>
-
-    <div class="mb-6" id="stateBlock">
-      <p class="text-sm font-semibold mb-2" style="color:#374151">État actuel du bien</p>
-      <div class="grid grid-cols-2 gap-2">
-        <label class="opt-card" id="lbl-ps-propre">
-          <input type="radio" name="property_state" value="propre" onchange="pickRadio('property_state','lbl-ps-',this.value)" />
-          <div class="opt-inner gap-2 py-2">
-            <span aria-hidden="true">😊</span><p class="text-sm" style="color:#1a2e1a">Propre à entretenir</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-ps-sale">
-          <input type="radio" name="property_state" value="sale" onchange="pickRadio('property_state','lbl-ps-',this.value)" />
-          <div class="opt-inner gap-2 py-2">
-            <span aria-hidden="true">😐</span><p class="text-sm" style="color:#1a2e1a">Sale</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-ps-tres_sale">
-          <input type="radio" name="property_state" value="tres_sale" onchange="pickRadio('property_state','lbl-ps-',this.value)" />
-          <div class="opt-inner gap-2 py-2">
-            <span aria-hidden="true">😰</span><p class="text-sm" style="color:#1a2e1a">Très sale</p>
-          </div>
-        </label>
-        <label class="opt-card" id="lbl-ps-apres_travaux">
-          <input type="radio" name="property_state" value="apres_travaux" onchange="pickRadio('property_state','lbl-ps-',this.value)" />
-          <div class="opt-inner gap-2 py-2">
-            <span aria-hidden="true">🔨</span><p class="text-sm" style="color:#1a2e1a">Après travaux / sinistre</p>
-          </div>
-        </label>
-      </div>
-    </div>
-
-    <div class="flex justify-between">
+    <div class="flex justify-between mt-6">
       <button onclick="goPrev(2)" class="btn-back">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         Retour
       </button>
       <button onclick="goNext(2)" class="btn-next">
-        Étape suivante
+        Continuer
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       </button>
     </div>
   </div>
 
-  <!-- STEP 3 — Contact -->
+  <!-- STEP 3 — Fréquence -->
   <div class="step bg-white rounded-2xl shadow-sm p-5 sm:p-6" style="border:1px solid #e2e8e2" id="step3">
+    <h2 class="text-lg font-bold mb-1" style="color:#0d3a1f">Fréquence &amp; urgence</h2>
+    <p class="text-sm mb-4" style="color:#6b7a6b">Comment souhaitez-vous travailler avec nous ?</p>
+
+    <div class="flex flex-col gap-2">
+      <label class="opt-card" id="lbl-frq-ponctuel">
+        <input type="radio" name="frequency" value="ponctuel" onchange="pickFreq('ponctuel')" />
+        <div class="opt-inner">
+          <span class="text-xl" aria-hidden="true">1️⃣</span>
+          <div><p class="text-sm font-semibold" style="color:#1a2e1a">Intervention ponctuelle</p><p class="text-xs" style="color:#6b7a6b">Une seule fois, date à définir</p></div>
+        </div>
+      </label>
+      <label class="opt-card" id="lbl-frq-urgent">
+        <input type="radio" name="frequency" value="urgent" onchange="pickFreq('urgent')" />
+        <div class="opt-inner">
+          <span class="text-xl" aria-hidden="true">🔴</span>
+          <div><p class="text-sm font-semibold" style="color:#1a2e1a">Intervention urgente</p><p class="text-xs" style="color:#6b7a6b">Sous 48h – 72h</p></div>
+        </div>
+      </label>
+      <label class="opt-card" id="lbl-frq-regulier">
+        <input type="radio" name="frequency" value="regulier" onchange="pickFreq('regulier')" />
+        <div class="opt-inner">
+          <span class="text-xl" aria-hidden="true">🔄</span>
+          <div><p class="text-sm font-semibold" style="color:#1a2e1a">Entretien régulier</p><p class="text-xs" style="color:#6b7a6b">Hebdomadaire, bimensuel, mensuel</p></div>
+        </div>
+      </label>
+      <label class="opt-card" id="lbl-frq-contrat_annuel">
+        <input type="radio" name="frequency" value="contrat_annuel" onchange="pickFreq('contrat_annuel')" />
+        <div class="opt-inner">
+          <span class="text-xl" aria-hidden="true">📋</span>
+          <div><p class="text-sm font-semibold" style="color:#1a2e1a">Devis pour contrat annuel</p><p class="text-xs" style="color:#6b7a6b">Prestation sur l'année</p></div>
+        </div>
+      </label>
+      <label class="opt-card" id="lbl-frq-visite_necessaire">
+        <input type="radio" name="frequency" value="visite_necessaire" onchange="pickFreq('visite_necessaire')" />
+        <div class="opt-inner">
+          <span class="text-xl" aria-hidden="true">🔍</span>
+          <div><p class="text-sm font-semibold" style="color:#1a2e1a">Visite préalable nécessaire</p><p class="text-xs" style="color:#6b7a6b">Chantier à évaluer sur place</p></div>
+        </div>
+      </label>
+    </div>
+    <p class="emsg mt-2" id="err-frequency" role="alert">Veuillez indiquer une fréquence.</p>
+
+    <div class="flex justify-between mt-6">
+      <button onclick="goPrev(3)" class="btn-back">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Retour
+      </button>
+      <button onclick="goNext(3)" class="btn-next">
+        Continuer
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 4 — Situation -->
+  <div class="step bg-white rounded-2xl shadow-sm p-5 sm:p-6" style="border:1px solid #e2e8e2" id="step4">
+    <h2 class="text-lg font-bold mb-1" style="color:#0d3a1f">Votre situation</h2>
+    <p class="text-sm mb-4" style="color:#6b7a6b">Ces informations nous permettent de préparer une proposition adaptée.</p>
+
+    <div class="space-y-4">
+      <div>
+        <label class="block text-sm font-semibold mb-1.5" for="site_address" style="color:#374151">Adresse ou secteur *</label>
+        <input type="text" id="site_address" class="field" placeholder="Ex : Toulouse centre, Colomiers, résidence Les Pins…" autocomplete="street-address" />
+        <p class="emsg" id="err-address" role="alert">Veuillez indiquer l'adresse ou le secteur.</p>
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1" for="surface" style="color:#374151">
+          Surface approximative
+          <span class="font-normal text-xs" style="color:#6b7a6b"> — optionnel, si vous la connaissez</span>
+        </label>
+        <input type="text" id="surface" class="field" placeholder="Ex : 80 m², T3, 12 logements, 500 m² de jardin…" />
+      </div>
+      <div>
+        <label class="block text-sm font-semibold mb-1.5" for="specifications" style="color:#374151">
+          Cahier des charges / Précisions
+          <span class="font-normal text-xs" style="color:#6b7a6b"> — optionnel</span>
+        </label>
+        <textarea id="specifications" class="field" rows="4" style="resize:vertical"
+          placeholder="Décrivez votre situation : accès, particularités, fréquence souhaitée, contraintes horaires, état des lieux, matériaux, photos disponibles…"></textarea>
+      </div>
+    </div>
+
+    <div class="flex justify-between mt-6">
+      <button onclick="goPrev(4)" class="btn-back">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Retour
+      </button>
+      <button onclick="goNext(4)" class="btn-next">
+        Dernière étape
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- STEP 5 — Coordonnées -->
+  <div class="step bg-white rounded-2xl shadow-sm p-5 sm:p-6" style="border:1px solid #e2e8e2" id="step5">
     <h2 class="text-lg font-bold mb-1" style="color:#0d3a1f">Vos coordonnées</h2>
-    <p class="text-sm mb-5" style="color:#6b7a6b">Vous y êtes presque — renseignez vos coordonnées pour recevoir votre estimation.</p>
+    <p class="text-sm mb-5" style="color:#6b7a6b">Vous y êtes — nous vous contacterons avec une proposition personnalisée.</p>
 
     <div class="hp" aria-hidden="true">
       <label>Ne pas remplir <input type="text" name="bot-field" id="botField" tabindex="-1" autocomplete="off" /></label>
@@ -444,14 +343,22 @@
 
     <div class="space-y-4">
       <div>
-        <label class="block text-sm font-semibold mb-1.5" style="color:#374151" for="contact_name">Prénom &amp; Nom *</label>
+        <label class="block text-sm font-semibold mb-1.5" for="contact_name" style="color:#374151">Prénom &amp; Nom *</label>
         <input type="text" id="contact_name" class="field" placeholder="Jean Dupont" autocomplete="name" />
         <p class="emsg" id="err-name" role="alert">Veuillez indiquer votre nom.</p>
       </div>
 
       <div>
-        <label class="block text-sm font-semibold mb-1" style="color:#374151" for="phone">
-          Téléphone / WhatsApp *
+        <label class="block text-sm font-semibold mb-1" for="company_name" style="color:#374151">
+          Société / Résidence
+          <span class="font-normal text-xs" style="color:#6b7a6b"> — optionnel</span>
+        </label>
+        <input type="text" id="company_name" class="field" placeholder="Nom de votre société, agence ou résidence" autocomplete="organization" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold mb-1" for="phone" style="color:#374151">
+          Téléphone *
           <span class="font-normal text-xs" style="color:#6b7a6b"> — pour vous rappeler rapidement</span>
         </label>
         <input type="tel" id="phone" class="field" placeholder="06 00 00 00 00" autocomplete="tel" />
@@ -459,42 +366,41 @@
       </div>
 
       <div>
-        <label class="block text-sm font-semibold mb-1" style="color:#374151" for="email">
+        <label class="block text-sm font-semibold mb-1" for="email" style="color:#374151">
           Email
-          <span class="font-normal text-xs" style="color:#6b7a6b"> — optionnel, pour recevoir le devis</span>
+          <span class="font-normal text-xs" style="color:#6b7a6b"> — optionnel, pour recevoir la proposition</span>
         </label>
         <input type="email" id="email" class="field" placeholder="vous@exemple.fr" autocomplete="email" />
         <p class="emsg" id="err-email" role="alert">Adresse email invalide.</p>
       </div>
 
       <div>
-        <label class="block text-sm font-semibold mb-1.5" style="color:#374151" for="callback_time">Meilleur moment pour vous rappeler</label>
-        <select id="callback_time" class="field" style="cursor:pointer">
-          <option value="">Pas de préférence</option>
-          <option value="matin">Matin (8h–12h)</option>
-          <option value="dejeuner">Déjeuner (12h–14h)</option>
-          <option value="apres_midi">Après-midi (14h–18h)</option>
-          <option value="soir">Soir (18h–20h)</option>
-        </select>
-      </div>
-
-      <div>
-        <label class="block text-sm font-semibold mb-1.5" style="color:#374151" for="message">
-          Message / Précisions
-          <span class="font-normal text-xs" style="color:#6b7a6b"> — optionnel</span>
-        </label>
-        <textarea id="message" class="field" rows="3"
-          placeholder="Ex : logement inoccupé depuis 6 mois, accès par boîte à clés, urgence EDL..."
-          style="resize:vertical"></textarea>
+        <p class="text-sm font-semibold mb-2" style="color:#374151">Préférence de contact</p>
+        <div class="grid grid-cols-2 gap-2">
+          <label class="opt-card" id="lbl-cp-telephone">
+            <input type="radio" name="contact_preference" value="telephone" onchange="pickRadio('contact_preference','lbl-cp-',this.value)" />
+            <div class="opt-inner gap-2.5"><span aria-hidden="true">📞</span><p class="text-sm" style="color:#1a2e1a">Téléphone</p></div>
+          </label>
+          <label class="opt-card" id="lbl-cp-whatsapp">
+            <input type="radio" name="contact_preference" value="whatsapp" onchange="pickRadio('contact_preference','lbl-cp-',this.value)" />
+            <div class="opt-inner gap-2.5"><span aria-hidden="true">💬</span><p class="text-sm" style="color:#1a2e1a">WhatsApp</p></div>
+          </label>
+          <label class="opt-card" id="lbl-cp-email">
+            <input type="radio" name="contact_preference" value="email" onchange="pickRadio('contact_preference','lbl-cp-',this.value)" />
+            <div class="opt-inner gap-2.5"><span aria-hidden="true">✉️</span><p class="text-sm" style="color:#1a2e1a">Email</p></div>
+          </label>
+          <label class="opt-card" id="lbl-cp-indifferent">
+            <input type="radio" name="contact_preference" value="indifferent" onchange="pickRadio('contact_preference','lbl-cp-',this.value)" />
+            <div class="opt-inner gap-2.5"><span aria-hidden="true">🤝</span><p class="text-sm" style="color:#1a2e1a">Indifférent</p></div>
+          </label>
+        </div>
       </div>
 
       <div class="rounded-xl p-4" style="background:#f9fdf9;border:1.5px solid #c3e6cb">
         <label class="flex items-start gap-3 cursor-pointer">
-          <input type="checkbox" id="rgpd" name="rgpd_consent" value="oui"
-            class="mt-0.5 w-4 h-4" style="accent-color:#16532d;flex-shrink:0"
-            onchange="clearErr('err-rgpd')" />
+          <input type="checkbox" id="rgpd" class="mt-0.5 w-4 h-4" style="accent-color:#16532d;flex-shrink:0" onchange="clearErr('err-rgpd')" />
           <p class="text-xs leading-relaxed" style="color:#374151">
-            J'accepte que Mr &amp; Mrs Eco'Clean utilise mes informations pour traiter ma demande de pré-devis et me contacter.
+            J'accepte que Mr &amp; Mrs Eco'Clean utilise mes informations pour traiter ma demande et me contacter.
             Données conservées 2 ans maximum. Aucun démarchage commercial non sollicité.
           </p>
         </label>
@@ -502,13 +408,12 @@
       </div>
     </div>
 
-    <!-- Reassurance strip before submit -->
     <p class="text-xs text-center mt-5 mb-1" style="color:#9ca3af">
-      <span aria-hidden="true">🔒</span> Données confidentielles &middot; Sans démarchage &middot; Réponse sous 2h garantie
+      <span aria-hidden="true">🔒</span> Données confidentielles &middot; Sans démarchage &middot; Proposition sous 2h garantie
     </p>
 
     <div class="flex justify-between mt-3">
-      <button onclick="goPrev(3)" class="btn-back">
+      <button onclick="goPrev(5)" class="btn-back">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
         Retour
       </button>
@@ -528,23 +433,23 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>
       </svg>
     </div>
-    <h2 class="text-xl font-bold mb-2" style="color:#0d3a1f">Demande envoyée ! <span aria-hidden="true">🎉</span></h2>
-    <p class="text-sm mb-6" style="color:#4b5563">
-      Merci <strong id="confPrenom"></strong> ! Nous avons reçu votre demande et vous rappellerons
-      <strong>sous 2h</strong> (lun.–sam., 8h–19h).
+    <h2 class="text-xl font-bold mb-2" style="color:#0d3a1f">Demande bien transmise <span aria-hidden="true">✅</span></h2>
+    <p class="text-sm mb-2" style="color:#4b5563">Merci <strong id="confPrenom"></strong> !</p>
+    <p class="text-sm font-medium mb-6 px-2" style="color:#16532d">
+      Votre demande a bien été transmise. Nous revenons vers vous avec une proposition adaptée à votre situation, sous 2h ouvrables (lun.–sam., 8h–19h).
     </p>
 
-    <div class="rounded-xl p-4 mb-6 text-left" style="background:#e8f5ec;border:1px solid #c3e6cb">
-      <p class="text-xs font-bold uppercase tracking-wide mb-3" style="color:#16532d">Votre demande</p>
-      <div id="confSummary" class="space-y-1.5 text-sm"></div>
+    <div class="rounded-xl p-4 mb-6 text-left" style="background:#f9fdf9;border:1px solid #c3e6cb">
+      <p class="text-xs font-bold uppercase tracking-wide mb-3" style="color:#16532d">Récapitulatif de votre demande</p>
+      <div id="confSummary" class="space-y-1 text-sm"></div>
     </div>
 
-    <p class="text-sm mb-4" style="color:#4b5563">Vous préférez nous joindre directement ?</p>
+    <p class="text-sm mb-4" style="color:#4b5563">Vous préférez nous contacter directement ?</p>
     <div class="flex flex-col sm:flex-row gap-3 justify-center">
       <a href="tel:+33757671156" class="btn-next justify-center" style="text-decoration:none">
         <span aria-hidden="true">📞</span> Nous appeler
       </a>
-      <a href="https://wa.me/33757671156?text=Bonjour%20Mr%20%26%20Mrs%20Eco'Clean%2C%20je%20viens%20de%20remplir%20votre%20formulaire%20de%20pr%C3%A9-devis."
+      <a href="https://wa.me/33757671156?text=Bonjour%20Mr%20%26%20Mrs%20Eco'Clean%2C%20je%20viens%20de%20soumettre%20une%20demande%20de%20pr%C3%A9-devis."
          target="_blank" rel="noopener noreferrer"
          class="btn-back justify-center" style="text-decoration:none;display:inline-flex">
         <span aria-hidden="true">💬</span> WhatsApp
@@ -569,8 +474,8 @@
     </div>
     <div class="bg-white rounded-xl p-3 text-center" style="border:1px solid #e2e8e2">
       <p class="text-2xl mb-1" aria-hidden="true">🔒</p>
-      <p class="text-xs font-semibold" style="color:#1a2e1a">Sans engagement</p>
-      <p class="text-xs" style="color:#6b7a6b">Devis 100% gratuit</p>
+      <p class="text-xs font-semibold" style="color:#1a2e1a">Devis confidentiel</p>
+      <p class="text-xs" style="color:#6b7a6b">Sans engagement</p>
     </div>
   </div>
 </main>
@@ -582,28 +487,102 @@
 </footer>
 
 <script>
-const STEPS = 3;
+// ========== CONFIGURATION ==========
+const STEPS = 5;
 let cur = 1;
+let selectedProfile = null;
+let selectedServices = new Set();
+let selectedEvServices = new Set();
 
 const META = [
   null,
-  { label: 'Étape 1 sur 3', name: 'Votre besoin',    pct: 33 },
-  { label: 'Étape 2 sur 3', name: 'Votre bien',       pct: 66 },
-  { label: 'Étape 3 sur 3', name: 'Vos coordonnées', pct: 100 },
+  { label:'Étape 1 sur 5', name:'Votre profil',        pct:20  },
+  { label:'Étape 2 sur 5', name:'Vos besoins',          pct:40  },
+  { label:'Étape 3 sur 5', name:'Fréquence & urgence',  pct:60  },
+  { label:'Étape 4 sur 5', name:'Votre situation',      pct:80  },
+  { label:'Étape 5 sur 5', name:'Vos coordonnées',      pct:100 },
 ];
 
-const SVC_LBL   = { nettoyage:'Nettoyage intérieur', espaces_verts:'Espaces verts', les_deux:'Nettoyage + Espaces verts' };
-const URG_LBL   = { '48h':'Sous 48h (urgent)', semaine:'Cette semaine', mois:'Ce mois', planifie:'Planifié' };
-const SURF_LBL  = { moins_40:'< 40 m²', '40_70':'40–70 m²', '70_100':'70–100 m²', plus_100:'> 100 m²' };
+const PROFILE_LBL = {
+  syndic:       'Syndic / Copropriété',
+  agence_immo:  'Agence immobilière / Gestion locative',
+  professionnel:'Pro / Bureaux / Local commercial',
+  particulier:  'Particulier',
+};
 
+const FREQ_LBL = {
+  ponctuel:         'Intervention ponctuelle',
+  urgent:           'Intervention urgente (48–72h)',
+  regulier:         'Entretien régulier',
+  contrat_annuel:   'Devis contrat annuel',
+  visite_necessaire:'Visite préalable nécessaire',
+};
+
+// Services par profil — aucun prix, aucune estimation
+const SERVICES = {
+  syndic: [
+    { id:'parties_communes',  label:'Nettoyage parties communes',    icon:'🏢' },
+    { id:'containers',        label:'Sortie / rentrée containers',    icon:'🗑️' },
+    { id:'local_poubelles',   label:'Nettoyage local poubelles',      icon:'♻️' },
+    { id:'vitrerie_commune',  label:'Vitrerie commune',               icon:'🪟' },
+    { id:'parking',           label:'Parking / sous-sol',             icon:'🅿️' },
+    { id:'remise_en_etat',    label:'Désinfection / remise en état',  icon:'🧴' },
+    { id:'espaces_verts',     label:'Espaces verts résidence',        icon:'🌿', ev:true },
+    { id:'autre',             label:'Autre (cahier des charges)',      icon:'📋' },
+  ],
+  agence_immo: [
+    { id:'avant_relocation',  label:'Nettoyage avant relocation',     icon:'🏠' },
+    { id:'apres_depart',      label:'Après départ locataire',          icon:'🚪' },
+    { id:'remise_en_etat',    label:'Remise en état du logement',     icon:'🔧' },
+    { id:'apres_travaux',     label:'Nettoyage après travaux',        icon:'🔨' },
+    { id:'vitres',            label:'Nettoyage vitres',                icon:'🪟' },
+    { id:'debarras',          label:'Débarras léger',                 icon:'📦' },
+    { id:'ponctuel_urgent',   label:'Intervention ponctuelle urgente',icon:'⚡' },
+    { id:'contrat_recurrent', label:'Contrat récurrent agence',       icon:'📋' },
+  ],
+  professionnel: [
+    { id:'entretien_regulier',label:'Entretien régulier des locaux',  icon:'🔄' },
+    { id:'bureaux',           label:'Nettoyage bureaux',               icon:'🖥️' },
+    { id:'sanitaires',        label:'Sanitaires',                      icon:'🚿' },
+    { id:'sols',              label:'Sols (carrelage, parquet…)',      icon:'🦶' },
+    { id:'vitrerie',          label:'Vitrerie / façade',               icon:'🪟' },
+    { id:'remise_en_etat',    label:'Remise en état',                 icon:'🔧' },
+    { id:'ponctuel',          label:'Intervention ponctuelle',        icon:'1️⃣' },
+  ],
+  particulier: [
+    { id:'nettoyage_complet', label:'Nettoyage complet du logement',  icon:'🧹' },
+    { id:'entretien_regulier',label:'Entretien régulier',             icon:'🔄' },
+    { id:'apres_travaux',     label:'Après travaux / sinistre',       icon:'🔨' },
+    { id:'remise_en_etat',    label:'Remise en état',                 icon:'🔧' },
+    { id:'espaces_verts',     label:'Espaces verts / Jardin',         icon:'🌿', ev:true },
+    { id:'vitrerie',          label:'Nettoyage vitrerie',             icon:'🪟' },
+    { id:'ponctuel',          label:'Intervention ponctuelle',        icon:'1️⃣' },
+  ],
+};
+
+const EV_SERVICES = [
+  { id:'tonte',             label:'Tonte',                      icon:'🌱' },
+  { id:'debroussaillage',   label:'Débroussaillage',             icon:'🌾' },
+  { id:'taille_haies',      label:'Taille de haies',            icon:'✂️' },
+  { id:'desherbage',        label:'Désherbage',                  icon:'🌿' },
+  { id:'ramassage_feuilles',label:'Ramassage de feuilles',      icon:'🍂' },
+  { id:'evacuation_dechets',label:'Évacuation déchets verts',   icon:'🚛' },
+  { id:'entretien_regulier',label:'Entretien régulier',         icon:'🔄' },
+  { id:'remise_en_etat_ev', label:'Remise en état ponctuelle',  icon:'🔧' },
+];
+
+// ========== SÉCURITÉ ==========
 function esc(s) {
   return String(s)
-    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#x27;');
 }
 
+// ========== UI ==========
 function showStep(n) {
-  ['step1','step2','step3','stepConf'].forEach(id => document.getElementById(id).classList.remove('visible'));
+  ['step1','step2','step3','step4','step5','stepConf'].forEach(id => {
+    document.getElementById(id).classList.remove('visible');
+  });
   document.getElementById(n <= STEPS ? 'step' + n : 'stepConf').classList.add('visible');
 
   const pb = document.getElementById('progressBlock');
@@ -617,21 +596,27 @@ function showStep(n) {
     document.getElementById('stepLabel').textContent = m.label;
     document.getElementById('stepPct').textContent   = m.pct + '%';
     document.getElementById('stepName').textContent  = m.name;
-    const pbar = document.getElementById('pBar');
-    pbar.style.width = m.pct + '%';
-    pbar.setAttribute('aria-valuenow', m.pct);
+    const bar = document.getElementById('pBar');
+    bar.style.width = m.pct + '%';
+    bar.setAttribute('aria-valuenow', m.pct);
   }
   cur = n;
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window.scrollTo({ top:0, behavior:'smooth' });
 }
 
 function pickRadio(name, prefix, val) {
   document.querySelectorAll('[id^="' + prefix + '"]').forEach(el => el.classList.remove('selected'));
   const el = document.getElementById(prefix + val);
   if (el) el.classList.add('selected');
-  if (name === 'service_type') {
-    document.getElementById('stateBlock').style.display = val === 'espaces_verts' ? 'none' : '';
-  }
+}
+
+function pickProfile(val) {
+  selectedProfile = val;
+  pickRadio('profile_type', 'lbl-prf-', val);
+}
+
+function pickFreq(val) {
+  pickRadio('frequency', 'lbl-frq-', val);
 }
 
 function radio(name) {
@@ -645,107 +630,170 @@ function showErr(id, show) {
 }
 function clearErr(id) { showErr(id, false); }
 
-function validateStep1() {
-  let ok = true;
-  if (!radio('service_type'))  { showErr('err-service', true);   ok = false; } else clearErr('err-service');
-  if (!radio('urgency'))       { showErr('err-urgency', true);   ok = false; } else clearErr('err-urgency');
-  if (!radio('frequency'))     { showErr('err-frequency', true); ok = false; } else clearErr('err-frequency');
-  if (!radio('profile_type'))  { showErr('err-profile', true);   ok = false; } else clearErr('err-profile');
-  return ok;
+// ========== RENDU ÉTAPE 2 ==========
+function renderServices() {
+  const list = SERVICES[selectedProfile] || [];
+  selectedServices = new Set();
+  selectedEvServices = new Set();
+
+  document.getElementById('servicesGrid').innerHTML = list.map(s =>
+    '<label class="opt-card" id="lbl-srv-' + s.id + '">' +
+    '<input type="checkbox" value="' + s.id + '" onchange="toggleSrv(\'' + s.id + '\',' + (!!s.ev) + ')" />' +
+    '<div class="opt-inner gap-3">' +
+    '<span class="text-xl" aria-hidden="true">' + s.icon + '</span>' +
+    '<p class="text-sm font-medium" style="color:#1a2e1a">' + esc(s.label) + '</p>' +
+    '</div></label>'
+  ).join('');
+
+  document.getElementById('evGrid').innerHTML = EV_SERVICES.map(s =>
+    '<label class="opt-card" id="lbl-ev-' + s.id + '">' +
+    '<input type="checkbox" value="' + s.id + '" onchange="toggleEv(\'' + s.id + '\')" />' +
+    '<div class="opt-inner gap-3">' +
+    '<span class="text-xl" aria-hidden="true">' + s.icon + '</span>' +
+    '<p class="text-sm font-medium" style="color:#1a2e1a">' + esc(s.label) + '</p>' +
+    '</div></label>'
+  ).join('');
+
+  const subtitles = {
+    syndic:       'Sélectionnez les prestations pour votre résidence.',
+    agence_immo:  'Sélectionnez les prestations pour vos mandats.',
+    professionnel:'Sélectionnez les prestations pour vos locaux.',
+    particulier:  'Sélectionnez tout ce dont vous avez besoin.',
+  };
+  document.getElementById('step2Sub').textContent = subtitles[selectedProfile] || 'Sélectionnez tout ce qui correspond.';
+  document.getElementById('evBlock').style.display = 'none';
 }
 
-function validateStep2() {
-  let ok = true;
-  if (!radio('property_type')) { showErr('err-property', true); ok = false; } else clearErr('err-property');
-  if (!radio('surface'))       { showErr('err-surface', true);  ok = false; } else clearErr('err-surface');
-  const city = document.getElementById('city').value.trim();
-  if (!city)                   { showErr('err-city', true);     ok = false; } else clearErr('err-city');
-  return ok;
+function toggleSrv(id, hasEv) {
+  const card = document.getElementById('lbl-srv-' + id);
+  if (!card) return;
+  const checked = card.querySelector('input').checked;
+  if (checked) { selectedServices.add(id); card.classList.add('selected'); }
+  else { selectedServices.delete(id); card.classList.remove('selected'); }
+  if (hasEv) updateEvBlock();
 }
 
-function validateStep3() {
-  let ok = true;
-  const name = document.getElementById('contact_name').value.trim();
-  if (!name)                                                       { showErr('err-name', true);  ok = false; } else clearErr('err-name');
-  const phone = document.getElementById('phone').value.trim();
-  if (!/^[\d\s\+\(\)\.\-]{8,}$/.test(phone))                     { showErr('err-phone', true); ok = false; } else clearErr('err-phone');
-  const email = document.getElementById('email').value.trim();
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))        { showErr('err-email', true); ok = false; } else clearErr('err-email');
-  if (!document.getElementById('rgpd').checked)                    { showErr('err-rgpd', true);  ok = false; } else clearErr('err-rgpd');
-  if (document.getElementById('botField').value)                   return false;
-  return ok;
+function toggleEv(id) {
+  const card = document.getElementById('lbl-ev-' + id);
+  if (!card) return;
+  const checked = card.querySelector('input').checked;
+  if (checked) { selectedEvServices.add(id); card.classList.add('selected'); }
+  else { selectedEvServices.delete(id); card.classList.remove('selected'); }
 }
 
-function goNext(from) { if (from === 1 ? validateStep1() : validateStep2()) showStep(from + 1); }
-function goPrev(from) { showStep(from - 1); }
+function updateEvBlock() {
+  const evSvcs = (SERVICES[selectedProfile] || []).filter(s => s.ev);
+  const anyEv  = evSvcs.some(s => selectedServices.has(s.id));
+  document.getElementById('evBlock').style.display = anyEv ? '' : 'none';
+  if (!anyEv) selectedEvServices = new Set();
+}
 
+// ========== SCORING INTERNE — invisible client ==========
 function calcScore() {
   let s = 0;
-  const urg = radio('urgency');
-  if (urg === '48h') s += 3; else if (urg === 'semaine') s += 2; else if (urg === 'mois') s += 1;
-  if (radio('frequency') === 'regulier') s += 3; else s += 1;
-  const surf = radio('surface');
-  if (surf === 'plus_100') s += 3; else if (surf === '70_100') s += 2; else if (surf === '40_70') s += 1;
-  const state = radio('property_state');
-  if (state === 'apres_travaux') s += 3; else if (state === 'tres_sale') s += 2; else if (state === 'sale') s += 1;
-  const prof = radio('profile_type');
-  if (prof === 'agence_immo' || prof === 'bailleur') s += 3; else if (prof === 'professionnel') s += 2; else s += 1;
-  return { score: s, priority: s >= 10 ? 'HIGH' : s >= 6 ? 'MEDIUM' : 'LOW' };
+  const freq = radio('frequency');
+  if (selectedProfile === 'syndic')         s += 5;
+  else if (selectedProfile === 'agence_immo')   s += 4;
+  else if (selectedProfile === 'professionnel') s += 3;
+  else s += 1;
+  if (freq === 'contrat_annuel')    s += 5;
+  else if (freq === 'urgent')       s += 4;
+  else if (freq === 'visite_necessaire' || freq === 'regulier') s += 3;
+  else s += 1;
+  s += Math.min(selectedServices.size, 3);
+  return { score:s, priority: s >= 10 ? 'HIGH' : s >= 6 ? 'MEDIUM' : 'LOW' };
 }
 
+// ========== VALIDATION ==========
+function v1() { const ok = !!selectedProfile; showErr('err-profile', !ok); return ok; }
+function v2() { const ok = selectedServices.size > 0; showErr('err-services', !ok); return ok; }
+function v3() { const ok = !!radio('frequency'); showErr('err-frequency', !ok); return ok; }
+function v4() {
+  const ok = !!document.getElementById('site_address').value.trim();
+  showErr('err-address', !ok);
+  return ok;
+}
+function v5() {
+  let ok = true;
+  const name = document.getElementById('contact_name').value.trim();
+  if (!name) { showErr('err-name', true); ok = false; } else clearErr('err-name');
+  const phone = document.getElementById('phone').value.trim();
+  if (!/^[\d\s\+\(\)\.\-]{8,}$/.test(phone)) { showErr('err-phone', true); ok = false; } else clearErr('err-phone');
+  const email = document.getElementById('email').value.trim();
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('err-email', true); ok = false; } else clearErr('err-email');
+  if (!document.getElementById('rgpd').checked) { showErr('err-rgpd', true); ok = false; } else clearErr('err-rgpd');
+  if (document.getElementById('botField').value) return false;
+  return ok;
+}
+
+// ========== NAVIGATION ==========
+const VALIDATORS = [null, v1, v2, v3, v4, v5];
+
+function goNext(from) {
+  if (!VALIDATORS[from]()) return;
+  if (from === 1) renderServices();
+  showStep(from + 1);
+}
+function goPrev(from) { showStep(from - 1); }
+
+// ========== ENVOI ==========
 function genRef() { return 'ECO-' + Date.now().toString(36).toUpperCase().slice(-6); }
 
 async function submitForm() {
-  if (!validateStep3()) return;
+  if (!v5()) return;
 
   const btn = document.getElementById('submitBtn');
   btn.disabled = true;
   btn.innerHTML = '<div class="spinner"></div> Envoi…';
 
   const ref  = genRef();
-  const { score, priority } = calcScore();
   const ts   = new Date().toISOString();
+  const { score, priority } = calcScore();
 
-  const name  = document.getElementById('contact_name').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const city  = document.getElementById('city').value.trim();
-  const msg   = document.getElementById('message').value.trim();
-  const cb    = document.getElementById('callback_time').value;
+  const name    = document.getElementById('contact_name').value.trim();
+  const company = document.getElementById('company_name').value.trim();
+  const phone   = document.getElementById('phone').value.trim();
+  const email   = document.getElementById('email').value.trim();
+  const addr    = document.getElementById('site_address').value.trim();
+  const surface = document.getElementById('surface').value.trim();
+  const specs   = document.getElementById('specifications').value.trim();
+  const freq    = radio('frequency');
+  const cp      = radio('contact_preference') || 'indifferent';
 
-  const svc   = radio('service_type');
-  const urg   = radio('urgency');
-  const frq   = radio('frequency');
-  const prof  = radio('profile_type');
-  const prop  = radio('property_type');
-  const surf  = radio('surface');
-  const state = radio('property_state') || 'non_renseigne';
+  const srvArr = Array.from(selectedServices);
+  const evArr  = Array.from(selectedEvServices);
 
-  const subject = '[' + priority + '] ' + ref + ' — ' + (SVC_LBL[svc] || svc) + ' — ' + city;
+  const subject = '[' + priority + '] ' + ref + ' — ' + (PROFILE_LBL[selectedProfile] || selectedProfile) + ' — ' + addr;
 
   const payload = new URLSearchParams({
-    'form-name':    'pre-devis-ecoclean',
-    'bot-field':    '',
-    request_id:     ref,
-    source:         'landing-ecoclean',
-    version:        '2',
-    service_type:   svc,
-    urgency:        urg,
-    frequency:      frq,
-    profile_type:   prof,
-    property_type:  prop,
-    surface:        surf,
-    property_state: state,
-    city:           city,
-    contact_name:   name,
-    phone:          phone,
-    email:          email,
-    callback_time:  cb,
-    message:        msg,
-    rgpd_consent:   'oui',
-    prospect_score: String(score),
-    subject:        subject,
-    form_payload:   JSON.stringify({ ref, ts, source: 'landing-ecoclean', version: '2', svc, urg, frq, prof, prop, surf, state, city, name, phone, email, cb, msg, score, priority }),
+    'form-name':        'pre-devis-ecoclean',
+    'bot-field':        '',
+    request_id:         ref,
+    source:             'landing-ecoclean',
+    version:            '3',
+    profile_type:       selectedProfile,
+    services:           srvArr.join(', '),
+    ev_services:        evArr.join(', '),
+    frequency:          freq,
+    site_address:       addr,
+    surface:            surface,
+    specifications:     specs,
+    contact_name:       name,
+    company_name:       company,
+    phone:              phone,
+    email:              email,
+    contact_preference: cp,
+    rgpd_consent:       'oui',
+    prospect_score:     String(score),
+    priority:           priority,
+    subject:            subject,
+    form_payload: JSON.stringify({
+      ref, ts, source:'landing-ecoclean', version:'3',
+      profile: selectedProfile, services: srvArr, ev_services: evArr,
+      frequency: freq, addr, surface, specs,
+      name, company, phone, email, cp,
+      score, priority,
+    }),
   });
 
   try {
@@ -755,18 +803,23 @@ async function submitForm() {
       body: payload.toString(),
     });
   } catch (e) {
-    console.warn('Submit warning:', e);
+    console.warn('Netlify Forms submit warning:', e);
   }
+
+  // Confirmation — no prices, no estimations
+  const srvLabels = (SERVICES[selectedProfile] || []).filter(s => selectedServices.has(s.id)).map(s => s.label);
+  const evLabels  = EV_SERVICES.filter(s => selectedEvServices.has(s.id)).map(s => s.label);
 
   document.getElementById('confPrenom').textContent = name.split(' ')[0];
   document.getElementById('confRef').textContent    = ref;
-  document.getElementById('confSummary').innerHTML  =
-    row('Service',   SVC_LBL[svc]  || svc) +
-    row('Délai',     URG_LBL[urg]  || urg) +
-    row('Fréquence', frq === 'regulier' ? 'Régulier' : 'Ponctuel') +
-    row('Surface',   SURF_LBL[surf] || surf) +
-    row('Ville',     city) +
-    row('Contact',   phone + (email ? ' — ' + email : ''));
+  document.getElementById('confSummary').innerHTML =
+    row('Profil',      PROFILE_LBL[selectedProfile] || selectedProfile) +
+    row('Prestations', srvLabels.join(', ') || '—') +
+    (evLabels.length ? row('Espaces verts', evLabels.join(', ')) : '') +
+    row('Fréquence',   FREQ_LBL[freq] || freq) +
+    row('Secteur',     addr) +
+    (surface ? row('Surface', surface) : '') +
+    row('Contact',     phone + (email ? ' · ' + email : ''));
 
   showStep(99);
 
@@ -776,10 +829,10 @@ async function submitForm() {
 
 function row(k, v) {
   if (!v) return '';
-  return '<div class="flex justify-between gap-2" style="border-bottom:1px solid #c3e6cb;padding:4px 0">'
-    + '<span style="color:#6b7a6b">' + esc(k) + '</span>'
-    + '<span style="font-weight:600;color:#1a2e1a;text-align:right">' + esc(v) + '</span>'
-    + '</div>';
+  return '<div class="flex justify-between gap-3" style="border-bottom:1px solid #e5e7eb;padding:5px 0">' +
+    '<span style="color:#6b7a6b;flex-shrink:0">' + esc(k) + '</span>' +
+    '<span style="font-weight:600;color:#1a2e1a;text-align:right">' + esc(v) + '</span>' +
+    '</div>';
 }
 
 showStep(1);
