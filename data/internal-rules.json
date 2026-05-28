@@ -1,0 +1,93 @@
+{
+  "_info": "Fichier de configuration INTERNE — NE PAS EXPOSER côté client.",
+  "_usage": "Scoring interne des demandes et grille tarifaire à compléter. Ce fichier est hors du dossier landing/ et n'est jamais servi par Netlify (publish = 'landing').",
+  "_version": "1.0",
+
+  "scoring": {
+    "_comment": "Points attribués par critère pour calculer la priorité de la demande (LOW / MEDIUM / HIGH)",
+    "profile": {
+      "syndic":         5,
+      "agence_immo":    4,
+      "professionnel":  3,
+      "particulier":    1
+    },
+    "frequency": {
+      "contrat_annuel":    5,
+      "urgent":            4,
+      "visite_necessaire": 3,
+      "regulier":          3,
+      "ponctuel":          1
+    },
+    "services_count": {
+      "1":     1,
+      "2":     2,
+      "3_plus":3
+    }
+  },
+
+  "priority_thresholds": {
+    "HIGH":   10,
+    "MEDIUM":  6,
+    "LOW":     0
+  },
+
+  "pricing_reference": {
+    "_comment": "Grille tarifaire à compléter par Mr & Mrs Eco'Clean. Les valeurs null indiquent un tarif non encore défini. Aucune valeur de cette section ne doit être affichée au client.",
+    "nettoyage": {
+      "parties_communes_forfait_mensuel":   null,
+      "logement_moins_40m2":                null,
+      "logement_40_70m2":                   null,
+      "logement_70_100m2":                  null,
+      "logement_plus_100m2":                null,
+      "remise_en_etat_forfait":             null,
+      "entretien_regulier_hebdo":           null,
+      "entretien_regulier_mensuel":         null,
+      "vitrerie_par_fenetre":               null,
+      "parking_forfait":                    null,
+      "local_poubelles_forfait_mensuel":    null,
+      "containers_par_passage":             null
+    },
+    "espaces_verts": {
+      "tonte_moins_200m2":        null,
+      "tonte_200_500m2":          null,
+      "tonte_plus_500m2":         null,
+      "debroussaillage_horaire":  null,
+      "taille_haies_lineaire_ml": null,
+      "desherbage_horaire":       null,
+      "ramassage_feuilles_m2":    null,
+      "evacuation_dechets_m3":    null,
+      "forfait_mensuel_entretien":null
+    }
+  },
+
+  "coefficients": {
+    "_comment": "Multiplicateurs à appliquer au tarif de base selon les conditions",
+    "urgence_moins_48h":       1.3,
+    "apres_travaux":           1.2,
+    "tres_sale":               1.15,
+    "acces_difficile":         1.1,
+    "contrat_annuel_remise":   0.9,
+    "client_regulier_remise":  0.95
+  },
+
+  "contact": {
+    "phone":           "+33757671156",
+    "whatsapp":        "33757671156",
+    "hours":           "Lun–Sam 8h–19h",
+    "response_target": "2h ouvrables"
+  },
+
+  "admin_roadmap": {
+    "_comment": "Ce fichier préfigure la future intégration Hounivers Admin.",
+    "v2_features": [
+      "Interface admin connectée à Netlify Forms API",
+      "Tableau de bord demandes avec tri par priorité",
+      "Modification des règles tarifaires depuis l'UI",
+      "Export des demandes (CSV, PDF)",
+      "Notifications email/SMS automatiques",
+      "Raccord avec CRM Hounivers"
+    ],
+    "current_admin_access": "Netlify dashboard → Forms → pre-devis-ecoclean (app.netlify.com)",
+    "no_admin_ui_yet": true
+  }
+}
