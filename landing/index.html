@@ -10,7 +10,8 @@
   <meta property="og:description" content="Nettoyage professionnel &amp; espaces verts à Toulouse. Proposition sur mesure, réponse sous 2h." />
   <title>Demande de pré-devis — Mr &amp; Mrs Eco'Clean | Toulouse</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- CSS compilé statiquement — aucune dépendance CDN externe -->
+  <link rel="stylesheet" href="assets/tailwind.css" />
   <style>
     * { -webkit-font-smoothing: antialiased; box-sizing: border-box; }
     body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background: #f5f7f5; }
@@ -402,6 +403,7 @@
           <p class="text-xs leading-relaxed" style="color:#374151">
             J'accepte que Mr &amp; Mrs Eco'Clean utilise mes informations pour traiter ma demande et me contacter.
             Données conservées 2 ans maximum. Aucun démarchage commercial non sollicité.
+            <a href="politique-confidentialite.html" style="color:#16532d;text-decoration:underline">Politique de confidentialité</a>
           </p>
         </label>
         <p class="emsg mt-2" id="err-rgpd" role="alert">Vous devez accepter pour continuer.</p>
@@ -482,8 +484,8 @@
 
 <footer class="text-center py-5 text-xs" style="color:#9ca3af">
   &copy; 2026 Mr &amp; Mrs Eco'Clean &mdash; Toulouse
-  &middot; <a href="#" style="color:#6b7a6b">Mentions légales</a>
-  &middot; <a href="#" style="color:#6b7a6b">Politique RGPD</a>
+  &middot; <a href="mentions-legales.html" style="color:#6b7a6b">Mentions légales</a>
+  &middot; <a href="politique-confidentialite.html" style="color:#6b7a6b">Politique RGPD</a>
 </footer>
 
 <script>
@@ -491,6 +493,7 @@
 const STEPS = 5;
 let cur = 1;
 let selectedProfile = null;
+let renderedProfile = null;  // track which profile was last rendered for step 2
 let selectedServices = new Set();
 let selectedEvServices = new Set();
 
@@ -633,26 +636,33 @@ function clearErr(id) { showErr(id, false); }
 // ========== RENDU ÉTAPE 2 ==========
 function renderServices() {
   const list = SERVICES[selectedProfile] || [];
-  selectedServices = new Set();
-  selectedEvServices = new Set();
 
-  document.getElementById('servicesGrid').innerHTML = list.map(s =>
-    '<label class="opt-card" id="lbl-srv-' + s.id + '">' +
-    '<input type="checkbox" value="' + s.id + '" onchange="toggleSrv(\'' + s.id + '\',' + (!!s.ev) + ')" />' +
-    '<div class="opt-inner gap-3">' +
-    '<span class="text-xl" aria-hidden="true">' + s.icon + '</span>' +
-    '<p class="text-sm font-medium" style="color:#1a2e1a">' + esc(s.label) + '</p>' +
-    '</div></label>'
-  ).join('');
+  // Reset selections uniquement si le profil change
+  if (renderedProfile !== selectedProfile) {
+    selectedServices = new Set();
+    selectedEvServices = new Set();
+    renderedProfile = selectedProfile;
+  }
 
-  document.getElementById('evGrid').innerHTML = EV_SERVICES.map(s =>
-    '<label class="opt-card" id="lbl-ev-' + s.id + '">' +
-    '<input type="checkbox" value="' + s.id + '" onchange="toggleEv(\'' + s.id + '\')" />' +
-    '<div class="opt-inner gap-3">' +
-    '<span class="text-xl" aria-hidden="true">' + s.icon + '</span>' +
-    '<p class="text-sm font-medium" style="color:#1a2e1a">' + esc(s.label) + '</p>' +
-    '</div></label>'
-  ).join('');
+  document.getElementById('servicesGrid').innerHTML = list.map(s => {
+    const isSel = selectedServices.has(s.id);
+    return '<label class="opt-card' + (isSel ? ' selected' : '') + '" id="lbl-srv-' + s.id + '">' +
+      '<input type="checkbox" value="' + s.id + '"' + (isSel ? ' checked' : '') + ' onchange="toggleSrv(\'' + s.id + '\',' + (!!s.ev) + ')" />' +
+      '<div class="opt-inner gap-3">' +
+      '<span class="text-xl" aria-hidden="true">' + s.icon + '</span>' +
+      '<p class="text-sm font-medium" style="color:#1a2e1a">' + esc(s.label) + '</p>' +
+      '</div></label>';
+  }).join('');
+
+  document.getElementById('evGrid').innerHTML = EV_SERVICES.map(s => {
+    const isSel = selectedEvServices.has(s.id);
+    return '<label class="opt-card' + (isSel ? ' selected' : '') + '" id="lbl-ev-' + s.id + '">' +
+      '<input type="checkbox" value="' + s.id + '"' + (isSel ? ' checked' : '') + ' onchange="toggleEv(\'' + s.id + '\')" />' +
+      '<div class="opt-inner gap-3">' +
+      '<span class="text-xl" aria-hidden="true">' + s.icon + '</span>' +
+      '<p class="text-sm font-medium" style="color:#1a2e1a">' + esc(s.label) + '</p>' +
+      '</div></label>';
+  }).join('');
 
   const subtitles = {
     syndic:       'Sélectionnez les prestations pour votre résidence.',
@@ -661,7 +671,7 @@ function renderServices() {
     particulier:  'Sélectionnez tout ce dont vous avez besoin.',
   };
   document.getElementById('step2Sub').textContent = subtitles[selectedProfile] || 'Sélectionnez tout ce qui correspond.';
-  document.getElementById('evBlock').style.display = 'none';
+  updateEvBlock();
 }
 
 function toggleSrv(id, hasEv) {
@@ -806,7 +816,7 @@ async function submitForm() {
     console.warn('Netlify Forms submit warning:', e);
   }
 
-  // Confirmation — no prices, no estimations
+  // Confirmation — aucun prix, aucune estimation
   const srvLabels = (SERVICES[selectedProfile] || []).filter(s => selectedServices.has(s.id)).map(s => s.label);
   const evLabels  = EV_SERVICES.filter(s => selectedEvServices.has(s.id)).map(s => s.label);
 
